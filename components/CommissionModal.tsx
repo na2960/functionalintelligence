@@ -17,7 +17,8 @@ export default function CommissionModal({
   onDone: () => void;
 }) {
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("other");
+  const [category, setCategory] = useState("ai");
+  const [customCategory, setCustomCategory] = useState("");
   const [detail, setDetail] = useState("");
   const [amountCents, setAmountCents] = useState(10000);
   const [custom, setCustom] = useState("");
@@ -54,6 +55,8 @@ export default function CommissionModal({
         body: JSON.stringify({
           title: title.trim(),
           category,
+          customCategory:
+            category === "other" ? customCategory.trim() || undefined : undefined,
           detail: detail.trim() || undefined,
           amountCents: effectiveCents,
           name: name.trim() || undefined,
@@ -122,6 +125,18 @@ export default function CommissionModal({
           />
         </label>
       </div>
+      {category === "other" && (
+        <label className="f">
+          What field is this? (we&rsquo;ll review it)
+          <input
+            type="text"
+            maxLength={80}
+            placeholder="e.g. materials science, linguistics…"
+            value={customCategory}
+            onChange={(e) => setCustomCategory(e.target.value)}
+          />
+        </label>
+      )}
       <label className="f">
         What do you want answered? (optional)
         <textarea

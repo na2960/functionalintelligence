@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
       detail?: string;
       link?: string;
       category?: string;
+      customCategory?: string;
     };
     amountCents?: number;
     name?: string;
@@ -66,6 +67,10 @@ export async function POST(req: NextRequest) {
     const category = CATEGORIES.has(body.newTopic.category ?? "")
       ? (body.newTopic.category as string)
       : "other";
+    const customCategory =
+      category === "other"
+        ? (body.newTopic.customCategory ?? "").trim().slice(0, 80) || null
+        : null;
     if (title.length < 3 || title.length > 140) {
       return NextResponse.json(
         { error: "Topic must be 3–140 characters." },
@@ -88,6 +93,7 @@ export async function POST(req: NextRequest) {
         detail: detail || null,
         link: link || null,
         category,
+        custom_category: customCategory,
       })
       .select("id, title, status")
       .single();

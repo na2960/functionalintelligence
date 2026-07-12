@@ -106,7 +106,7 @@ a {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 10.5px;
   letter-spacing: 0.14em;
   color: var(--green);
@@ -310,7 +310,7 @@ a {
   flex-wrap: wrap;
   gap: 8px 12px;
   margin-top: 16px;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12.5px;
   color: #97a5b8;
 }
@@ -338,14 +338,14 @@ a {
 }
 
 .close-bar .label {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
   letter-spacing: 0.16em;
   color: #97a5b8;
 }
 
 .close-bar .clock {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 24px;
   font-weight: 700;
   color: var(--gold);
@@ -353,7 +353,7 @@ a {
 }
 
 .close-bar .ships {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
   letter-spacing: 0.08em;
   color: var(--cream);
@@ -390,7 +390,7 @@ main {
 }
 
 .section-head .count {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12px;
   color: var(--muted);
 }
@@ -449,7 +449,7 @@ main {
   gap: 12px;
   background: linear-gradient(90deg, var(--gold), #f2c266);
   color: #211703;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -529,7 +529,7 @@ main {
 }
 
 .chase-label {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -559,7 +559,7 @@ main {
 }
 
 .rank-n {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 19px;
   font-weight: 700;
   color: var(--muted);
@@ -601,7 +601,7 @@ main {
 }
 
 .gap {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
   color: var(--red);
   font-weight: 600;
@@ -625,7 +625,7 @@ main {
 }
 
 .pool .amt {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 21px;
   font-weight: 700;
   color: var(--gold-deep);
@@ -755,7 +755,7 @@ main {
 .quick {
   font-size: 12.5px;
   font-weight: 700;
-  font-family: var(--mono);
+  font-family: var(--sans);
   padding: 7px 11px;
   border-radius: 8px;
   cursor: pointer;
@@ -789,7 +789,7 @@ main {
 
 /* ---------- hero kicker / tail ---------- */
 .kicker {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -965,7 +965,7 @@ main {
 .custom-amt .dollar {
   padding: 0 6px 0 12px;
   color: var(--muted);
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-weight: 700;
 }
 
@@ -1098,7 +1098,7 @@ main {
 }
 
 .shipped-row .amt {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-weight: 700;
   color: var(--gold-deep);
   white-space: nowrap;
@@ -1138,7 +1138,7 @@ main {
 }
 
 .step .n {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
   font-weight: 700;
   color: var(--gold-deep);
@@ -1573,7 +1573,7 @@ textarea {
 }
 
 .amounts .amt {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 13.5px;
   font-weight: 700;
   padding: 9px 0;
@@ -1650,4 +1650,161 @@ textarea {
   font-size: 12px;
   color: var(--muted);
   margin-top: 12px;
+}
+
+/* ================= v4 refinements ================= */
+
+/* centered, calmer hero */
+.hero.centered {
+  text-align: center;
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 66px 0 46px;
+}
+
+.hero .eyebrow {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3.2vw, 32px);
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.hero.centered h1 {
+  font-size: clamp(40px, 6.6vw, 66px);
+  letter-spacing: -0.015em;
+}
+
+.hero .lede {
+  margin: 18px auto 0;
+  max-width: 620px;
+  color: #aab6c6;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.hero.centered .cta-row,
+.hero.centered .stat-strip {
+  justify-content: center;
+}
+
+/* sleek newsletter field (input + attached button as one pill) */
+.email-capture {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.email-field {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 4px 4px 4px 8px;
+  box-shadow: 0 1px 2px rgba(12, 23, 39, 0.05);
+  transition: border-color 0.14s, box-shadow 0.14s;
+}
+
+.email-field:focus-within {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(12, 23, 39, 0.08);
+}
+
+.email-field input[type="email"] {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  padding: 9px 10px;
+  width: 230px;
+  max-width: 100%;
+  font-size: 14.5px;
+}
+
+.email-field input[type="email"]:focus {
+  box-shadow: none;
+}
+
+.email-field button {
+  border: none;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.14s;
+}
+
+.email-field button:hover {
+  background: #1b2c45;
+}
+
+.email-msg {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---- cleaner button system (fixes flat white buttons) ---- */
+.btn {
+  box-shadow: none;
+}
+
+.btn-gold {
+  box-shadow: 0 1px 2px rgba(169, 126, 34, 0.28);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 6px 16px rgba(232, 180, 82, 0.32);
+}
+
+/* ghost button on the navy surfaces (commission card) */
+.btn-ghost {
+  border-color: rgba(240, 232, 214, 0.35);
+  color: var(--cream);
+  background: rgba(240, 232, 214, 0.04);
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(232, 180, 82, 0.08);
+}
+
+/* white action buttons: crisp, deliberate, subtle lift on hover */
+.action {
+  box-shadow: 0 1px 2px rgba(12, 23, 39, 0.05);
+}
+
+.action:not(.primary):hover {
+  background: #fbfaf6;
+}
+
+.nav-cta.ghost {
+  color: var(--ink);
+}
+
+/* dialog cancel button reads as secondary, not empty */
+.dialog-actions .btn-ghost {
+  background: #fff;
+  border-color: var(--border-strong);
+  color: var(--text-2);
+}
+
+.dialog-actions .btn-ghost:hover {
+  background: var(--bg);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.stat-strip {
+  font-variant-numeric: tabular-nums;
+}
+
+.gap,
+.rank-n {
+  font-variant-numeric: tabular-nums;
 }

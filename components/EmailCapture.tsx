@@ -37,17 +37,19 @@ export default function EmailCapture({
 
   return (
     <form className={`email-capture ${variant}`} onSubmit={submit}>
-      <input
-        type="email"
-        required
-        maxLength={200}
-        placeholder="you@example.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button className="btn btn-gold" type="submit" disabled={busy}>
-        {busy ? "…" : "Get the brief"}
-      </button>
+      <div className="email-field">
+        <input
+          type="email"
+          required
+          maxLength={200}
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button type="submit" disabled={busy}>
+          {busy ? "…" : "Subscribe"}
+        </button>
+      </div>
       {msg && (
         <span className={`email-msg ${msg.ok ? "ok" : "err"}`}>{msg.text}</span>
       )}

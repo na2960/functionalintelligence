@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
     detail?: string;
     link?: string;
     category?: string;
+    customCategory?: string;
     amountCents?: number;
     name?: string;
     email?: string;
@@ -43,6 +44,10 @@ export async function POST(req: NextRequest) {
   const category = CATEGORIES.has(body.category ?? "")
     ? (body.category as string)
     : "other";
+  const customCategory =
+    category === "other"
+      ? (body.customCategory ?? "").trim().slice(0, 80) || null
+      : null;
   const amountCents = Math.round(Number(body.amountCents));
   const name = (body.name ?? "").trim().slice(0, 60);
   const email = normalizeEmail(body.email);
@@ -80,6 +85,7 @@ export async function POST(req: NextRequest) {
       detail: detail || null,
       link: link || null,
       category,
+      custom_category: customCategory,
       is_private: true,
     })
     .select("id, title")

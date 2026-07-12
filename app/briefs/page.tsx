@@ -35,9 +35,6 @@ export default async function Briefs() {
         <section>
           <div className="section-head">
             <h2>Briefs</h2>
-            <span className="count">
-              what the board shipped · 5 minutes each · free
-            </span>
           </div>
           <p className="section-sub">
             Every issue starts as an idea on The Board. The most-funded one

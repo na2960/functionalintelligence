@@ -31,7 +31,8 @@ export default function BackModal({
   );
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
-  const [category, setCategory] = useState("other");
+  const [category, setCategory] = useState("ai");
+  const [customCategory, setCustomCategory] = useState("");
   const [detail, setDetail] = useState("");
 
   const [amountCents, setAmountCents] = useState(preset ?? 500);
@@ -71,6 +72,10 @@ export default function BackModal({
                 title: title.trim(),
                 link: link.trim() || undefined,
                 category,
+                customCategory:
+                  category === "other"
+                    ? customCategory.trim() || undefined
+                    : undefined,
                 detail: detail.trim() || undefined,
               },
               amountCents: effectiveCents,
@@ -137,7 +142,7 @@ export default function BackModal({
           </label>
           <div className="field-row">
             <label className="f">
-              Source link (optional)
+              Link a paper (optional)
               <input
                 type="url"
                 maxLength={500}
@@ -160,6 +165,18 @@ export default function BackModal({
               </select>
             </label>
           </div>
+          {category === "other" && (
+            <label className="f">
+              What field is this? (we&rsquo;ll review it)
+              <input
+                type="text"
+                maxLength={80}
+                placeholder="e.g. materials science, linguistics…"
+                value={customCategory}
+                onChange={(e) => setCustomCategory(e.target.value)}
+              />
+            </label>
+          )}
         </>
       ) : (
         <label className="f">

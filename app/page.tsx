@@ -3,7 +3,6 @@ import BoardActions from "@/components/BoardActions";
 import CommissionCta from "@/components/CommissionCta";
 import Countdown from "@/components/Countdown";
 import EmailCapture from "@/components/EmailCapture";
-import HeroCtas from "@/components/HeroCtas";
 import MarketProvider from "@/components/MarketProvider";
 import Nav from "@/components/Nav";
 import { formatMoney } from "@/lib/market";
@@ -34,24 +33,25 @@ export default async function Home() {
       <MarketProvider initialIdeas={board}>
         <div className="hero-band">
           <div className="wrap">
-            <section className="hero">
-              <div className="kicker">A RESEARCH MARKETPLACE</div>
+            <section className="hero centered">
+              <div className="eyebrow">A Research Marketplace</div>
               <h1>
                 <span className="fund">You fund it.</span>{" "}
-                <span className="break">We break it down</span>
+                <span className="break">We break it down.</span>
               </h1>
-              <div className="hero-tail">to its underlying assumptions.</div>
-              <p className="sub">
-                Cutting-edge research, AI models, bio-medicine, quantum, supply
-                chain, chemistry, and more. The{" "}
-                <strong>highest-funded topic</strong> on The Board resolves as a{" "}
-                <strong>5-minute brief</strong> every{" "}
-                <strong>Tuesday &amp; Thursday at 7am</strong>.
+              <p className="lede">
+                Our team breaks the top-funded topic down to its underlying
+                assumptions — delivered as a 5-minute brief every Tuesday &amp;
+                Thursday at 7am.
               </p>
               <p className="free-note">
                 Free to read. Pay to steer or commission.
               </p>
-              <HeroCtas />
+              <div className="cta-row">
+                <a className="btn btn-gold" href="#board">
+                  See The Board →
+                </a>
+              </div>
               <div className="stat-strip">
                 <span>
                   <b>{formatMoney(totalOnBoard)}</b> riding on the board
@@ -75,9 +75,6 @@ export default async function Home() {
           <section id="board">
             <div className="section-head">
               <h2>The Board</h2>
-              <span className="count">
-                live leaderboard · #1 at market close ships as the next brief
-              </span>
             </div>
             <p className="section-sub">
               One winner per issue: the top-funded topic when the market closes.
@@ -91,11 +88,8 @@ export default async function Home() {
           <section className="brief-signup">
             <div className="signup-inner">
               <div>
-                <h3>Never miss the 7am brief.</h3>
-                <p>
-                  One email, Tuesday &amp; Thursday. Free — and it&rsquo;s the
-                  same list as the Substack.
-                </p>
+                <h3>Don&rsquo;t miss the free 7am brief.</h3>
+                <p>Every Tuesday and Thursday.</p>
               </div>
               <EmailCapture variant="band" />
             </div>
@@ -146,15 +140,14 @@ export default async function Home() {
               <div>
                 <h3>Commissions</h3>
                 <p>
-                  Want it written for you alone? Commission a single topic at{" "}
-                  <strong style={{ color: "var(--gold)" }}>$100+</strong>: a
-                  private brief, delivered to you before it goes public — if it
-                  ever does. Commissioner&rsquo;s choice.
+                  A commission is a private brief on a topic of your choice,
+                  from{" "}
+                  <strong style={{ color: "var(--gold)" }}>$100</strong>. It
+                  stays private unless you decide otherwise.
                 </p>
                 <p>
-                  Researchers: want your own paper featured? Commission a
-                  breakdown of your work — or put it on The Board and let the
-                  crowd bid it to the top.
+                  Researchers can commission a breakdown of their own work, or
+                  add it to The Board for the crowd to fund.
                 </p>
               </div>
               <CommissionCta />

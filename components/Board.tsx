@@ -14,7 +14,7 @@ const FILTERS: { key: string; label: string }[] = [
   { key: "supply-chain", label: "Supply Chain" },
   { key: "science", label: "Science" },
   { key: "math", label: "Math" },
-  { key: "other", label: "Wildcard" },
+  { key: "other", label: "Other" },
 ];
 
 function QuickRow({ idea }: { idea: BoardIdea }) {
@@ -23,9 +23,9 @@ function QuickRow({ idea }: { idea: BoardIdea }) {
     <div className="quick-row">
       <button
         className="quick ghost"
-        onClick={() => openBackExisting(idea, 500)}
+        onClick={() => openBackExisting(idea, 300)}
       >
-        $5
+        $3
       </button>
       <button
         className="quick ghost"
