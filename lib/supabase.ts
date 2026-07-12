@@ -5,11 +5,11 @@ import { createClient } from "@supabase/supabase-js";
 // is never bundled and must come from the environment.
 export const SUPABASE_URL =
   process.env.NEXT_PUBLIC_SUPABASE_URL ??
-  "https://hvczjjshhsjpytqlbvel.supabase.co";
+  "https://hxmbvkljjulssmoylwbq.supabase.co";
 
 export const SUPABASE_PUBLISHABLE_KEY =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
-  "sb_publishable_p10WLaGzSTUMZs3E_ZODSA_ACHhqrNn";
+  "sb_publishable_NkiX6MDTmdr8RCFBmayfkw_trPQJyng";
 
 export function publicClient() {
   return createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {

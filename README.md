@@ -11,8 +11,8 @@ keep their funding.
 ## Stack
 
 - **Next.js 15** (App Router) on **Vercel**
-- **Supabase** (Postgres + RLS) — tables prefixed `fi_` inside the
-  `sawhorse-intelligence` project
+- **Supabase** (Postgres + RLS) — dedicated `functional-intelligence`
+  project, tables prefixed `fi_`
 - **Stripe Checkout** for backing payments (env-gated, see below)
 - **Substack** for the briefs themselves
 
