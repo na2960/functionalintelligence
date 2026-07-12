@@ -15,9 +15,24 @@ const CATEGORY_LABELS: Record<string, string> = {
   other: "Wildcard",
 };
 
+const FILTERS: { key: string; label: string }[] = [
+  { key: "all", label: "All" },
+  { key: "ai", label: "AI" },
+  { key: "biomed", label: "Biomedicine" },
+  { key: "markets", label: "Markets" },
+  { key: "supply-chain", label: "Supply Chain" },
+  { key: "science", label: "Science" },
+  { key: "math", label: "Math" },
+  { key: "other", label: "Wildcard" },
+];
+
 export default function Board({ initial }: { initial: BoardIdea[] }) {
   const [ideas, setIdeas] = useState<BoardIdea[]>(initial);
-  const [backing, setBacking] = useState<BoardIdea | null>(null);
+  const [filter, setFilter] = useState("all");
+  const [backing, setBacking] = useState<{
+    idea: BoardIdea;
+    preset?: number;
+  } | null>(null);
 
   const refresh = useCallback(async () => {
     try {
@@ -39,64 +54,107 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
   const open = ideas.filter((i) => i.status === "open");
   const covered = ideas.filter((i) => i.status !== "open");
   const leaderCents = Math.max(1, ...open.map((i) => i.total_cents));
+  const leaderId =
+    open.length > 0 && open[0].total_cents > 0 ? open[0].id : null;
+  const visible =
+    filter === "all" ? open : open.filter((i) => i.category === filter);
 
   return (
     <>
-      <div className="board">
-        {open.map((idea, idx) => {
-          const isLeader = idx === 0 && idea.total_cents > 0;
+      <div className="filters">
+        {FILTERS.map((f) => (
+          <button
+            key={f.key}
+            className={`filter${filter === f.key ? " on" : ""}`}
+            onClick={() => setFilter(f.key)}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid">
+        {visible.map((idea) => {
+          const isLeader = idea.id === leaderId;
           const climbing =
             !isLeader &&
             idea.last_backed_at != null &&
             Date.now() - new Date(idea.last_backed_at).getTime() <
               24 * 3600_000;
           return (
-          <div key={idea.id} className={`row${isLeader ? " leader" : ""}`}>
-            <div className="rank">{String(idx + 1).padStart(2, "0")}</div>
-            <div>
-              <div className="idea-title">
-                {idea.link ? (
-                  <a href={idea.link} target="_blank" rel="noopener noreferrer">
-                    {idea.title}
-                  </a>
-                ) : (
-                  idea.title
-                )}
+            <div key={idea.id} className={`card${isLeader ? " leader" : ""}`}>
+              <div className="card-top">
+                <div className="card-title">
+                  {idea.link ? (
+                    <a
+                      href={idea.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {idea.title}
+                    </a>
+                  ) : (
+                    idea.title
+                  )}
+                </div>
+                <div className="pool">
+                  <div className="amt">{formatMoney(idea.total_cents)}</div>
+                  <div className="cap">in the pool</div>
+                </div>
               </div>
-              <div className="idea-meta">
-                {isLeader && <span className="tag-leader">★ THE LEADER</span>}
+
+              <div className="card-tags">
+                {isLeader && <span className="tag-leader">★ LEADER</span>}
                 {climbing && <span className="tag-climbing">▲ CLIMBING</span>}
                 <span className="chip">
                   {CATEGORY_LABELS[idea.category] ?? idea.category}
                 </span>
-                {idea.detail ? <span>{idea.detail}</span> : null}
+              </div>
+
+              {idea.detail ? (
+                <div className="card-detail">{idea.detail}</div>
+              ) : null}
+
+              <div className="fund-track">
+                <div
+                  className={`fund-fill${isLeader ? " shimmer" : ""}`}
+                  style={{
+                    width: `${Math.max(
+                      idea.total_cents > 0 ? 4 : 0,
+                      Math.round((idea.total_cents / leaderCents) * 100)
+                    )}%`,
+                  }}
+                />
+              </div>
+
+              <div className="card-foot">
+                <span className="backers-n">
+                  {idea.total_cents > 0
+                    ? `${idea.backers} backer${idea.backers === 1 ? "" : "s"}`
+                    : "Be the first"}
+                </span>
+                <div className="quick-row">
+                  <button
+                    className="quick"
+                    onClick={() => setBacking({ idea, preset: 500 })}
+                  >
+                    Back $5
+                  </button>
+                  <button
+                    className="quick"
+                    onClick={() => setBacking({ idea, preset: 2500 })}
+                  >
+                    $25
+                  </button>
+                  <button
+                    className="quick"
+                    onClick={() => setBacking({ idea })}
+                  >
+                    More
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="money-cell">
-              <span className="money">{formatMoney(idea.total_cents)}</span>
-              {idea.total_cents > 0 ? (
-                <span className="backers-n">
-                  {idea.backers} backer{idea.backers === 1 ? "" : "s"}
-                </span>
-              ) : (
-                <span className="zero-note">be the first</span>
-              )}
-              <button className="back-btn" onClick={() => setBacking(idea)}>
-                Back this →
-              </button>
-            </div>
-            <div className="fund-track">
-              <div
-                className={`fund-fill${isLeader ? " shimmer" : ""}`}
-                style={{
-                  width: `${Math.max(
-                    idea.total_cents > 0 ? 4 : 0,
-                    Math.round((idea.total_cents / leaderCents) * 100)
-                  )}%`,
-                }}
-              />
-            </div>
-          </div>
           );
         })}
       </div>
@@ -104,39 +162,37 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
       {covered.length > 0 && (
         <>
           <div className="section-head">
-            <h2>SHIPPED</h2>
-            <div className="rule" />
+            <h2>Shipped</h2>
+            <span className="count">
+              {covered.length} brief{covered.length === 1 ? "" : "s"}
+            </span>
           </div>
-          <div className="board">
+          <div className="shipped-list">
             {covered.map((idea) => (
-              <div key={idea.id} className="row">
-                <div className="rank">✓</div>
-                <div>
-                  <div className="idea-title">
-                    {idea.brief_url ? (
-                      <a href={idea.brief_url} target="_blank" rel="noopener noreferrer">
-                        {idea.title}
-                      </a>
-                    ) : (
-                      idea.title
-                    )}
-                  </div>
-                  <div className="idea-meta">
-                    <span className="chip">
-                      {CATEGORY_LABELS[idea.category] ?? idea.category}
-                    </span>
-                    <span>
-                      covered
-                      {idea.covered_at
-                        ? ` · ${new Date(idea.covered_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}`
-                        : ""}
-                    </span>
-                  </div>
-                </div>
-                <div className="money-cell">
-                  <span className="money">{formatMoney(idea.total_cents)}</span>
-                  <span className="backers-n">final</span>
-                </div>
+              <div key={idea.id} className="shipped-row">
+                <span className="check">✓</span>
+                <span className="t">
+                  {idea.brief_url ? (
+                    <a
+                      href={idea.brief_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {idea.title}
+                    </a>
+                  ) : (
+                    idea.title
+                  )}
+                </span>
+                <span className="amt">{formatMoney(idea.total_cents)}</span>
+                <span className="when">
+                  {idea.covered_at
+                    ? new Date(idea.covered_at).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })
+                    : "covered"}
+                </span>
               </div>
             ))}
           </div>
@@ -145,7 +201,8 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
 
       {backing && (
         <BackDialog
-          idea={backing}
+          idea={backing.idea}
+          preset={backing.preset}
           onClose={() => setBacking(null)}
           onBacked={() => {
             setBacking(null);

@@ -53,7 +53,6 @@ export default function SubmitForm() {
 
   return (
     <form className="panel" id="submit" onSubmit={submit}>
-      <h3>Put an idea on The Board</h3>
       <p className="hint">
         A paper link, a topic, a question. Anything from &ldquo;explain this
         Nature paper&rdquo; to &ldquo;why did the chip supply chain

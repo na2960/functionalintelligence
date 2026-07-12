@@ -8,14 +8,16 @@ const PRESETS = [300, 500, 1000, 2500, 10000];
 
 export default function BackDialog({
   idea,
+  preset,
   onClose,
   onBacked,
 }: {
   idea: BoardIdea;
+  preset?: number;
   onClose: () => void;
   onBacked: () => void;
 }) {
-  const [amountCents, setAmountCents] = useState(500);
+  const [amountCents, setAmountCents] = useState(preset ?? 500);
   const [custom, setCustom] = useState("");
   const [name, setName] = useState("");
   const [commission, setCommission] = useState(false);
