@@ -225,7 +225,7 @@ export default function BackModal({
           <input
             type="email"
             maxLength={200}
-            placeholder="you@example.com"
+            placeholder="name@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

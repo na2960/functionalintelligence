@@ -119,7 +119,7 @@ export default function CommissionModal({
           <input
             type="email"
             maxLength={200}
-            placeholder="you@example.com"
+            placeholder="name@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -167,7 +167,7 @@ export default function CommissionModal({
         <input
           type="text"
           maxLength={60}
-          placeholder="how you'd like to be credited, if ever"
+          placeholder="Optional"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />

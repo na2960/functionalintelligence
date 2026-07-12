@@ -42,7 +42,7 @@ export default function EmailCapture({
           type="email"
           required
           maxLength={200}
-          placeholder="you@example.com"
+          placeholder="name@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />

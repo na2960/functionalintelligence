@@ -31,27 +31,28 @@ export default async function Home() {
       <Nav active="board" />
 
       <MarketProvider initialIdeas={board}>
-        <div className="hero-band">
+        <div className="store-hero">
           <div className="wrap">
-            <section className="hero centered">
-              <div className="eyebrow">A Research Marketplace</div>
-              <h1>
-                <span className="fund">You fund it.</span>{" "}
-                <span className="break">We break it down.</span>
-              </h1>
-              <p className="lede">
-                Our team breaks the top-funded topic down to its underlying
-                assumptions — delivered as a 5-minute brief every Tuesday &amp;
-                Thursday at 7am.
-              </p>
-              <p className="free-note">
-                Free to read. Pay to steer or commission.
-              </p>
-              <div className="cta-row">
-                <a className="btn btn-gold" href="#board">
-                  See The Board →
-                </a>
+            <div className="store-hero-row">
+              <h1 className="store-title">Research Marketplace</h1>
+              <div className="store-aside">
+                <p className="store-lede">You fund it. We break it down.</p>
+                <p className="store-desc">
+                  Our team breaks the top-funded topic down to its underlying
+                  assumptions — a 5-minute brief every Tuesday &amp; Thursday at
+                  7am. Free to read. Pay to steer or commission.
+                </p>
+                <div className="store-links">
+                  <a className="store-link" href="#board">
+                    See The Board <span aria-hidden="true">→</span>
+                  </a>
+                  <a className="store-link" href="/briefs">
+                    Read the briefs <span aria-hidden="true">→</span>
+                  </a>
+                </div>
               </div>
+            </div>
+            <div className="hero-metrics">
               <div className="stat-strip">
                 <span>
                   <b>{formatMoney(totalOnBoard)}</b> riding on the board
@@ -67,7 +68,7 @@ export default async function Home() {
                 </span>
               </div>
               <Countdown />
-            </section>
+            </div>
           </div>
         </div>
 
@@ -77,9 +78,9 @@ export default async function Home() {
               <h2>The Board</h2>
             </div>
             <p className="section-sub">
-              One winner per issue: the top-funded topic when the market closes.
-              Everything else rolls over with its money intact — still in the
-              running until covered or beaten.
+              When the market closes, the most-backed topic becomes the next
+              brief. Every other topic keeps its funding and stays in the
+              running.
             </p>
             <BoardActions />
             <Board />
@@ -112,16 +113,16 @@ export default async function Home() {
                 <div className="n">02 · BACK</div>
                 <h4>Put money on it</h4>
                 <p>
-                  Backing is a bid: it says how much you want it covered. Stack
-                  onto topics you didn&rsquo;t submit — totals add up.
+                  Back any topic — yours or someone else&rsquo;s. Every dollar
+                  adds to its total.
                 </p>
               </div>
               <div className="step">
                 <div className="n">03 · CLOSE</div>
                 <h4>Market closes 8pm ET</h4>
                 <p>
-                  The night before each issue, the board locks. Highest total
-                  funding takes the slot.
+                  The night before each issue, the board locks. The most-backed
+                  topic is delivered as a brief.
                 </p>
               </div>
               <div className="step">
