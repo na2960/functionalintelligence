@@ -26,11 +26,14 @@ export default function Countdown() {
   const m = marketState(now);
   const remaining = m.closesAt.getTime() - now.getTime();
   const closeDay = m.issueDay === "Tuesday" ? "MON" : "WED";
+  const lastCall = remaining < 6 * 3600_000;
 
   return (
-    <div className="close-bar">
+    <div className={`close-bar${lastCall ? " last-call" : ""}`}>
       <span className="label">
-        MARKET CLOSES {closeDay} 8:00 PM ET · IN
+        {lastCall
+          ? "⚡ LAST CALL — MARKET CLOSES TONIGHT 8:00 PM ET · IN"
+          : `MARKET CLOSES ${closeDay} 8:00 PM ET · IN`}
       </span>
       <span className="clock" suppressHydrationWarning>
         {formatCountdown(remaining)}

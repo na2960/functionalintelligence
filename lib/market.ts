@@ -98,6 +98,14 @@ export function formatCountdown(ms: number): string {
   return days > 0 ? `${days}d ${hh}:${mm}:${ss}` : `${hh}:${mm}:${ss}`;
 }
 
+export function timeAgo(iso: string, now: Date = new Date()): string {
+  const s = Math.max(0, Math.floor((now.getTime() - new Date(iso).getTime()) / 1000));
+  if (s < 60) return "just now";
+  if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+  if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+  return `${Math.floor(s / 86400)}d ago`;
+}
+
 export function formatMoney(cents: number): string {
   const dollars = cents / 100;
   return dollars % 1 === 0

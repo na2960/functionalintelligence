@@ -38,6 +38,13 @@ export type BoardIdea = {
   last_backed_at: string | null;
 };
 
+export type RecentBacking = {
+  amount_cents: number;
+  backer_name: string | null;
+  created_at: string;
+  idea_title: string;
+};
+
 export async function fetchBoard(): Promise<BoardIdea[]> {
   const supabase = publicClient();
   const { data, error } = await supabase
@@ -47,4 +54,26 @@ export async function fetchBoard(): Promise<BoardIdea[]> {
     .order("created_at", { ascending: true });
   if (error) throw new Error(error.message);
   return (data ?? []) as BoardIdea[];
+}
+
+export async function fetchRecentBackings(): Promise<RecentBacking[]> {
+  const supabase = publicClient();
+  const { data, error } = await supabase
+    .from("fi_backings")
+    .select("amount_cents, backer_name, created_at, idea:fi_ideas(title)")
+    .in("status", ["pledged", "paid"])
+    .order("created_at", { ascending: false })
+    .limit(14);
+  if (error) throw new Error(error.message);
+  return (data ?? [])
+    .map((row) => {
+      const idea = Array.isArray(row.idea) ? row.idea[0] : row.idea;
+      return {
+        amount_cents: row.amount_cents,
+        backer_name: row.backer_name,
+        created_at: row.created_at,
+        idea_title: (idea as { title?: string } | null)?.title ?? "",
+      };
+    })
+    .filter((r) => r.idea_title); // drops backings of private commissions
 }

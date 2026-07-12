@@ -22,7 +22,10 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
   const refresh = useCallback(async () => {
     try {
       const res = await fetch("/api/board", { cache: "no-store" });
-      if (res.ok) setIdeas(await res.json());
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.ideas)) setIdeas(data.ideas);
+      }
     } catch {
       // keep showing the last known board
     }
@@ -40,8 +43,15 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
   return (
     <>
       <div className="board">
-        {open.map((idea, idx) => (
-          <div key={idea.id} className={`row${idx === 0 && idea.total_cents > 0 ? " leader" : ""}`}>
+        {open.map((idea, idx) => {
+          const isLeader = idx === 0 && idea.total_cents > 0;
+          const climbing =
+            !isLeader &&
+            idea.last_backed_at != null &&
+            Date.now() - new Date(idea.last_backed_at).getTime() <
+              24 * 3600_000;
+          return (
+          <div key={idea.id} className={`row${isLeader ? " leader" : ""}`}>
             <div className="rank">{String(idx + 1).padStart(2, "0")}</div>
             <div>
               <div className="idea-title">
@@ -54,6 +64,8 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
                 )}
               </div>
               <div className="idea-meta">
+                {isLeader && <span className="tag-leader">★ THE LEADER</span>}
+                {climbing && <span className="tag-climbing">▲ CLIMBING</span>}
                 <span className="chip">
                   {CATEGORY_LABELS[idea.category] ?? idea.category}
                 </span>
@@ -75,7 +87,7 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
             </div>
             <div className="fund-track">
               <div
-                className="fund-fill"
+                className={`fund-fill${isLeader ? " shimmer" : ""}`}
                 style={{
                   width: `${Math.max(
                     idea.total_cents > 0 ? 4 : 0,
@@ -85,7 +97,8 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
               />
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {covered.length > 0 && (

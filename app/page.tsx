@@ -1,7 +1,14 @@
 import Board from "@/components/Board";
 import Countdown from "@/components/Countdown";
 import SubmitForm from "@/components/SubmitForm";
-import { fetchBoard, type BoardIdea } from "@/lib/supabase";
+import Ticker from "@/components/Ticker";
+import { formatMoney } from "@/lib/market";
+import {
+  fetchBoard,
+  fetchRecentBackings,
+  type BoardIdea,
+  type RecentBacking,
+} from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -11,11 +18,16 @@ const SUBSTACK_URL =
 
 export default async function Home() {
   let board: BoardIdea[] = [];
+  let recent: RecentBacking[] = [];
   try {
-    board = await fetchBoard();
+    [board, recent] = await Promise.all([fetchBoard(), fetchRecentBackings()]);
   } catch {
     // render with an empty board rather than a 500; the client refreshes
   }
+
+  const openIdeas = board.filter((i) => i.status === "open");
+  const totalOnBoard = openIdeas.reduce((s, i) => s + i.total_cents, 0);
+  const totalBackers = openIdeas.reduce((s, i) => s + i.backers, 0);
 
   return (
     <div className="wrap">
@@ -40,6 +52,8 @@ export default async function Home() {
           READ ON SUBSTACK ↗
         </a>
       </header>
+
+      <Ticker initial={recent} />
 
       <section className="hero">
         <h1>
@@ -66,6 +80,19 @@ export default async function Home() {
         <p className="free-note">
           Free to read, always. You only pay if you want to steer.
         </p>
+        <div className="stat-strip">
+          <span>
+            <b>{formatMoney(totalOnBoard)}</b> riding on the board
+          </span>
+          <span className="stat-dot">·</span>
+          <span>
+            <b>{totalBackers}</b> backer{totalBackers === 1 ? "" : "s"} steering
+          </span>
+          <span className="stat-dot">·</span>
+          <span>
+            <b>{openIdeas.length}</b> ideas in the race
+          </span>
+        </div>
         <Countdown />
       </section>
 
@@ -132,6 +159,11 @@ export default async function Home() {
               <strong style={{ color: "var(--gold)" }}>$100+</strong> and mark
               it a Commission: a private brief, delivered to you before it goes
               public — if it ever does. Commissioner&rsquo;s choice.
+            </p>
+            <p>
+              Researchers: want your own paper featured? Commission a breakdown
+              of your work — or put it on The Board and let the crowd bid it to
+              the top.
             </p>
           </div>
           <a className="btn btn-ghost" href="#board">
