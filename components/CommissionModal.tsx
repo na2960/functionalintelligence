@@ -24,6 +24,7 @@ export default function CommissionModal({
   const [custom, setCustom] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [makePublic, setMakePublic] = useState(false);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -61,6 +62,7 @@ export default function CommissionModal({
           amountCents: effectiveCents,
           name: name.trim() || undefined,
           email: email.trim(),
+          makePublic,
         }),
       });
       const data = await res.json();
@@ -87,7 +89,7 @@ export default function CommissionModal({
   return (
     <Modal
       title="Commission a private brief"
-      subtitle="Written for you, delivered to you first. It goes public only if you choose."
+      subtitle="Written for you. It can be released publicly if you choose."
       onClose={onClose}
     >
       <label className="f">
@@ -173,6 +175,15 @@ export default function CommissionModal({
         />
       </label>
 
+      <label className="commission-opt">
+        <input
+          type="checkbox"
+          checked={makePublic}
+          onChange={(e) => setMakePublic(e.target.checked)}
+        />
+        <span>Make public once it&rsquo;s ready</span>
+      </label>
+
       <div className="dialog-actions">
         <button className="btn btn-ghost" onClick={onClose} disabled={busy}>
           Cancel
@@ -188,10 +199,7 @@ export default function CommissionModal({
         </button>
       </div>
 
-      <p className="pledge-note">
-        A commission is a private brief you fund directly — not a public bid on
-        The Board. No odds, no payouts.
-      </p>
+      <p className="pledge-note">A commission is a private brief.</p>
       {msg && <p className={`form-msg ${msg.ok ? "ok" : "err"}`}>{msg.text}</p>}
     </Modal>
   );

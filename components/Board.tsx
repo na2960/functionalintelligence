@@ -56,8 +56,8 @@ export default function Board() {
   const leader = hasLeader ? open[0] : null;
   const challengers = hasLeader ? open.slice(1) : open;
   const shipsLabel = issueDay
-    ? `SHIPS ${issueDay.toUpperCase()} 7:00 AM ET`
-    : "SHIPS NEXT ISSUE · 7:00 AM ET";
+    ? `ships ${issueDay}, 7:00 AM ET`
+    : "ships next issue, 7:00 AM ET";
 
   return (
     <>
@@ -65,7 +65,7 @@ export default function Board() {
         <div className="throne">
           <div className="throne-banner">
             <span className="throne-rank">#1</span>
-            <span>★ IN THE LEAD — THIS ONE {shipsLabel}</span>
+            <span>In the lead — {shipsLabel}</span>
           </div>
           <div className="throne-body">
             <div className="throne-main">
@@ -119,7 +119,7 @@ export default function Board() {
         <>
           <div className="chase-head">
             <span className="chase-label">
-              {leader ? "THE CHASE — beat the leader before close" : "THE FIELD"}
+              {leader ? "Beat the leader before close" : "Open topics"}
             </span>
             <div className="filters">
               {FILTERS.map((f) => (
@@ -162,7 +162,7 @@ export default function Board() {
                     </div>
                     <div className="card-tags">
                       {climbing && (
-                        <span className="tag-climbing">▲ CLIMBING</span>
+                        <span className="tag-climbing">▲ Climbing</span>
                       )}
                       <span className="chip">
                         {CATEGORY_LABELS[idea.category] ?? idea.category}

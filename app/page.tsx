@@ -33,24 +33,25 @@ export default async function Home() {
       <MarketProvider initialIdeas={board}>
         <div className="store-hero">
           <div className="wrap">
-            <div className="store-hero-row">
-              <h1 className="store-title">Research Marketplace</h1>
-              <div className="store-aside">
-                <p className="store-lede">You fund it. We break it down.</p>
-                <p className="store-desc">
-                  Our team breaks the top-funded topic down to its underlying
-                  assumptions — a 5-minute brief every Tuesday &amp; Thursday at
-                  7am. Free to read. Pay to steer or commission.
-                </p>
-                <div className="store-links">
-                  <a className="store-link" href="#board">
-                    See The Board <span aria-hidden="true">→</span>
-                  </a>
-                  <a className="store-link" href="/briefs">
-                    Read the briefs <span aria-hidden="true">→</span>
-                  </a>
-                </div>
-              </div>
+            <div className="hero-kicker">
+              <span className="hero-kicker-mark">
+                <em>f</em>i
+              </span>
+              Research Marketplace
+            </div>
+            <h1 className="hero-heading">You fund it. We break it down.</h1>
+            <p className="hero-desc">
+              Our team breaks the top-funded topic down to its underlying
+              assumptions — a 5-minute brief every Tuesday &amp; Thursday at
+              7am. Free to read. Pay to steer or commission.
+            </p>
+            <div className="hero-cta-row">
+              <a className="btn btn-gold" href="#board">
+                The Board →
+              </a>
+              <a className="btn btn-secondary" href="/briefs">
+                Read the Briefs →
+              </a>
             </div>
             <div className="hero-metrics">
               <div className="stat-strip">
@@ -102,7 +103,7 @@ export default async function Home() {
             </div>
             <div className="steps">
               <div className="step">
-                <div className="n">01 · SUBMIT</div>
+                <div className="n">01 · Submit</div>
                 <h4>Pitch the topic</h4>
                 <p>
                   A paper link, a topic, a question. If it makes you curious, it
@@ -110,7 +111,7 @@ export default async function Home() {
                 </p>
               </div>
               <div className="step">
-                <div className="n">02 · BACK</div>
+                <div className="n">02 · Back</div>
                 <h4>Put money on it</h4>
                 <p>
                   Back any topic — yours or someone else&rsquo;s. Every dollar
@@ -118,7 +119,7 @@ export default async function Home() {
                 </p>
               </div>
               <div className="step">
-                <div className="n">03 · CLOSE</div>
+                <div className="n">03 · Close</div>
                 <h4>Market closes 8pm ET</h4>
                 <p>
                   The night before each issue, the board locks. The most-backed
@@ -126,7 +127,7 @@ export default async function Home() {
                 </p>
               </div>
               <div className="step">
-                <div className="n">04 · SHIP</div>
+                <div className="n">04 · Ship</div>
                 <h4>Brief lands at 7am</h4>
                 <p>
                   Tuesday &amp; Thursday. A clear, intuitive breakdown — read it

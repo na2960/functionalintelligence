@@ -1,6 +1,7 @@
 :root {
-  /* clean, Apple-neutral surfaces with fi navy/gold as accents */
-  --bg: #f5f5f7;
+  /* white surface, hairline dividers — fi navy/gold as accents */
+  --bg: #ffffff;
+  --bg-sunken: #fafafa;
   --card: #ffffff;
   --border: #e6e6e9;
   --border-strong: #d2d2d7;
@@ -17,11 +18,13 @@
   --green-hover: #188a54;
   --green-soft: #e6f4ec;
   --green-border: #bfe3d0;
-  --blue: #0071e3; /* Apple-style links / focus */
+  --blue: #0071e3; /* link / focus ring */
   --red: #d64b3d;
   --serif: Georgia, "Times New Roman", Times, serif;
-  --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif;
+  /* system-native stack — the same fallback fonts stripe.com renders in for
+     most visitors (their licensed webfont is proprietary and not bundleable) */
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
     "Liberation Mono", monospace;
 }
@@ -341,8 +344,9 @@ a {
 
 .close-bar .label {
   font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
   color: #97a5b8;
 }
 
@@ -356,8 +360,9 @@ a {
 
 .close-bar .ships {
   font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
   color: var(--cream);
   margin-left: auto;
 }
@@ -452,9 +457,9 @@ main {
   background: linear-gradient(90deg, var(--gold), #f2c266);
   color: #211703;
   font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
   padding: 9px 16px;
 }
 
@@ -532,9 +537,9 @@ main {
 
 .chase-label {
   font-family: var(--sans);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
   color: var(--muted);
 }
 
@@ -1654,258 +1659,87 @@ textarea {
   margin-top: 12px;
 }
 
-/* ================= v4 refinements ================= */
+/* ================= v6: hero rebuild + Stripe-style calm ================= */
 
-/* centered, calmer hero */
-.hero.centered {
-  text-align: center;
-  max-width: 840px;
-  margin: 0 auto;
-  padding: 66px 0 46px;
-}
-
-.hero .eyebrow {
-  font-family: var(--serif);
-  font-size: clamp(22px, 3.2vw, 32px);
-  font-weight: 500;
-  color: var(--gold);
-  margin-bottom: 8px;
-}
-
-.hero.centered h1 {
-  font-size: clamp(40px, 6.6vw, 66px);
-  letter-spacing: -0.015em;
-}
-
-.hero .lede {
-  margin: 18px auto 0;
-  max-width: 620px;
-  color: #aab6c6;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-.hero.centered .cta-row,
-.hero.centered .stat-strip {
-  justify-content: center;
-}
-
-/* sleek newsletter field (input + attached button as one pill) */
-.email-capture {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-.email-field {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  padding: 4px 4px 4px 8px;
-  box-shadow: 0 1px 2px rgba(12, 23, 39, 0.05);
-  transition: border-color 0.14s, box-shadow 0.14s;
-}
-
-.email-field:focus-within {
-  border-color: var(--ink);
-  box-shadow: 0 0 0 3px rgba(12, 23, 39, 0.08);
-}
-
-.email-field input[type="email"] {
-  border: none;
-  background: transparent;
-  border-radius: 0;
-  padding: 9px 10px;
-  width: 230px;
-  max-width: 100%;
-  font-size: 14.5px;
-}
-
-.email-field input[type="email"]:focus {
-  box-shadow: none;
-}
-
-.email-field button {
-  border: none;
-  background: var(--ink);
-  color: #fff;
-  font-weight: 700;
-  font-size: 13.5px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.14s;
-}
-
-.email-field button:hover {
-  background: #1b2c45;
-}
-
-.email-msg {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-/* ---- cleaner button system (fixes flat white buttons) ---- */
-.btn {
-  box-shadow: none;
-}
-
-.btn-gold {
-  box-shadow: 0 1px 2px rgba(169, 126, 34, 0.28);
-}
-
-.btn-gold:hover {
-  box-shadow: 0 6px 16px rgba(232, 180, 82, 0.32);
-}
-
-/* ghost button on the navy surfaces (commission card) */
-.btn-ghost {
-  border-color: rgba(240, 232, 214, 0.35);
-  color: var(--cream);
-  background: rgba(240, 232, 214, 0.04);
-}
-
-.btn-ghost:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: rgba(232, 180, 82, 0.08);
-}
-
-/* white action buttons: crisp, deliberate, subtle lift on hover */
-.action {
-  box-shadow: 0 1px 2px rgba(12, 23, 39, 0.05);
-}
-
-.action:not(.primary):hover {
-  background: #fbfaf6;
-}
-
-.nav-cta.ghost {
-  color: var(--ink);
-}
-
-/* dialog cancel button reads as secondary, not empty */
-.dialog-actions .btn-ghost {
-  background: #fff;
-  border-color: var(--border-strong);
-  color: var(--text-2);
-}
-
-.dialog-actions .btn-ghost:hover {
-  background: var(--bg);
-  border-color: var(--ink);
-  color: var(--ink);
-}
-
-.stat-strip {
-  font-variant-numeric: tabular-nums;
-}
-
-.gap,
-.rank-n {
-  font-variant-numeric: tabular-nums;
-}
-
-/* ================= v5: Apple/Notion clean pass ================= */
-
-/* ---- Apple Store–style hero (light) ---- */
+/* ---- new hero: small kicker + moderate heading (not a giant display word) ---- */
 .store-hero {
   background: var(--bg);
   border-bottom: 1px solid var(--border);
-  padding: 40px 0 30px;
+  padding: 40px 0 32px;
 }
 
-.store-hero-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 40px;
-  flex-wrap: wrap;
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 14px;
 }
 
-.store-title {
+.hero-kicker-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hero-kicker-mark em {
+  font-style: italic;
+  margin-right: 1px;
+}
+
+.hero-heading {
   font-family: var(--sans);
   font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.02;
-  font-size: clamp(52px, 8.5vw, 104px);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  font-size: clamp(30px, 4.2vw, 44px);
   color: var(--text);
-  max-width: 62%;
+  max-width: 620px;
 }
 
-.store-aside {
-  flex: 1;
-  min-width: 300px;
-  max-width: 440px;
-  padding-top: 10px;
-}
-
-.store-lede {
-  font-size: clamp(22px, 2.4vw, 30px);
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-  color: var(--text);
-}
-
-.store-desc {
-  margin-top: 12px;
+.hero-desc {
+  margin-top: 14px;
+  max-width: 560px;
   font-size: 16px;
   line-height: 1.55;
   color: var(--text-2);
 }
 
-.store-links {
+.hero-cta-row {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
 }
 
-.store-link {
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 17px;
-  font-weight: 400;
-  width: fit-content;
+.btn-secondary {
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
 }
 
-.store-link span {
-  display: inline-block;
-  transition: transform 0.15s;
+.btn-secondary:hover {
+  background: var(--bg-sunken);
+  border-color: #c0c0c6;
 }
 
-.store-link:hover {
-  text-decoration: underline;
-}
-
-.store-link:hover span {
-  transform: translateX(2px);
-}
-
-@media (max-width: 760px) {
-  .store-title {
-    max-width: 100%;
-    font-size: clamp(46px, 15vw, 72px);
-  }
-  .store-aside {
-    max-width: 100%;
-    padding-top: 0;
-  }
-}
-
-/* hero metrics row (stats + countdown) on light */
 .hero-metrics {
-  margin-top: 30px;
+  margin-top: 28px;
 }
 
 .stat-strip {
   color: var(--muted);
+  font-size: 13px;
 }
 
 .stat-strip b {
@@ -1916,12 +1750,12 @@ textarea {
   color: #c7c7cc;
 }
 
-/* countdown bar on light */
+/* countdown bar on white, hairline border instead of dark panel */
 .close-bar {
   margin-top: 14px;
   border: 1px solid var(--border);
-  background: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  background: var(--bg-sunken);
+  box-shadow: none;
 }
 
 .close-bar .label {
@@ -1936,24 +1770,114 @@ textarea {
   color: var(--text-2);
 }
 
-/* ---- Notion-style buttons ---- */
+/* segmented countdown: 1d : 04h : 12m : 08s, tabular + calm */
+.clock {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.clock-seg {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+}
+
+.clock-n {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--text);
+}
+
+.clock-u {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-right: 3px;
+}
+
+.clock-sep {
+  color: var(--border-strong);
+  margin-right: 3px;
+  font-weight: 400;
+}
+
+/* ---- sleek newsletter field (input + attached pill button) ---- */
+.email-capture {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.email-field {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  padding: 5px 5px 5px 8px;
+}
+
+.email-field:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+}
+
+.email-field input[type="email"] {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 9px 8px;
+  width: 220px;
+  max-width: 100%;
+  font-size: 14.5px;
+}
+
+.email-field input[type="email"]:focus {
+  box-shadow: none;
+}
+
+.email-field button {
+  border: none;
+  background: var(--green);
+  color: #fff;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.14s;
+}
+
+.email-field button:hover {
+  background: var(--green-hover);
+}
+
+.email-msg {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---- Notion-style buttons everywhere ---- */
 .btn,
 .action,
 .quick,
-.email-field button,
 .nav-cta {
   font-family: var(--sans);
   font-weight: 600;
   border-radius: 8px;
+  box-shadow: none;
   transition: background 0.14s, color 0.14s, border-color 0.14s,
     box-shadow 0.14s;
 }
 
-/* primary = green, solid, subtle depth (Notion feel) */
 .btn-gold,
 .action.primary,
 .quick.solid,
-.email-field button,
 .dialog-actions .btn-gold,
 .panel .btn-gold,
 .nav-cta.solid {
@@ -1966,7 +1890,6 @@ textarea {
 .btn-gold:hover,
 .action.primary:hover,
 .quick.solid:hover,
-.email-field button:hover,
 .dialog-actions .btn-gold:hover,
 .panel .btn-gold:hover,
 .nav-cta.solid:hover {
@@ -1978,7 +1901,6 @@ textarea {
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* secondary = white, hairline border, dark text */
 .action,
 .nav-cta.ghost,
 .dialog-actions .btn-ghost,
@@ -1993,7 +1915,7 @@ textarea {
 .nav-cta.ghost:hover,
 .dialog-actions .btn-ghost:hover,
 .quick.ghost:hover {
-  background: #fbfbfd;
+  background: var(--bg-sunken);
   border-color: #c0c0c6;
   color: var(--text);
 }
@@ -2002,7 +1924,10 @@ textarea {
   color: var(--green);
 }
 
-/* filters: pill toggles */
+.nav-cta.ghost {
+  color: var(--ink);
+}
+
 .filter {
   border-radius: 999px;
   border: 1px solid var(--border-strong);
@@ -2015,20 +1940,22 @@ textarea {
   color: #fff;
 }
 
-/* ghost button that sits on the navy commission card */
-.commission .btn-ghost {
+/* ghost button on the navy commission card */
+.commission .btn-ghost,
+.btn-ghost {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(240, 232, 214, 0.35);
   color: var(--cream);
 }
 
-.commission .btn-ghost:hover {
+.commission .btn-ghost:hover,
+.btn-ghost:hover {
   background: rgba(232, 180, 82, 0.12);
   border-color: var(--gold);
   color: var(--gold);
 }
 
-/* ---- clean inputs (neutral, Apple focus ring) ---- */
+/* ---- clean inputs, Stripe-style focus ring ---- */
 input[type="text"],
 input[type="url"],
 input[type="email"],
@@ -2060,43 +1987,19 @@ label.f {
   font-size: 12.5px;
 }
 
-/* ---- sleek newsletter field ---- */
-.email-field {
-  border-radius: 12px;
-  border: 1px solid var(--border-strong);
-  padding: 5px 5px 5px 8px;
-  background: #fff;
+.stat-strip,
+.gap,
+.rank-n {
+  font-variant-numeric: tabular-nums;
 }
 
-.email-field:focus-within {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
-}
-
-.email-field input[type="email"] {
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 9px 8px;
-}
-
-.email-field input[type="email"]:focus {
-  box-shadow: none;
-}
-
-.email-field button {
-  border-radius: 8px;
-  padding: 9px 18px;
-}
-
-/* headings: clean sans everywhere (drop serif display) */
 .brief-page h1 {
   font-family: var(--sans);
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
-/* nav CTA label tweak */
-.nav-cta.solid {
-  font-weight: 600;
+/* the commission "make public" checkbox row */
+.commission-opt {
+  align-items: center;
 }

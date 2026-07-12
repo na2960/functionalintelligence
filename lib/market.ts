@@ -85,17 +85,21 @@ export function marketState(now: Date = new Date()): MarketState {
   throw new Error("could not compute market state");
 }
 
-export function formatCountdown(ms: number): string {
-  if (ms <= 0) return "00:00:00";
-  const total = Math.floor(ms / 1000);
-  const days = Math.floor(total / 86400);
-  const h = Math.floor((total % 86400) / 3600);
-  const m = Math.floor((total % 3600) / 60);
-  const s = total % 60;
-  const hh = String(h).padStart(2, "0");
-  const mm = String(m).padStart(2, "0");
-  const ss = String(s).padStart(2, "0");
-  return days > 0 ? `${days}d ${hh}:${mm}:${ss}` : `${hh}:${mm}:${ss}`;
+export type CountdownParts = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
+export function countdownParts(ms: number): CountdownParts {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  return {
+    days: Math.floor(total / 86400),
+    hours: Math.floor((total % 86400) / 3600),
+    minutes: Math.floor((total % 3600) / 60),
+    seconds: total % 60,
+  };
 }
 
 export function timeAgo(iso: string, now: Date = new Date()): string {

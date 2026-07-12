@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
     amountCents?: number;
     name?: string;
     email?: string;
+    makePublic?: boolean;
   };
   try {
     body = await req.json();
@@ -87,6 +88,7 @@ export async function POST(req: NextRequest) {
       category,
       custom_category: customCategory,
       is_private: true,
+      commission_release_consent: Boolean(body.makePublic),
     })
     .select("id, title")
     .single();

@@ -46,6 +46,10 @@ is recorded, no card is charged). To turn on real payments:
    `paid` rows).
 4. Redeploy. Test with a Stripe test key + card `4242 4242 4242 4242`.
 
+**Status:** `STRIPE_SECRET_KEY` is set in Vercel. `STRIPE_WEBHOOK_SECRET` is
+pending — add it once the custom domain is attached, since the webhook URL
+needs the final domain.
+
 Row-level security guarantees the public key can only ever write
 `status='pledged'` rows — `paid` rows come exclusively from the verified
 webhook. Backer email (for brief delivery) is captured on the session and
