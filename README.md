@@ -26,15 +26,37 @@ keep their funding.
 3. Row-level security guarantees the public key can only ever write
    `status='pledged'` rows — `paid` rows come exclusively from the webhook.
 
-## Going live with payments
+## Connect Stripe (go live with payments)
 
-Add these in Vercel → Project → Settings → Environment Variables, then redeploy:
+Both flows — backing a topic (`/api/back`, min $3) and commissioning a private
+brief (`/api/commission`, min $100) — already build a Stripe Checkout session
+when the keys below are present. Until then they run in **pledge mode** (funding
+is recorded, no card is charged). To turn on real payments:
 
-| Variable | Where to get it |
-| --- | --- |
-| `STRIPE_SECRET_KEY` | Stripe → Developers → API keys |
-| `STRIPE_WEBHOOK_SECRET` | Stripe → Webhooks → add endpoint `https://<domain>/api/stripe/webhook`, event `checkout.session.completed` |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Project Settings → API keys |
+1. **Secret key** — Stripe dashboard → Developers → API keys → copy the Secret
+   key (`sk_live_…` or `sk_test_…`). Add as `STRIPE_SECRET_KEY` in Vercel.
+2. **Webhook** — Stripe → Developers → Webhooks → Add endpoint:
+   - URL: `https://<your-domain>/api/stripe/webhook`
+   - Event: `checkout.session.completed`
+   - Copy the endpoint's **Signing secret** (`whsec_…`) → add as
+     `STRIPE_WEBHOOK_SECRET` in Vercel.
+3. **Service role key** — Supabase → `functional-intelligence` project →
+   Settings → API → copy the `service_role` key → add as
+   `SUPABASE_SERVICE_ROLE_KEY` in Vercel (server-only; lets the webhook write
+   `paid` rows).
+4. Redeploy. Test with a Stripe test key + card `4242 4242 4242 4242`.
+
+Row-level security guarantees the public key can only ever write
+`status='pledged'` rows — `paid` rows come exclusively from the verified
+webhook. Backer email (for brief delivery) is captured on the session and
+stored on the backing.
+
+### Email / Substack
+
+Emails from the signup band and the fund/commission modals are stored in
+`fi_subscribers` (Supabase) and mirrored to your Substack (best-effort, via the
+same endpoint the embed form uses — set `NEXT_PUBLIC_SUBSTACK_URL`). Supabase is
+the source of truth; export it any time if the Substack sync is rate-limited.
 
 ## Running an issue (manual, for now)
 

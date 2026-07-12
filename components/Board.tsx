@@ -1,19 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { BoardIdea } from "@/lib/supabase";
 import { formatMoney, marketState } from "@/lib/market";
-import BackDialog from "./BackDialog";
-
-const CATEGORY_LABELS: Record<string, string> = {
-  ai: "AI",
-  biomed: "Biomedicine",
-  markets: "Markets",
-  "supply-chain": "Supply Chain",
-  science: "Science",
-  math: "Math",
-  other: "Wildcard",
-};
+import { CATEGORY_LABELS } from "@/lib/categories";
+import { useMarket } from "./MarketProvider";
 
 const FILTERS: { key: string; label: string }[] = [
   { key: "all", label: "All" },
@@ -26,57 +17,37 @@ const FILTERS: { key: string; label: string }[] = [
   { key: "other", label: "Wildcard" },
 ];
 
-function QuickRow({
-  idea,
-  onPick,
-}: {
-  idea: BoardIdea;
-  onPick: (idea: BoardIdea, preset?: number) => void;
-}) {
+function QuickRow({ idea }: { idea: BoardIdea }) {
+  const { openBackExisting } = useMarket();
   return (
     <div className="quick-row">
-      <button className="quick" onClick={() => onPick(idea, 500)}>
-        Back $5
+      <button
+        className="quick ghost"
+        onClick={() => openBackExisting(idea, 500)}
+      >
+        $5
       </button>
-      <button className="quick" onClick={() => onPick(idea, 2500)}>
+      <button
+        className="quick ghost"
+        onClick={() => openBackExisting(idea, 2500)}
+      >
         $25
       </button>
-      <button className="quick" onClick={() => onPick(idea)}>
-        More
+      <button className="quick solid" onClick={() => openBackExisting(idea)}>
+        Back ▸
       </button>
     </div>
   );
 }
 
-export default function Board({ initial }: { initial: BoardIdea[] }) {
-  const [ideas, setIdeas] = useState<BoardIdea[]>(initial);
+export default function Board() {
+  const { ideas } = useMarket();
   const [filter, setFilter] = useState("all");
   const [issueDay, setIssueDay] = useState<string | null>(null);
-  const [backing, setBacking] = useState<{
-    idea: BoardIdea;
-    preset?: number;
-  } | null>(null);
 
   useEffect(() => {
     setIssueDay(marketState().issueDay);
   }, []);
-
-  const refresh = useCallback(async () => {
-    try {
-      const res = await fetch("/api/board", { cache: "no-store" });
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data.ideas)) setIdeas(data.ideas);
-      }
-    } catch {
-      // keep showing the last known board
-    }
-  }, []);
-
-  useEffect(() => {
-    const t = setInterval(refresh, 30_000);
-    return () => clearInterval(t);
-  }, [refresh]);
 
   const open = ideas.filter((i) => i.status === "open");
   const covered = ideas.filter((i) => i.status !== "open");
@@ -84,8 +55,6 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
   const hasLeader = open.length > 0 && open[0].total_cents > 0;
   const leader = hasLeader ? open[0] : null;
   const challengers = hasLeader ? open.slice(1) : open;
-  const pick = (idea: BoardIdea, preset?: number) =>
-    setBacking({ idea, preset });
   const shipsLabel = issueDay
     ? `SHIPS ${issueDay.toUpperCase()} 7:00 AM ET`
     : "SHIPS NEXT ISSUE · 7:00 AM ET";
@@ -130,7 +99,7 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
                 <div className="amt big">{formatMoney(leader.total_cents)}</div>
                 <div className="cap">in the pool</div>
               </div>
-              <QuickRow idea={leader} onPick={pick} />
+              <QuickRow idea={leader} />
             </div>
           </div>
           <div className="fund-track">
@@ -173,14 +142,10 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
                 idea.last_backed_at != null &&
                 Date.now() - new Date(idea.last_backed_at).getTime() <
                   24 * 3600_000;
-              const gap = leader
-                ? leader.total_cents - idea.total_cents
-                : null;
+              const gap = leader ? leader.total_cents - idea.total_cents : null;
               return (
                 <div key={idea.id} className="rank-row">
-                  <div className="rank-n">
-                    {String(rank).padStart(2, "0")}
-                  </div>
+                  <div className="rank-n">{String(rank).padStart(2, "0")}</div>
                   <div className="rank-main">
                     <div className="rank-title">
                       {idea.link ? (
@@ -219,9 +184,7 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
                         style={{
                           width: `${Math.max(
                             idea.total_cents > 0 ? 4 : 0,
-                            Math.round(
-                              (idea.total_cents / leaderCents) * 100
-                            )
+                            Math.round((idea.total_cents / leaderCents) * 100)
                           )}%`,
                         }}
                       />
@@ -229,12 +192,10 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
                   </div>
                   <div className="rank-side">
                     <div className="pool">
-                      <div className="amt">
-                        {formatMoney(idea.total_cents)}
-                      </div>
+                      <div className="amt">{formatMoney(idea.total_cents)}</div>
                       <div className="cap">in the pool</div>
                     </div>
-                    <QuickRow idea={idea} onPick={pick} />
+                    <QuickRow idea={idea} />
                   </div>
                 </div>
               );
@@ -271,18 +232,6 @@ export default function Board({ initial }: { initial: BoardIdea[] }) {
             ))}
           </div>
         </>
-      )}
-
-      {backing && (
-        <BackDialog
-          idea={backing.idea}
-          preset={backing.preset}
-          onClose={() => setBacking(null)}
-          onBacked={() => {
-            setBacking(null);
-            refresh();
-          }}
-        />
       )}
     </>
   );

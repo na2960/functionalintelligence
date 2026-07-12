@@ -37,12 +37,17 @@ export async function POST(req: NextRequest) {
 
     if (ideaId && amount && session.payment_status === "paid") {
       // Upsert on session id makes webhook retries idempotent.
+      const email =
+        session.metadata?.backer_email ||
+        session.customer_details?.email ||
+        null;
       const { error } = await supabase.from("fi_backings").upsert(
         {
           idea_id: ideaId,
           amount_cents: amount,
           status: "paid",
           backer_name: session.metadata?.backer_name || null,
+          backer_email: email,
           is_commission: session.metadata?.is_commission === "1",
           stripe_session_id: session.id,
         },
