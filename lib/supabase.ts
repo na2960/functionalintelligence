@@ -38,11 +38,14 @@ export type BoardIdea = {
   last_backed_at: string | null;
 };
 
-export type RecentBacking = {
-  amount_cents: number;
-  backer_name: string | null;
-  created_at: string;
-  idea_title: string;
+export type Brief = {
+  id: string;
+  title: string;
+  detail: string | null;
+  category: string;
+  brief_url: string | null;
+  brief_body: string | null;
+  covered_at: string | null;
 };
 
 export async function fetchBoard(): Promise<BoardIdea[]> {
@@ -56,24 +59,29 @@ export async function fetchBoard(): Promise<BoardIdea[]> {
   return (data ?? []) as BoardIdea[];
 }
 
-export async function fetchRecentBackings(): Promise<RecentBacking[]> {
+const BRIEF_COLS =
+  "id, title, detail, category, brief_url, brief_body, covered_at";
+
+export async function fetchBriefs(): Promise<Brief[]> {
   const supabase = publicClient();
   const { data, error } = await supabase
-    .from("fi_backings")
-    .select("amount_cents, backer_name, created_at, idea:fi_ideas(title)")
-    .in("status", ["pledged", "paid"])
-    .order("created_at", { ascending: false })
-    .limit(14);
+    .from("fi_ideas")
+    .select(BRIEF_COLS)
+    .in("status", ["covered", "commissioned"])
+    .order("covered_at", { ascending: false, nullsFirst: false });
   if (error) throw new Error(error.message);
-  return (data ?? [])
-    .map((row) => {
-      const idea = Array.isArray(row.idea) ? row.idea[0] : row.idea;
-      return {
-        amount_cents: row.amount_cents,
-        backer_name: row.backer_name,
-        created_at: row.created_at,
-        idea_title: (idea as { title?: string } | null)?.title ?? "",
-      };
-    })
-    .filter((r) => r.idea_title); // drops backings of private commissions
+  return (data ?? []) as Brief[];
+}
+
+export async function fetchBrief(id: string): Promise<Brief | null> {
+  if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
+  const supabase = publicClient();
+  const { data, error } = await supabase
+    .from("fi_ideas")
+    .select(BRIEF_COLS)
+    .eq("id", id)
+    .in("status", ["covered", "commissioned"])
+    .maybeSingle();
+  if (error) throw new Error(error.message);
+  return (data as Brief) ?? null;
 }

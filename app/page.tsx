@@ -1,14 +1,9 @@
 import Board from "@/components/Board";
 import Countdown from "@/components/Countdown";
+import Nav from "@/components/Nav";
 import SubmitForm from "@/components/SubmitForm";
-import Ticker from "@/components/Ticker";
 import { formatMoney } from "@/lib/market";
-import {
-  fetchBoard,
-  fetchRecentBackings,
-  type BoardIdea,
-  type RecentBacking,
-} from "@/lib/supabase";
+import { fetchBoard, type BoardIdea } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -18,9 +13,8 @@ const SUBSTACK_URL =
 
 export default async function Home() {
   let board: BoardIdea[] = [];
-  let recent: RecentBacking[] = [];
   try {
-    [board, recent] = await Promise.all([fetchBoard(), fetchRecentBackings()]);
+    board = await fetchBoard();
   } catch {
     // render with an empty board rather than a 500; the client refreshes
   }
@@ -31,34 +25,7 @@ export default async function Home() {
 
   return (
     <>
-      <nav className="nav">
-        <div className="wrap nav-inner">
-          <div className="mark">
-            <em>f</em> i
-          </div>
-          <div className="masthead">
-            <span className="name">Functional Intelligence</span>
-            <span className="status">
-              <span className="dot" />
-              THE BOARD · MARKET OPEN
-            </span>
-          </div>
-          <div className="spacer" />
-          <a
-            className="nav-cta ghost"
-            href={SUBSTACK_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read on Substack ↗
-          </a>
-          <a className="nav-cta solid" href="#board">
-            The Board
-          </a>
-        </div>
-      </nav>
-
-      <Ticker initial={recent} />
+      <Nav active="board" />
 
       <div className="hero-band">
         <div className="wrap">
@@ -69,8 +36,8 @@ export default async function Home() {
             </h1>
             <p className="sub">
               A research market. Back the paper, topic, or idea you want
-              explained — the most-funded idea on The Board ships as a sharp{" "}
-              <strong>5-minute brief</strong>, every{" "}
+              explained — the <strong>single most-funded idea</strong> on The
+              Board ships as a sharp <strong>5-minute brief</strong>, every{" "}
               <strong>Tuesday &amp; Thursday at 7am</strong>. AI, biomedicine,
               markets, supply chain, science, math. No jargon — you finish
               every brief smarter and a little smug about it.
@@ -110,13 +77,13 @@ export default async function Home() {
           <div className="section-head">
             <h2>The Board</h2>
             <span className="count">
-              live · ranked by total funding · winner ships next issue
+              live leaderboard · #1 at market close ships as the next brief
             </span>
           </div>
           <p className="section-sub">
-            Highest total when the market closes wins the next brief. Unpicked
-            ideas roll over and keep their money — they stay in the running
-            until covered or beaten.
+            One winner per issue: the top-funded idea when the market closes.
+            Everything else rolls over with its money intact — still in the
+            running until covered or beaten.
           </p>
           <Board initial={board} />
         </section>
@@ -154,8 +121,8 @@ export default async function Home() {
               <div className="n">04 · SHIP</div>
               <h4>Brief lands at 7am</h4>
               <p>
-                Tuesday &amp; Thursday. A clear, intuitive breakdown in your
-                inbox before you finish your coffee.
+                Tuesday &amp; Thursday. A clear, intuitive breakdown — read it
+                here or in your inbox.
               </p>
             </div>
           </div>

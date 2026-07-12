@@ -59,9 +59,9 @@ export default function BackDialog({
       }
       setMsg({
         ok: true,
-        text: `You're on the board for ${formatMoney(effectiveCents)}. Watch it climb.`,
+        text: `You're on the board for ${formatMoney(effectiveCents)} — recorded as a launch-week pledge, no charge yet. Watch it climb.`,
       });
-      setTimeout(onBacked, 1600);
+      setTimeout(onBacked, 2000);
     } catch (e) {
       setMsg({
         ok: false,

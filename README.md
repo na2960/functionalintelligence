@@ -42,12 +42,19 @@ When a brief ships, mark the winner covered (Supabase SQL editor):
 
 ```sql
 update fi_ideas
-set status = 'covered', covered_at = now(), brief_url = 'https://<substack-post>'
+set status = 'covered',
+    covered_at = now(),
+    brief_url = 'https://<substack-post>',        -- optional
+    brief_body = $brief$
+Paste the brief text here. Supports blank-line paragraphs, ## and ###
+headings, - bullet lists, **bold**, *italics*, and [links](https://…).
+$brief$
 where id = '<idea-id>';
 ```
 
-Covered ideas move to the **Shipped** section with their final total; all
-other ideas roll over automatically.
+Covered ideas move to **Shipped** on the board and appear on the **Briefs**
+tab (`/briefs`), readable on-site. If `brief_body` is empty the brief page
+links out to `brief_url` instead. All other ideas roll over automatically.
 
 ## Local dev
 

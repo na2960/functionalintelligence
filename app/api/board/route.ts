@@ -1,16 +1,13 @@
 import { NextResponse } from "next/server";
-import { fetchBoard, fetchRecentBackings } from "@/lib/supabase";
+import { fetchBoard } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const [ideas, recent] = await Promise.all([
-      fetchBoard(),
-      fetchRecentBackings(),
-    ]);
+    const ideas = await fetchBoard();
     return NextResponse.json(
-      { ideas, recent },
+      { ideas },
       { headers: { "Cache-Control": "no-store" } }
     );
   } catch {
