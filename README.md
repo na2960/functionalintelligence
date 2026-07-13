@@ -46,9 +46,16 @@ is recorded, no card is charged). To turn on real payments:
    `paid` rows).
 4. Redeploy. Test with a Stripe test key + card `4242 4242 4242 4242`.
 
-**Status:** `STRIPE_SECRET_KEY` is set in Vercel. `STRIPE_WEBHOOK_SECRET` is
-pending — add it once the custom domain is attached, since the webhook URL
-needs the final domain.
+**Status:** `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, and
+`SUPABASE_SERVICE_ROLE_KEY` are all set in Vercel; domain `funcimarket.com`.
+The Stripe webhook endpoint must point at `https://funcimarket.com/api/stripe/webhook`
+(event `checkout.session.completed`) and its signing secret must match
+`STRIPE_WEBHOOK_SECRET`.
+
+**Privacy:** `fi_backings.backer_email` is not selectable by the public
+(anon/authenticated) roles — only the leaderboard-safe columns are granted,
+so `backer_name` shows on the board but emails never leave the server. The
+webhook writes emails using the service role, which bypasses the grants.
 
 Row-level security guarantees the public key can only ever write
 `status='pledged'` rows — `paid` rows come exclusively from the verified

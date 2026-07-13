@@ -89,6 +89,11 @@ export default function Board() {
                 <span className="backers-n">
                   {leader.backers} backer{leader.backers === 1 ? "" : "s"}
                 </span>
+                {leader.top_backer && (
+                  <span className="backed-by">
+                    Backed by {leader.top_backer}
+                  </span>
+                )}
               </div>
               {leader.detail ? (
                 <div className="card-detail">{leader.detail}</div>
@@ -109,7 +114,7 @@ export default function Board() {
       ) : (
         open.length > 0 && (
           <div className="no-leader">
-            No leader yet — the first dollar takes the crown. Winner ships{" "}
+            No leader yet — top dollar takes the crown. Winner ships{" "}
             {issueDay ?? "Tuesday"} 7:00 AM ET.
           </div>
         )
@@ -172,6 +177,11 @@ export default function Board() {
                           ? `${idea.backers} backer${idea.backers === 1 ? "" : "s"}`
                           : "Be the first"}
                       </span>
+                      {idea.top_backer && (
+                        <span className="backed-by">
+                          Backed by {idea.top_backer}
+                        </span>
+                      )}
                       {gap != null && gap > 0 && (
                         <span className="gap">
                           {formatMoney(gap)} behind the lead

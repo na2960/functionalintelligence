@@ -2150,3 +2150,53 @@ label.f {
   background: var(--bg-sunken);
   border: 1px solid var(--border);
 }
+
+/* ================= v8: wordmark logo, navy nav mark, backer chip ================= */
+
+/* hero wordmark: "ƒi Research Marketplace" as one lockup — gold serif ƒi,
+   no box/background, slightly smaller than before */
+.rm-title {
+  font-size: clamp(34px, 4.4vw, 54px);
+}
+
+.rm-mark {
+  display: inline;
+  background: none;
+  border: none;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  color: var(--gold-deep);
+  font-family: var(--serif);
+  font-size: 0.98em;
+  margin-right: 0.16em;
+  vertical-align: baseline;
+}
+
+.rm-mark em {
+  font-style: italic;
+  margin-right: 0.04em;
+}
+
+/* nav logo returns to the navy + gold tile */
+.mark {
+  background: var(--ink);
+  border: none;
+  color: var(--gold);
+}
+
+/* "Private Commissions" is an anchor styled like a button */
+a.action {
+  text-decoration: none;
+}
+
+/* named-backer social proof on cards */
+.backed-by {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold-deep);
+  background: #faf6ec;
+  border: 1px solid #ecdfc2;
+  border-radius: 999px;
+  padding: 2px 9px;
+}

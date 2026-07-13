@@ -44,8 +44,9 @@ export default async function Home() {
                 <p className="hero-lede">You fund it. We break it down.</p>
                 <p className="hero-desc">
                   Our team breaks the top-funded topic down to its underlying
-                  assumptions — a 5-minute brief every Tuesday &amp; Thursday at
-                  7am. Free to read. Pay to steer or commission.
+                  assumptions using abstractions anyone could understand — a
+                  5-minute brief every Tuesday &amp; Thursday at 7am. Free to
+                  read. Pay to steer or commission.
                 </p>
                 <div className="hero-cta-row">
                   <a className="btn btn-gold" href="#board">
@@ -149,10 +150,6 @@ export default async function Home() {
                   <strong style={{ color: "var(--gold)" }}>$100</strong>. It
                   stays private unless you decide otherwise.
                 </p>
-                <p>
-                  Researchers can commission a breakdown of their own work, or
-                  add it to The Board for the crowd to fund.
-                </p>
               </div>
               <CommissionCta />
             </div>
@@ -169,9 +166,13 @@ export default async function Home() {
             </a>
           </span>
           <span className="fine">
-            Backing funds coverage: you&rsquo;re paying to prioritize what gets
-            explained, not placing a wager. No odds, no payouts. Briefs are free
-            to read for everyone, always.
+            Backing and commissions are voluntary, non-refundable payments to
+            prioritize which topic gets covered. They are not wagers, bets, or
+            entries in a game of chance, and they carry no odds, no payouts, and
+            no financial, ownership, or other return of any kind. Funding a
+            topic does not guarantee any specific result or publication date.
+            Every brief is free to read. Functional Intelligence is an
+            editorial publication, not a financial product or investment.
           </span>
         </div>
       </footer>
