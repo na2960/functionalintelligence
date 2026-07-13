@@ -63,14 +63,23 @@ export type MarketState = {
   issueDay: "Tuesday" | "Thursday";
 };
 
+// Launch floor: the first market must not close before this instant. This
+// skips the Tuesday launch-week issue so the very first brief ships Thursday
+// (market closes Wednesday evening, July 15 8:00 PM ET = July 16 00:00 UTC).
+// Once this moment passes, the normal Tue/Thu cadence resumes automatically.
+// Override with NEXT_PUBLIC_FI_FIRST_CLOSE if the launch date changes.
+const FIRST_CLOSE_MS = Date.parse(
+  process.env.NEXT_PUBLIC_FI_FIRST_CLOSE ?? "2026-07-16T00:00:00Z"
+);
+
 export function marketState(now: Date = new Date()): MarketState {
   // Walk forward day by day (in ET) to find the next close that is still ahead.
-  for (let offset = 0; offset < 9; offset++) {
+  for (let offset = 0; offset < 16; offset++) {
     const probe = new Date(now.getTime() + offset * 86400_000);
     const p = etParts(probe);
     if (p.weekday === 1 || p.weekday === 3) {
       const close = etToUtc(p.year, p.month, p.day, 20, 0);
-      if (close.getTime() > now.getTime()) {
+      if (close.getTime() > now.getTime() && close.getTime() >= FIRST_CLOSE_MS) {
         const issue = new Date(close.getTime() + 11 * 3600_000); // next day 7:00 AM ET
         const ip = etParts(issue);
         const issueAt = etToUtc(ip.year, ip.month, ip.day, 7, 0);
