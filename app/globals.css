@@ -2297,3 +2297,44 @@ a.action {
 .legal strong {
   color: var(--text);
 }
+
+/* ================= v10: success page ================= */
+.success-sec {
+  max-width: 620px;
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+.success-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  border: 1px solid var(--green-border);
+  color: var(--green);
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.success-sec h1 {
+  font-size: clamp(28px, 3.6vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.success-sec p {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 520px;
+}
+
+.success-actions {
+  margin-top: 24px;
+}
