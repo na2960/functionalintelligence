@@ -1,10 +1,8 @@
 import Link from "next/link";
 
-const SUBSTACK_URL =
-  process.env.NEXT_PUBLIC_SUBSTACK_URL ??
-  "https://functionalintelligence.substack.com";
+const SUBSTACK_URL = process.env.NEXT_PUBLIC_SUBSTACK_URL?.trim();
 
-export default function Nav({ active }: { active: "board" | "briefs" }) {
+export default function Nav({ active }: { active?: "board" | "briefs" }) {
   return (
     <nav className="nav">
       <div className="wrap nav-inner">
@@ -32,14 +30,16 @@ export default function Nav({ active }: { active: "board" | "briefs" }) {
           </Link>
         </div>
         <div className="spacer" />
-        <a
-          className="nav-cta ghost"
-          href={SUBSTACK_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Substack ↗
-        </a>
+        {SUBSTACK_URL ? (
+          <a
+            className="nav-cta ghost"
+            href={SUBSTACK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Substack ↗
+          </a>
+        ) : null}
         <Link className="nav-cta solid" href="/#board">
           Fund an idea
         </Link>

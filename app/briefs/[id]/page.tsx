@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import BriefBody from "@/components/BriefBody";
 import { fetchBrief } from "@/lib/supabase";
 
@@ -78,6 +79,7 @@ export default async function BriefPage({
           </div>
         </article>
       </main>
+      <Footer />
     </>
   );
 }

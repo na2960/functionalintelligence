@@ -1,8 +1,8 @@
 import { publicClient } from "@/lib/supabase";
 
-const SUBSTACK_URL =
-  process.env.NEXT_PUBLIC_SUBSTACK_URL ??
-  "https://functionalintelligence.substack.com";
+// Substack sync is opt-in: only when NEXT_PUBLIC_SUBSTACK_URL is set. Left
+// unset, the site is fully self-contained — emails live only in Supabase.
+const SUBSTACK_URL = process.env.NEXT_PUBLIC_SUBSTACK_URL?.trim();
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -17,6 +17,7 @@ export function normalizeEmail(raw: string | undefined | null): string | null {
 // and may be rejected (captcha/rate limit). We never throw — the Supabase
 // record is the source of truth; Substack is a nice-to-have sync.
 async function pushToSubstack(email: string): Promise<void> {
+  if (!SUBSTACK_URL) return; // Substack disabled unless explicitly configured
   try {
     const base = SUBSTACK_URL.replace(/\/+$/, "");
     const res = await fetch(`${base}/api/v1/free`, {

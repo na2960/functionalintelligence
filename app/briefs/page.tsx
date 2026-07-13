@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import { fetchBriefs, type Brief } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
@@ -11,7 +12,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   "supply-chain": "Supply Chain",
   science: "Science",
   math: "Math",
-  other: "Wildcard",
+  other: "Other",
 };
 
 export const metadata = {
@@ -83,6 +84,7 @@ export default async function Briefs() {
           )}
         </section>
       </main>
+      <Footer />
     </>
   );
 }

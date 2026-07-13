@@ -3,16 +3,13 @@ import BoardActions from "@/components/BoardActions";
 import CommissionCta from "@/components/CommissionCta";
 import Countdown from "@/components/Countdown";
 import EmailCapture from "@/components/EmailCapture";
+import Footer from "@/components/Footer";
 import MarketProvider from "@/components/MarketProvider";
 import Nav from "@/components/Nav";
 import { formatMoney } from "@/lib/market";
 import { fetchBoard, type BoardIdea } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
-
-const SUBSTACK_URL =
-  process.env.NEXT_PUBLIC_SUBSTACK_URL ??
-  "https://functionalintelligence.substack.com";
 
 export default async function Home() {
   let board: BoardIdea[] = [];
@@ -35,10 +32,13 @@ export default async function Home() {
           <section className="frame-sec hero-sec">
             <div className="hero-cols">
               <h1 className="rm-title">
+                The{" "}
                 <span className="rm-mark">
                   <em>f</em>i
-                </span>
-                <span className="rm-text">Research Marketplace</span>
+                </span>{" "}
+                Research
+                <br />
+                Marketplace
               </h1>
               <div className="hero-aside">
                 <p className="hero-lede">You fund it. We break it down.</p>
@@ -157,25 +157,7 @@ export default async function Home() {
         </div>
       </MarketProvider>
 
-      <footer className="footer">
-        <div className="wrap footer-inner">
-          <span>
-            ƒi — Functional Intelligence ·{" "}
-            <a href={SUBSTACK_URL} target="_blank" rel="noopener noreferrer">
-              Substack
-            </a>
-          </span>
-          <span className="fine">
-            Backing and commissions are voluntary, non-refundable payments to
-            prioritize which topic gets covered. They are not wagers, bets, or
-            entries in a game of chance, and they carry no odds, no payouts, and
-            no financial, ownership, or other return of any kind. Funding a
-            topic does not guarantee any specific result or publication date.
-            Every brief is free to read. Functional Intelligence is an
-            editorial publication, not a financial product or investment.
-          </span>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
