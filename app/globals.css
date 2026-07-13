@@ -2003,3 +2003,150 @@ label.f {
 .commission-opt {
   align-items: center;
 }
+
+/* ================= v7: framed Stripe layout + restored Apple hero ================= */
+
+/* white page; the frame draws thin vertical rules down the content column and
+   each section draws a thin horizontal rule — the Stripe "ruled page" look */
+.frame {
+  max-width: 1120px;
+  margin: 0 auto;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+.frame-sec {
+  padding: 34px 44px;
+  border-bottom: 1px solid var(--border);
+}
+
+.frame-sec:last-child {
+  border-bottom: none;
+}
+
+.frame-sec > .section-head:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .frame-sec {
+    padding: 24px 20px;
+  }
+}
+
+/* ---- restored Apple two-column hero ---- */
+.hero-sec {
+  padding-top: 46px;
+  padding-bottom: 38px;
+}
+
+.hero-cols {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.rm-title {
+  flex: 1 1 auto;
+  min-width: 280px;
+  max-width: 600px;
+  font-family: var(--sans);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.0;
+  font-size: clamp(40px, 5.4vw, 66px);
+  color: var(--text);
+}
+
+/* logo mark: light/outline (no navy fill), inline before the wordmark */
+.rm-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 0.46em;
+  width: 1.7em;
+  height: 1.7em;
+  border-radius: 0.4em;
+  background: #faf8f3;
+  border: 1px solid #e7e2d5;
+  color: var(--gold-deep);
+  vertical-align: 0.04em;
+  margin-right: 0.42em;
+  flex-shrink: 0;
+}
+
+.rm-mark em {
+  font-style: italic;
+  margin-right: 0.06em;
+}
+
+.hero-aside {
+  flex: 1 1 320px;
+  max-width: 400px;
+  padding-top: 6px;
+}
+
+.hero-lede {
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.18;
+  color: var(--text);
+}
+
+.hero-desc {
+  margin-top: 14px;
+  max-width: 400px;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.hero-metrics {
+  margin-top: 34px;
+}
+
+@media (max-width: 820px) {
+  .rm-title {
+    max-width: 100%;
+  }
+  .hero-aside {
+    max-width: 100%;
+    padding-top: 0;
+  }
+}
+
+/* ---- non-navy logo in the nav (match the light app-icon mark) ---- */
+.mark {
+  background: #faf8f3;
+  border: 1px solid #e7e2d5;
+  color: var(--gold-deep);
+}
+
+/* ---- signup band blends into the ruled page (no separate card) ---- */
+.brief-signup {
+  margin: 0;
+}
+
+.signup-inner {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+/* how-it-works cards sit on the subtle sunken tint so they read on white */
+.step {
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+}

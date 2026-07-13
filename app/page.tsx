@@ -31,27 +31,31 @@ export default async function Home() {
       <Nav active="board" />
 
       <MarketProvider initialIdeas={board}>
-        <div className="store-hero">
-          <div className="wrap">
-            <div className="hero-kicker">
-              <span className="hero-kicker-mark">
-                <em>f</em>i
-              </span>
-              Research Marketplace
-            </div>
-            <h1 className="hero-heading">You fund it. We break it down.</h1>
-            <p className="hero-desc">
-              Our team breaks the top-funded topic down to its underlying
-              assumptions — a 5-minute brief every Tuesday &amp; Thursday at
-              7am. Free to read. Pay to steer or commission.
-            </p>
-            <div className="hero-cta-row">
-              <a className="btn btn-gold" href="#board">
-                The Board →
-              </a>
-              <a className="btn btn-secondary" href="/briefs">
-                Read the Briefs →
-              </a>
+        <div className="frame">
+          <section className="frame-sec hero-sec">
+            <div className="hero-cols">
+              <h1 className="rm-title">
+                <span className="rm-mark">
+                  <em>f</em>i
+                </span>
+                <span className="rm-text">Research Marketplace</span>
+              </h1>
+              <div className="hero-aside">
+                <p className="hero-lede">You fund it. We break it down.</p>
+                <p className="hero-desc">
+                  Our team breaks the top-funded topic down to its underlying
+                  assumptions — a 5-minute brief every Tuesday &amp; Thursday at
+                  7am. Free to read. Pay to steer or commission.
+                </p>
+                <div className="hero-cta-row">
+                  <a className="btn btn-gold" href="#board">
+                    The Board →
+                  </a>
+                  <a className="btn btn-secondary" href="/briefs">
+                    Read the Briefs →
+                  </a>
+                </div>
+              </div>
             </div>
             <div className="hero-metrics">
               <div className="stat-strip">
@@ -70,11 +74,9 @@ export default async function Home() {
               </div>
               <Countdown />
             </div>
-          </div>
-        </div>
+          </section>
 
-        <main className="wrap">
-          <section id="board">
+          <section className="frame-sec" id="board">
             <div className="section-head">
               <h2>The Board</h2>
             </div>
@@ -87,7 +89,7 @@ export default async function Home() {
             <Board />
           </section>
 
-          <section className="brief-signup">
+          <section className="frame-sec brief-signup">
             <div className="signup-inner">
               <div>
                 <h3>Don&rsquo;t miss the free 7am brief.</h3>
@@ -97,7 +99,7 @@ export default async function Home() {
             </div>
           </section>
 
-          <section>
+          <section className="frame-sec">
             <div className="section-head">
               <h2>How it works</h2>
             </div>
@@ -137,7 +139,7 @@ export default async function Home() {
             </div>
           </section>
 
-          <section id="commission">
+          <section className="frame-sec" id="commission">
             <div className="commission">
               <div>
                 <h3>Commissions</h3>
@@ -155,7 +157,7 @@ export default async function Home() {
               <CommissionCta />
             </div>
           </section>
-        </main>
+        </div>
       </MarketProvider>
 
       <footer className="footer">
