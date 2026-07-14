@@ -209,11 +209,19 @@ a {
 }
 
 @media (max-width: 640px) {
+  /* the wordmark + status collide with the tabs on phones; the logo mark
+     (and the hero wordmark below) carry the brand, so drop the text here */
+  .masthead {
+    display: none;
+  }
+  .nav-inner {
+    gap: 8px;
+  }
   .tabs {
     margin-left: 4px;
   }
   .tab {
-    padding: 0 9px;
+    padding: 0 10px;
   }
 }
 
