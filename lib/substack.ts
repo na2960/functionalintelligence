@@ -1,4 +1,4 @@
-import { publicClient } from "@/lib/supabase";
+import { publicClient, serviceClient } from "@/lib/supabase";
 
 // Substack sync is opt-in: only when NEXT_PUBLIC_SUBSTACK_URL is set. Left
 // unset, the site is fully self-contained — emails live only in Supabase.
@@ -37,30 +37,52 @@ async function pushToSubstack(email: string): Promise<void> {
         source: "embed",
       }),
     });
-    // Swallow non-2xx silently; we tried.
     void res.status;
   } catch {
     // network/DNS/captcha — ignore, Supabase already has the email.
   }
 }
 
-// Store an email in Supabase (idempotent) and mirror it to Substack.
-// Returns true if the email was valid/stored, false if it looked invalid.
+// Write the subscriber row. captureEmail/subscribeEmail are only ever called
+// from server-side API routes, so this uses the service role (bypasses RLS,
+// same as the Stripe webhook) and falls back to the anon client. Unlike
+// before, a store failure is logged and reported rather than swallowed.
+async function storeSubscriber(
+  email: string,
+  source: string
+): Promise<{ ok: boolean; error?: string }> {
+  const supabase = serviceClient() ?? publicClient();
+  const { error } = await supabase
+    .from("fi_subscribers")
+    .upsert({ email, source }, { onConflict: "email", ignoreDuplicates: true });
+  if (error) {
+    console.error("[subscribers] store failed:", error.message);
+    return { ok: false, error: error.message };
+  }
+  return { ok: true };
+}
+
+// Newsletter signup: store + best-effort Substack, surfacing real failures so
+// the endpoint can return an error instead of a false success.
+export async function subscribeEmail(
+  raw: string | undefined | null
+): Promise<{ ok: boolean; invalid?: boolean; error?: string }> {
+  const email = normalizeEmail(raw);
+  if (!email) return { ok: false, invalid: true };
+  const stored = await storeSubscriber(email, "site");
+  await pushToSubstack(email);
+  return stored;
+}
+
+// Fund/commission flows: capture the email without blocking the payment.
+// Returns true only if the email looked valid (store errors are logged).
 export async function captureEmail(
   raw: string | undefined | null,
   source = "site"
 ): Promise<boolean> {
   const email = normalizeEmail(raw);
   if (!email) return false;
-  try {
-    const supabase = publicClient();
-    // upsert-by-unique: ignore duplicate emails without erroring.
-    await supabase
-      .from("fi_subscribers")
-      .upsert({ email, source }, { onConflict: "email", ignoreDuplicates: true });
-  } catch {
-    // don't block the user flow on a subscribers write failure
-  }
+  await storeSubscriber(email, source);
   await pushToSubstack(email);
   return true;
 }
