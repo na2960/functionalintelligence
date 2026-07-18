@@ -1,10 +1,12 @@
 import Link from "next/link";
-import Countdown from "./Countdown";
 
-type Active = "briefs" | "services" | "about" | "fund";
+type Active = "services" | "about" | "marketplace" | "briefs";
+
+const CONTACT =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@funcimarket.com";
 
 export default function Nav({ active }: { active?: Active }) {
-  const link = (key: Active) => `nav-link${active === key ? " on" : ""}`;
+  const cls = (key: Active) => `nav-link${active === key ? " on" : ""}`;
   return (
     <nav className="nav">
       <div className="wrap nav-inner">
@@ -15,20 +17,19 @@ export default function Nav({ active }: { active?: Active }) {
           <span className="brand-name">Functional Intelligence</span>
         </Link>
         <div className="spacer" />
-        <Countdown />
         <div className="nav-links">
-          <Link href="/briefs" className={link("briefs")}>
-            Briefs
+          <Link href="/services" className={cls("services")}>
+            Writing Services
           </Link>
-          <Link href="/#fund" className={link("fund")}>
-            Fund a topic
-          </Link>
-          <Link href="/services" className={link("services")}>
-            Services
-          </Link>
-          <Link href="/about" className={link("about")}>
+          <Link href="/about" className={cls("about")}>
             About
           </Link>
+          <Link href="/#marketplace" className={cls("marketplace")}>
+            Research Marketplace
+          </Link>
+          <a href={`mailto:${CONTACT}`} className="nav-link">
+            Contact Us
+          </a>
         </div>
       </div>
     </nav>

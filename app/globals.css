@@ -3118,3 +3118,380 @@ body {
 .signup-inner {
   background: transparent;
 }
+
+/* ================= v13: connected-box hub — white, gold accents, dashed rules ================= */
+
+:root {
+  /* clean warm white — no gray field, gold as the accent, dashed grey rules */
+  --bg: #ffffff;
+  --bg-sunken: #faf8f2;
+  --card: #ffffff;
+  --border: #eae6dc;
+  --border-strong: #dcd6c8;
+  --text: #1b1c21;
+  --text-2: #56544c;
+  --muted: #918c80;
+  --gold: #d7a53c;        /* warm brand gold */
+  --gold-deep: #a17c1e;   /* gold on light */
+  --dash: #cbc5b5;        /* warm grey dashed connectors + box outlines */
+  --serif: var(--font-serif), Georgia, "Times New Roman", Times, serif;
+  --sans: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+}
+
+/* ---- nav: quiet hairline, longer labels ---- */
+.nav {
+  border-bottom: 1px solid var(--border);
+}
+.brand-name {
+  font-weight: 650;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.nav-link {
+  font-size: 14px;
+  font-weight: 450;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: 3px 0;
+  border-bottom: 1.5px solid transparent;
+  white-space: nowrap;
+}
+.nav-link:hover {
+  color: var(--ink);
+}
+.nav-link.on {
+  color: var(--ink);
+  border-bottom-color: var(--gold);
+}
+@media (max-width: 760px) {
+  .nav-inner {
+    height: auto;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+  .spacer {
+    display: none;
+  }
+  .nav-links {
+    width: 100%;
+    gap: 8px 18px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    font-size: 13px;
+  }
+}
+
+/* ---- the hub: three dashed boxes connected by dashed rules ---- */
+.hub-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(38px, 6vw, 80px) 24px;
+}
+.hub {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 74px minmax(0, 1.06fr);
+  grid-template-rows: auto 52px auto;
+  grid-template-areas:
+    "writing .     market"
+    "vjoin   hjoin market"
+    "briefs  .     market";
+}
+.hub-writing {
+  grid-area: writing;
+}
+.hub-briefs {
+  grid-area: briefs;
+}
+.hub-market {
+  grid-area: market;
+  align-self: center;
+}
+.hub-join {
+  display: block;
+}
+.hub-join-v {
+  grid-area: vjoin;
+  justify-self: end;
+  width: 0;
+  height: 100%;
+  border-left: 1.5px dashed var(--dash);
+  margin-right: 34px;
+}
+.hub-join-h {
+  grid-area: hjoin;
+  align-self: center;
+  width: 100%;
+  height: 0;
+  border-top: 1.5px dashed var(--dash);
+}
+
+.hub-box {
+  border: 1.5px dashed var(--dash);
+  border-radius: 16px;
+  background: var(--card);
+  padding: 30px 30px 32px;
+  display: flex;
+  flex-direction: column;
+}
+.hub-market {
+  padding: 42px 40px;
+  background:
+    linear-gradient(180deg, #fffdf7 0%, #fdfaf1 100%);
+  border-color: var(--gold);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.01);
+}
+
+.hub-kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 13px;
+}
+.hub-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(22px, 2.3vw, 27px);
+  line-height: 1.14;
+  letter-spacing: -0.006em;
+  color: var(--text);
+}
+.hub-title-lg {
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+.hub-body {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.56;
+  color: var(--text-2);
+  max-width: 44ch;
+}
+.hub-market .hub-body {
+  font-size: 15.5px;
+  max-width: 40ch;
+}
+
+.hub-link {
+  margin-top: 18px;
+  align-self: flex-start;
+  color: var(--gold-deep);
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.hub-link:hover {
+  text-decoration: underline;
+}
+.hub-link.as-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--sans);
+}
+.hub-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.hub-actions .hub-link {
+  margin-top: 0;
+}
+
+.hub-btn {
+  background: var(--gold);
+  color: #2a2208;
+  border: none;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.hub-btn:hover {
+  background: #c8952f;
+}
+
+.hub-board-chip {
+  background: transparent;
+  border: 1px dashed var(--dash);
+  color: var(--text-2);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.hub-board-chip:hover {
+  border-color: var(--gold-deep);
+  color: var(--text);
+}
+.hub-briefs .hub-board-chip {
+  margin-top: 18px;
+  align-self: flex-start;
+}
+
+.hub-count {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.hub-count-val {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* stack on narrow screens: writing → marketplace → briefs, dashed verticals */
+@media (max-width: 860px) {
+  .hub {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 40px auto 40px auto;
+    grid-template-areas:
+      "writing"
+      "vjoin"
+      "market"
+      "hjoin"
+      "briefs";
+  }
+  .hub-market {
+    align-self: stretch;
+  }
+  .hub-join-v,
+  .hub-join-h {
+    justify-self: center;
+    align-self: center;
+    width: 0;
+    height: 100%;
+    border-top: none;
+    border-left: 1.5px dashed var(--dash);
+    margin: 0;
+  }
+}
+
+/* ---- current-board modal (read-only ledger) ---- */
+.board-list {
+  list-style: none;
+  margin: 6px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+.board-row {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+  padding: 13px 2px;
+  border-bottom: 1px solid var(--border);
+}
+.board-row:last-child {
+  border-bottom: none;
+}
+.board-rank {
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.board-topic {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--text);
+}
+.board-amt {
+  color: var(--gold-deep);
+  font-weight: 600;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.board-empty {
+  color: var(--text-2);
+  padding: 10px 0;
+}
+.board-foot {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.sub-modal {
+  margin-top: 4px;
+}
+
+/* ---- refresh the shared frame (services / about / briefs) on white ---- */
+.frame {
+  border-color: var(--border);
+}
+.frame-sec {
+  border-bottom-color: var(--border);
+}
+.footer {
+  background: var(--bg);
+  border-top-color: var(--border);
+}
+
+/* ---- v13: modal + form accents → gold (retire the green/blue) ---- */
+.amounts .amt.sel {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #2a2208;
+}
+.amounts .amt:hover {
+  border-color: var(--gold-deep);
+  color: var(--gold-deep);
+}
+.dialog-actions .btn-gold {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #2a2208;
+}
+.dialog-actions .btn-gold:hover {
+  background: #c8952f;
+  border-color: #c8952f;
+}
+.email-field button {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #2a2208;
+}
+.email-field button:hover {
+  background: #c8952f;
+}
+.custom-amt input:focus,
+.f input:focus,
+.f select:focus,
+.f textarea:focus,
+.email-field:focus-within {
+  outline: none;
+  border-color: var(--gold-deep);
+}
+.dialog h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.008em;
+}

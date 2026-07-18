@@ -7,8 +7,8 @@ import { CATEGORIES } from "@/lib/categories";
 import Modal from "./Modal";
 import AmountPicker from "./AmountPicker";
 
-const PRESETS = [300, 500, 1000, 2500, 10000]; // $3 $5 $10 $25 $100
-const MIN = 300;
+const PRESETS = [500]; // $5, or a custom amount
+const MIN = 500;
 
 export default function BackModal({
   mode,
@@ -55,7 +55,7 @@ export default function BackModal({
       return;
     }
     if (!Number.isFinite(effectiveCents) || effectiveCents < MIN) {
-      setMsg({ ok: false, text: "Minimum backing is $3." });
+      setMsg({ ok: false, text: "Minimum backing is $5." });
       return;
     }
     if (effectiveCents > 100000) {
