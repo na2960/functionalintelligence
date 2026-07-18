@@ -9,20 +9,17 @@ import {
 } from "react";
 import type { BoardIdea } from "@/lib/supabase";
 import BackModal from "./BackModal";
-import CommissionModal from "./CommissionModal";
 
 type ModalState =
   | null
   | { type: "back-new" }
-  | { type: "back-existing"; idea?: BoardIdea | null; preset?: number }
-  | { type: "commission" };
+  | { type: "back-existing"; idea?: BoardIdea | null; preset?: number };
 
 type MarketCtx = {
   ideas: BoardIdea[];
   refresh: () => void;
   openBackNew: () => void;
   openBackExisting: (idea?: BoardIdea | null, preset?: number) => void;
-  openCommission: () => void;
 };
 
 const Ctx = createContext<MarketCtx | null>(null);
@@ -51,12 +48,12 @@ export default function MarketProvider({
         if (Array.isArray(data.ideas)) setIdeas(data.ideas);
       }
     } catch {
-      // keep last known board
+      // keep last known list
     }
   }, []);
 
   useEffect(() => {
-    const t = setInterval(refresh, 30_000);
+    const t = setInterval(refresh, 45_000);
     return () => clearInterval(t);
   }, [refresh]);
 
@@ -66,7 +63,6 @@ export default function MarketProvider({
     openBackNew: () => setModal({ type: "back-new" }),
     openBackExisting: (idea, preset) =>
       setModal({ type: "back-existing", idea, preset }),
-    openCommission: () => setModal({ type: "commission" }),
   };
 
   const close = () => setModal(null);
@@ -79,12 +75,7 @@ export default function MarketProvider({
     <Ctx.Provider value={value}>
       {children}
       {modal?.type === "back-new" && (
-        <BackModal
-          mode="new"
-          ideas={ideas}
-          onClose={close}
-          onDone={done}
-        />
+        <BackModal mode="new" ideas={ideas} onClose={close} onDone={done} />
       )}
       {modal?.type === "back-existing" && (
         <BackModal
@@ -95,9 +86,6 @@ export default function MarketProvider({
           onClose={close}
           onDone={done}
         />
-      )}
-      {modal?.type === "commission" && (
-        <CommissionModal onClose={close} onDone={done} />
       )}
     </Ctx.Provider>
   );

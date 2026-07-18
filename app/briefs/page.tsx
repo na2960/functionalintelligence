@@ -18,7 +18,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export const metadata = {
   title: "Briefs — Functional Intelligence",
   description:
-    "Every brief the board has shipped. 5 minutes each, free to read.",
+    "Every brief we have shipped. 5 minutes each, free to read.",
 };
 
 export default async function Briefs() {
@@ -38,7 +38,7 @@ export default async function Briefs() {
             <h2>Briefs</h2>
           </div>
           <p className="section-sub">
-            Every issue starts as an idea on The Board. The most-funded one
+            Every issue starts as a topic on the funding list. The most-backed one
             ships Tuesday &amp; Thursday at 7:00 AM ET — and lands here.
           </p>
 

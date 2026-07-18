@@ -91,6 +91,19 @@ export async function fetchBriefs(): Promise<Brief[]> {
   return (data ?? []) as Brief[];
 }
 
+export async function fetchLatestBrief(): Promise<Brief | null> {
+  const supabase = publicClient();
+  const { data, error } = await supabase
+    .from("fi_ideas")
+    .select(BRIEF_COLS)
+    .eq("status", "covered")
+    .order("covered_at", { ascending: false, nullsFirst: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw new Error(error.message);
+  return (data as Brief) ?? null;
+}
+
 export async function fetchBrief(id: string): Promise<Brief | null> {
   if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
   const supabase = publicClient();

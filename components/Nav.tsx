@@ -1,8 +1,7 @@
 import Link from "next/link";
+import Countdown from "./Countdown";
 
-const SUBSTACK_URL = process.env.NEXT_PUBLIC_SUBSTACK_URL?.trim();
-
-export default function Nav({ active }: { active?: "board" | "briefs" }) {
+export default function Nav({ active }: { active?: "briefs" }) {
   return (
     <nav className="nav">
       <div className="wrap nav-inner">
@@ -12,36 +11,18 @@ export default function Nav({ active }: { active?: "board" | "briefs" }) {
           </span>
           <span className="masthead">
             <span className="name">Functional Intelligence</span>
-            <span className="status">
-              <span className="dot" />
-              MARKET OPEN
-            </span>
           </span>
         </Link>
-        <div className="tabs">
-          <Link href="/" className={`tab${active === "board" ? " on" : ""}`}>
-            The Board
-          </Link>
-          <Link
-            href="/briefs"
-            className={`tab${active === "briefs" ? " on" : ""}`}
-          >
-            Briefs
-          </Link>
-        </div>
         <div className="spacer" />
-        {SUBSTACK_URL ? (
-          <a
-            className="nav-cta ghost"
-            href={SUBSTACK_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Substack ↗
-          </a>
-        ) : null}
-        <Link className="nav-cta solid" href="/#board">
-          Fund an idea
+        <Countdown />
+        <Link
+          href="/briefs"
+          className={`nav-cta ghost${active === "briefs" ? " on" : ""}`}
+        >
+          Briefs
+        </Link>
+        <Link className="nav-cta solid" href="/#founder-voice">
+          Work with us
         </Link>
       </div>
     </nav>

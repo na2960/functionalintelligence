@@ -47,7 +47,7 @@ export default function Privacy() {
 
       <h2>How we use it</h2>
       <ul>
-        <li>To deliver briefs and operate The Board and commissions.</li>
+        <li>To deliver briefs and operate the topic funding list.</li>
         <li>To process payments and prevent fraud and abuse.</li>
         <li>To communicate about the Service and respond to your requests.</li>
       </ul>

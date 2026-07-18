@@ -18,13 +18,13 @@ export default function Footer() {
           ) : null}
         </div>
         <p className="fine">
-          Backing and commissions are voluntary, non-refundable payments to
-          prioritize which topic gets covered. They are not wagers, bets, or
-          entries in a game of chance, and they carry no odds, no payouts, and
-          no financial, ownership, or other return of any kind. Funding a topic
-          does not guarantee any specific result or publication date. Every
-          brief is free to read. Functional Intelligence is an editorial
-          publication, not a financial product or investment.
+          Backing is a voluntary, non-refundable payment to prioritize which
+          topic gets covered. It is not a wager, bet, or entry in a game of
+          chance, and it carries no odds, no payouts, and no financial,
+          ownership, or other return of any kind. Funding a topic does not
+          guarantee any specific result or publication date. Every brief is free
+          to read. Functional Intelligence is an editorial publication, not a
+          financial product or investment.
         </p>
       </div>
     </footer>

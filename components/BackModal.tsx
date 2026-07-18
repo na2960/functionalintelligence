@@ -101,9 +101,9 @@ export default function BackModal({
       }
       setMsg({
         ok: true,
-        text: `You're on the board for ${formatMoney(
+        text: `You're on the list for ${formatMoney(
           effectiveCents
-        )} — recorded as a launch pledge, no charge yet. Watch it climb.`,
+        )} — recorded, no charge yet. The most-backed topic ships next Tuesday.`,
       });
       setTimeout(onDone, 1800);
     } catch (e) {
@@ -121,9 +121,9 @@ export default function BackModal({
       title={mode === "new" ? "Back a new topic" : "Back a topic"}
       subtitle={
         mode === "new"
-          ? "Put it on The Board and fund it in one move."
+          ? "Put it on the list and fund it in one move."
           : selected
-          ? `${selected.title} · ${formatMoney(selected.total_cents)} in the pool`
+          ? selected.title
           : undefined
       }
       onClose={onClose}
@@ -187,7 +187,7 @@ export default function BackModal({
           >
             {open.map((i) => (
               <option key={i.id} value={i.id}>
-                {i.title} — {formatMoney(i.total_cents)}
+                {i.title}
               </option>
             ))}
           </select>
@@ -211,7 +211,7 @@ export default function BackModal({
 
       <div className="field-row">
         <label className="f">
-          Name on the board (optional)
+          Name on the list (optional)
           <input
             type="text"
             maxLength={60}

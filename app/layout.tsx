@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Functional Intelligence — You fund it. I break it down.",
+  title: "Functional Intelligence — Hard ideas, made legible.",
   description:
-    "A research market. Back the paper, topic, or idea you want explained — the most-funded idea on The Board ships as a 5-minute brief every Tuesday & Thursday, 7am.",
+    "A free weekly brief that breaks one hard topic down to its underlying assumptions — every Tuesday, 7am ET. Fund a topic, or put our writing under your name.",
   openGraph: {
-    title: "Functional Intelligence — The Board",
+    title: "Functional Intelligence — Hard ideas, made legible.",
     description:
-      "You fund it. I break it down. Back the research you want explained. Top idea ships Tue & Thu, 7am.",
+      "A free weekly brief that breaks one hard topic down to its underlying assumptions — every Tuesday, 7am ET. Fund a topic, or put our writing under your name.",
     siteName: "Functional Intelligence",
   },
   icons: {

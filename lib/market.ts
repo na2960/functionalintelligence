@@ -57,41 +57,19 @@ function etToUtc(
   return new Date(guess);
 }
 
-export type MarketState = {
-  closesAt: Date; // next Mon/Wed 8:00 PM ET
-  issueAt: Date; // the Tue/Thu 7:00 AM ET it feeds
-  issueDay: "Tuesday" | "Thursday";
-};
-
-// Launch floor: the first market must not close before this instant. This
-// skips the Tuesday launch-week issue so the very first brief ships Thursday
-// (market closes Wednesday evening, July 15 8:00 PM ET = July 16 00:00 UTC).
-// Once this moment passes, the normal Tue/Thu cadence resumes automatically.
-// Override with NEXT_PUBLIC_FI_FIRST_CLOSE if the launch date changes.
-const FIRST_CLOSE_MS = Date.parse(
-  process.env.NEXT_PUBLIC_FI_FIRST_CLOSE ?? "2026-07-16T00:00:00Z"
-);
-
-export function marketState(now: Date = new Date()): MarketState {
-  // Walk forward day by day (in ET) to find the next close that is still ahead.
-  for (let offset = 0; offset < 16; offset++) {
+// Weekly cadence: one brief every Tuesday at 7:00 AM ET. Returns the next
+// Tuesday 7:00 AM ET that is still ahead of `now`.
+export function nextBrief(now: Date = new Date()): Date {
+  for (let offset = 0; offset < 14; offset++) {
     const probe = new Date(now.getTime() + offset * 86400_000);
     const p = etParts(probe);
-    if (p.weekday === 1 || p.weekday === 3) {
-      const close = etToUtc(p.year, p.month, p.day, 20, 0);
-      if (close.getTime() > now.getTime() && close.getTime() >= FIRST_CLOSE_MS) {
-        const issue = new Date(close.getTime() + 11 * 3600_000); // next day 7:00 AM ET
-        const ip = etParts(issue);
-        const issueAt = etToUtc(ip.year, ip.month, ip.day, 7, 0);
-        return {
-          closesAt: close,
-          issueAt,
-          issueDay: p.weekday === 1 ? "Tuesday" : "Thursday",
-        };
-      }
+    if (p.weekday === 2) {
+      // Tuesday
+      const issue = etToUtc(p.year, p.month, p.day, 7, 0);
+      if (issue.getTime() > now.getTime()) return issue;
     }
   }
-  throw new Error("could not compute market state");
+  throw new Error("could not compute next brief time");
 }
 
 export type CountdownParts = {
@@ -109,14 +87,6 @@ export function countdownParts(ms: number): CountdownParts {
     minutes: Math.floor((total % 3600) / 60),
     seconds: total % 60,
   };
-}
-
-export function timeAgo(iso: string, now: Date = new Date()): string {
-  const s = Math.max(0, Math.floor((now.getTime() - new Date(iso).getTime()) / 1000));
-  if (s < 60) return "just now";
-  if (s < 3600) return `${Math.floor(s / 60)}m ago`;
-  if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
-  return `${Math.floor(s / 86400)}d ago`;
 }
 
 export function formatMoney(cents: number): string {

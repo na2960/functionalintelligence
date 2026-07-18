@@ -1,161 +1,84 @@
-import Board from "@/components/Board";
-import BoardActions from "@/components/BoardActions";
-import CommissionCta from "@/components/CommissionCta";
-import Countdown from "@/components/Countdown";
+import About from "@/components/About";
 import EmailCapture from "@/components/EmailCapture";
 import Footer from "@/components/Footer";
+import FounderVoice from "@/components/FounderVoice";
+import FundTopic from "@/components/FundTopic";
+import LatestBrief from "@/components/LatestBrief";
 import MarketProvider from "@/components/MarketProvider";
 import Nav from "@/components/Nav";
-import { formatMoney } from "@/lib/market";
-import { fetchBoard, type BoardIdea } from "@/lib/supabase";
+import {
+  fetchBoard,
+  fetchLatestBrief,
+  type BoardIdea,
+  type Brief,
+} from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
+  // Fetch independently so one failing query can't blank the other.
   let board: BoardIdea[] = [];
+  let latest: Brief | null = null;
   try {
     board = await fetchBoard();
   } catch {
-    // render with an empty board rather than a 500; the client refreshes
+    // topic list falls back to empty; client refreshes
   }
-
-  const openIdeas = board.filter((i) => i.status === "open");
-  const totalOnBoard = openIdeas.reduce((s, i) => s + i.total_cents, 0);
-  const totalBackers = openIdeas.reduce((s, i) => s + i.backers, 0);
+  try {
+    latest = await fetchLatestBrief();
+  } catch {
+    // no latest brief yet
+  }
 
   return (
     <>
-      <Nav active="board" />
+      <Nav />
 
-      <MarketProvider initialIdeas={board}>
-        <div className="frame">
-          <section className="frame-sec hero-sec">
-            <div className="hero-cols">
-              <h1 className="rm-title">
-                The{" "}
-                <span className="rm-mark">
-                  <em>f</em>i
-                </span>{" "}
-                Research
-                <br />
-                Marketplace
-              </h1>
-              <div className="hero-aside">
-                <p className="hero-lede">You fund it. We break it down.</p>
-                <p className="hero-desc">
-                  Our team breaks the top-funded topic down to its underlying
-                  assumptions using abstractions anyone could understand — a
-                  5-minute brief every Tuesday &amp; Thursday at 7am. Free to
-                  read. Pay to steer or commission.
-                </p>
-                <div className="hero-cta-row">
-                  <a className="btn btn-gold" href="#board">
-                    The Board →
-                  </a>
-                  <a className="btn btn-secondary" href="/briefs">
-                    Read the Briefs →
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="hero-metrics">
-              <div className="stat-strip">
-                <span>
-                  <b>{formatMoney(totalOnBoard)}</b> riding on the board
-                </span>
-                <span className="stat-dot">·</span>
-                <span>
-                  <b>{totalBackers}</b> backer{totalBackers === 1 ? "" : "s"}{" "}
-                  steering
-                </span>
-                <span className="stat-dot">·</span>
-                <span>
-                  <b>{openIdeas.length}</b> topics in the race
-                </span>
-              </div>
-              <Countdown />
-            </div>
-          </section>
+      <div className="frame">
+        <section className="frame-sec hero2">
+          <h1 className="hero-h1">Hard ideas, made legible.</h1>
+          <p className="hero-lede2">You fund it. We break it down.</p>
+          <p className="hero-desc">
+            Every Tuesday at 7am, we take one genuinely difficult topic — a
+            paper, a method, a claim — and break it down to its underlying
+            assumptions in a five-minute brief anyone can follow. Free to read,
+            always.
+          </p>
+          <div className="hero-cta-row">
+            <a className="btn btn-gold" href="/briefs">
+              Read the briefs →
+            </a>
+            <a className="btn btn-secondary" href="#fund">
+              Fund a topic →
+            </a>
+          </div>
+        </section>
 
-          <section className="frame-sec" id="board">
+        <LatestBrief brief={latest} />
+
+        <MarketProvider initialIdeas={board}>
+          <section id="fund" className="frame-sec">
             <div className="section-head">
-              <h2>The Board</h2>
+              <h2>Fund a topic</h2>
             </div>
-            <p className="section-sub">
-              When the market closes, the most-backed topic becomes the next
-              brief. Every other topic keeps its funding and stays in the
-              running.
-            </p>
-            <BoardActions />
-            <Board />
+            <FundTopic />
           </section>
+        </MarketProvider>
 
-          <section className="frame-sec brief-signup">
-            <div className="signup-inner">
-              <div>
-                <h3>Don&rsquo;t miss the free 7am brief.</h3>
-                <p>Every Tuesday and Thursday.</p>
-              </div>
-              <EmailCapture variant="band" />
+        <section className="frame-sec subscribe-sec">
+          <div className="subscribe-inner">
+            <div>
+              <h2>Get the brief free, every Tuesday.</h2>
+              <p>One email a week — the week&rsquo;s brief, in your inbox at 7am ET.</p>
             </div>
-          </section>
+            <EmailCapture variant="band" />
+          </div>
+        </section>
 
-          <section className="frame-sec">
-            <div className="section-head">
-              <h2>How it works</h2>
-            </div>
-            <div className="steps">
-              <div className="step">
-                <div className="n">01 · Submit</div>
-                <h4>Pitch the topic</h4>
-                <p>
-                  A paper link, a topic, a question. If it makes you curious, it
-                  belongs on The Board.
-                </p>
-              </div>
-              <div className="step">
-                <div className="n">02 · Back</div>
-                <h4>Put money on it</h4>
-                <p>
-                  Back any topic — yours or someone else&rsquo;s. Every dollar
-                  adds to its total.
-                </p>
-              </div>
-              <div className="step">
-                <div className="n">03 · Close</div>
-                <h4>Market closes 8pm ET</h4>
-                <p>
-                  The night before each issue, the board locks. The most-backed
-                  topic is delivered as a brief.
-                </p>
-              </div>
-              <div className="step">
-                <div className="n">04 · Ship</div>
-                <h4>Brief lands at 7am</h4>
-                <p>
-                  Tuesday &amp; Thursday. A clear, intuitive breakdown — read it
-                  here or in your inbox.
-                </p>
-              </div>
-            </div>
-          </section>
+        <FounderVoice />
 
-          <section className="frame-sec" id="commission">
-            <div className="commission">
-              <div>
-                <h3>Commissions</h3>
-                <p>
-                  A commission is a private brief on a topic of your choice,
-                  from{" "}
-                  <strong style={{ color: "var(--gold)" }}>$100</strong>. It
-                  stays private unless you decide otherwise.
-                </p>
-              </div>
-              <CommissionCta />
-            </div>
-          </section>
-        </div>
-      </MarketProvider>
+        <About />
+      </div>
 
       <Footer />
     </>
