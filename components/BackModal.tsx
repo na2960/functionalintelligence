@@ -3,7 +3,6 @@
 import { useState } from "react";
 import type { BoardIdea } from "@/lib/supabase";
 import { formatMoney } from "@/lib/market";
-import { CATEGORIES } from "@/lib/categories";
 import Modal from "./Modal";
 import AmountPicker from "./AmountPicker";
 
@@ -31,14 +30,10 @@ export default function BackModal({
   );
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
-  const [category, setCategory] = useState("ai");
-  const [customCategory, setCustomCategory] = useState("");
-  const [detail, setDetail] = useState("");
 
   const [amountCents, setAmountCents] = useState(preset ?? 500);
   const [custom, setCustom] = useState("");
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -71,22 +66,14 @@ export default function BackModal({
               newTopic: {
                 title: title.trim(),
                 link: link.trim() || undefined,
-                category,
-                customCategory:
-                  category === "other"
-                    ? customCategory.trim() || undefined
-                    : undefined,
-                detail: detail.trim() || undefined,
               },
               amountCents: effectiveCents,
               name: name.trim() || undefined,
-              email: email.trim() || undefined,
             }
           : {
               ideaId: selectedId,
               amountCents: effectiveCents,
               name: name.trim() || undefined,
-              email: email.trim() || undefined,
             };
       const res = await fetch("/api/back", {
         method: "POST",
@@ -140,43 +127,16 @@ export default function BackModal({
               onChange={(e) => setTitle(e.target.value)}
             />
           </label>
-          <div className="field-row">
-            <label className="f">
-              Link a paper (optional)
-              <input
-                type="url"
-                maxLength={500}
-                placeholder="https://…"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-              />
-            </label>
-            <label className="f">
-              Category
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                {CATEGORIES.map((c) => (
-                  <option key={c.value} value={c.value}>
-                    {c.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          {category === "other" && (
-            <label className="f">
-              What field is this? (we&rsquo;ll review it)
-              <input
-                type="text"
-                maxLength={80}
-                placeholder="e.g. materials science, linguistics…"
-                value={customCategory}
-                onChange={(e) => setCustomCategory(e.target.value)}
-              />
-            </label>
-          )}
+          <label className="f">
+            Link a paper (optional)
+            <input
+              type="url"
+              maxLength={500}
+              placeholder="https://…"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+            />
+          </label>
         </>
       ) : (
         <label className="f">
@@ -209,28 +169,16 @@ export default function BackModal({
         onCustom={setCustom}
       />
 
-      <div className="field-row">
-        <label className="f">
-          Name on the list (optional)
-          <input
-            type="text"
-            maxLength={60}
-            placeholder="anonymous"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label className="f">
-          Email for the brief (optional)
-          <input
-            type="email"
-            maxLength={200}
-            placeholder="name@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-      </div>
+      <label className="f">
+        Name on the list (optional)
+        <input
+          type="text"
+          maxLength={60}
+          placeholder="anonymous"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
 
       <div className="dialog-actions">
         <button className="btn btn-ghost" onClick={onClose} disabled={busy}>

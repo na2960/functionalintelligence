@@ -1,7 +1,7 @@
 const PAPER_URL = "https://pmc.ncbi.nlm.nih.gov/articles/PMC11141807/";
 const SCHOLAR_URL =
   process.env.NEXT_PUBLIC_SCHOLAR_URL ??
-  "https://scholar.google.com/scholar?q=Nripendra+Acharya";
+  "https://scholar.google.com/citations?user=7WyPDzgAAAAJ&hl=en";
 
 export default function About() {
   return (
@@ -35,10 +35,10 @@ export default function About() {
           <div className="about-grid">
             <div className="about-col">
               <p className="mo-card-desc about-para">
-                His published works include biomedical research in the
-                proceedings of the AMIA Joint Summits on Translational Science,
-                along with earlier industry writing such as a white paper on
-                human engagement in digital banking.
+                Nripendra&rsquo;s published works include biomedical research in
+                the proceedings of the AMIA Joint Summits on Translational
+                Science, along with industry writing and whitepapers on AI and
+                digital banking.
               </p>
               <div className="about-links">
                 <a
@@ -55,7 +55,7 @@ export default function About() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Read the full paper ↗
+                  Read a sample paper ↗
                 </a>
               </div>
             </div>

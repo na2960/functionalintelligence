@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [when, setWhen] = useState("");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -14,17 +15,28 @@ export default function ContactForm() {
     setBusy(true);
     setMsg(null);
     try {
+      const fullMessage = when
+        ? `${message}\n\nPreferred call time: ${new Date(
+            when
+          ).toLocaleString()}`
+        : message;
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message: fullMessage }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Something went wrong.");
       setName("");
       setEmail("");
+      setWhen("");
       setMessage("");
-      setMsg({ ok: true, text: "Sent — we'll get back to you shortly." });
+      setMsg({
+        ok: true,
+        text: when
+          ? "Sent — we'll confirm your call by email."
+          : "Sent — we'll get back to you shortly.",
+      });
     } catch (err) {
       setMsg({
         ok: false,
@@ -61,11 +73,19 @@ export default function ContactForm() {
         </label>
       </div>
       <label className="cf-field">
-        <span className="cf-label">03 / Message</span>
+        <span className="cf-label">03 / Preferred call time (optional)</span>
+        <input
+          type="datetime-local"
+          value={when}
+          onChange={(e) => setWhen(e.target.value)}
+        />
+      </label>
+      <label className="cf-field">
+        <span className="cf-label">04 / Message</span>
         <textarea
           required
           maxLength={4000}
-          rows={6}
+          rows={5}
           placeholder="What can we help with?"
           value={message}
           onChange={(e) => setMessage(e.target.value)}

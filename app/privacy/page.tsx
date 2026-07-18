@@ -8,7 +8,7 @@ const CONTACT = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@funcimarket.co
 
 export default function Privacy() {
   return (
-    <LegalLayout title="Privacy Policy" updated="July 13, 2026">
+    <LegalLayout title="Privacy Policy" updated="July 18, 2026">
       <p>
         This Privacy Policy explains what Functional Intelligence
         (&ldquo;ƒi&rdquo;, &ldquo;we&rdquo;) collects, how we use it, and the
@@ -19,18 +19,21 @@ export default function Privacy() {
       <ul>
         <li>
           <strong>Email address</strong> &mdash; when you subscribe, back a
-          topic, or commission a brief, so we can deliver briefs and
-          confirmations.
+          topic, contact us, or start a writing retainer, so we can deliver
+          briefs and confirmations.
         </li>
         <li>
           <strong>Name (optional)</strong> &mdash; a display name you may add to
-          a backing. If provided, it may be shown publicly on The Board next to
+          a backing. If provided, it may be shown publicly on the board next to
           the topic you backed. Leave it blank to remain anonymous.
         </li>
         <li>
           <strong>Topic submissions</strong> &mdash; the papers, topics,
-          questions, and links you submit, which appear publicly on The Board
-          (private commissions excepted).
+          questions, and links you submit, which appear publicly on the board.
+        </li>
+        <li>
+          <strong>Contact messages</strong> &mdash; the name, email, message,
+          and any preferred call time you send through our contact form.
         </li>
         <li>
           <strong>Payment information</strong> &mdash; processed by Stripe. We

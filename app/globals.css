@@ -4694,3 +4694,226 @@ body {
 .legal a:hover {
   color: var(--text-2);
 }
+
+/* ================= v16: homepage — diagonal boxes on a central axis ================= */
+.home {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 100px) 24px;
+}
+.home-diagram {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 120px;
+  row-gap: 44px;
+  align-items: center;
+  position: relative;
+}
+.home-diagram .hm-box {
+  flex: initial;
+  position: relative;
+  border: 1.5px dashed var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  padding: 26px 26px 28px;
+  display: flex;
+  flex-direction: column;
+}
+.hm-tl {
+  grid-column: 1;
+  grid-row: 1;
+}
+.hm-mr {
+  grid-column: 2;
+  grid-row: 2;
+}
+.hm-bl {
+  grid-column: 1;
+  grid-row: 3;
+}
+.hm-axis {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  border-left: 1.5px dashed var(--line);
+}
+.hm-conn {
+  position: absolute;
+  top: 50%;
+  height: 0;
+  border-top: 1.5px dashed var(--line);
+}
+.hm-conn-r {
+  left: 100%;
+  width: 60px;
+}
+.hm-conn-l {
+  right: 100%;
+  width: 60px;
+}
+.hm-conn::before,
+.hm-conn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+}
+.hm-conn-r::before {
+  left: 0;
+}
+.hm-conn-r::after {
+  left: 60px;
+}
+.hm-conn-l::before {
+  left: 60px;
+}
+.hm-conn-l::after {
+  left: 0;
+}
+
+@media (max-width: 820px) {
+  .home-diagram {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 44px;
+  }
+  .hm-tl,
+  .hm-mr,
+  .hm-bl {
+    grid-column: 1;
+  }
+  .hm-axis,
+  .hm-conn {
+    display: none;
+  }
+  .home-diagram .hm-box:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -44px;
+    height: 44px;
+    border-left: 1.5px dashed var(--line);
+  }
+}
+
+/* ================= v17: services hero cols, board scroll, subscribe modal ================= */
+/* writing-services hero: description left, note + contact right */
+.fv-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  gap: 48px;
+  align-items: end;
+}
+.fv-hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+  padding-bottom: 4px;
+}
+.fv-hero-note {
+  font-family: var(--mono-ui);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 32ch;
+}
+@media (max-width: 820px) {
+  .fv-hero {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+}
+
+/* plan cards */
+.fv-plan-desc {
+  font-family: var(--mono-ui);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+  margin-top: 14px;
+  max-width: 36ch;
+}
+.fv-plan-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* marketplace header: anchor nav on the right */
+.mkt-head-2col {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 36px;
+}
+.mkt-head-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  padding-top: 6px;
+  flex-shrink: 0;
+}
+@media (max-width: 720px) {
+  .mkt-head-2col {
+    flex-direction: column;
+  }
+  .mkt-head-nav {
+    flex-direction: row;
+    align-items: flex-start;
+    padding-top: 0;
+  }
+}
+
+/* scrollable board + "back something new" */
+.mkt-board-scroll {
+  max-height: 340px;
+  overflow-y: auto;
+}
+.mkt-board-new {
+  margin-top: 10px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1.5px dashed var(--line);
+  border-radius: 4px;
+  padding: 12px 14px;
+  font-family: var(--mono-ui);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.mkt-board-new:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* subscribe modal: clean full-width capture */
+.sub-modal {
+  margin-top: 4px;
+}
+.sub-modal .email-capture {
+  align-items: stretch;
+}
+.sub-modal .email-field {
+  display: flex;
+  width: 100%;
+}
+.sub-modal .email-field input[type="email"] {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+}
+.sub-modal .email-msg {
+  display: block;
+  margin-top: 10px;
+}

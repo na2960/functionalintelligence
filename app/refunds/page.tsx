@@ -8,12 +8,15 @@ const CONTACT = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@funcimarket.co
 
 export default function Refunds() {
   return (
-    <LegalLayout title="Refund Policy" updated="July 13, 2026">
+    <LegalLayout title="Refund Policy" updated="July 18, 2026">
       <p>
-        Backing a topic and commissioning a brief are voluntary payments that
-        prioritize editorial coverage. Because they fund work and queue
-        placement immediately, they are <strong>generally non-refundable</strong>.
-        Please back and commission deliberately.
+        Backing a topic is a voluntary payment that prioritizes editorial
+        coverage. Because it funds work immediately, backing is{" "}
+        <strong>generally non-refundable</strong>. Writing retainers (Founder
+        Voice and Founder Voice+) are recurring subscriptions; you can cancel at
+        any time to stop future charges, and amounts already billed for a
+        current or past period are non-refundable. Please back and subscribe
+        deliberately.
       </p>
 
       <h2>When we will refund</h2>
@@ -23,12 +26,12 @@ export default function Refunds() {
           you were charged in error, more than once, or in the wrong amount;
         </li>
         <li>
-          the payment did not register on The Board due to a technical failure
-          on our side; or
+          a backing did not register on the board due to a technical failure on
+          our side; or
         </li>
         <li>
-          you commissioned a private brief and we determine we cannot deliver it
-          (in which case the commission amount is refunded).
+          we started a writing retainer but were unable to begin the work (in
+          which case the first month is refunded).
         </li>
       </ul>
 

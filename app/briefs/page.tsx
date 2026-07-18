@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import Marketplace from "@/components/Marketplace";
 import SubscribeButton, { BriefTimer } from "@/components/SubscribeButton";
 import {
-  fetchBriefs,
   fetchLatestBrief,
   fetchBoard,
   type Brief,
@@ -26,7 +25,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export const metadata = {
   title: "Research Marketplace — Functional Intelligence",
   description:
-    "Back the topic you want explained, read the current issue, browse the archive, and subscribe. Reader-funded briefs, free to read.",
+    "Back any topic you want explained, read the current issue, and subscribe. Reader-funded briefs, free to read.",
 };
 
 function fmtDate(d: string | null) {
@@ -40,12 +39,8 @@ function fmtDate(d: string | null) {
 }
 
 export default async function Marketplace_Page() {
-  let briefs: Brief[] = [];
   let latest: Brief | null = null;
   let board: BoardIdea[] = [];
-  try {
-    briefs = await fetchBriefs();
-  } catch {}
   try {
     latest = await fetchLatestBrief();
   } catch {}
@@ -53,28 +48,36 @@ export default async function Marketplace_Page() {
     board = await fetchBoard();
   } catch {}
 
-  const archive = latest ? briefs.filter((b) => b.id !== latest!.id) : briefs;
-
   return (
     <>
       <Nav active="marketplace" />
 
       <div className="mo-wrap">
-        <section className="mkt-head">
-          <div className="mo-eyebrow">// Reader-funded research</div>
-          <h1 className="mo-h1">
-            Research
-            <br />
-            Marketplace.
-          </h1>
-          <p className="mo-lede">
-            Back the topic you want explained. The most-backed idea becomes next
-            week&rsquo;s brief — free to read.
-          </p>
-          <div className="mkt-head-actions">
-            <BriefTimer />
-            <SubscribeButton />
+        <section className="mkt-head mkt-head-2col">
+          <div className="mkt-head-main">
+            <div className="mo-eyebrow">// Reader-funded research</div>
+            <h1 className="mo-h1">
+              Research
+              <br />
+              Marketplace.
+            </h1>
+            <p className="mo-lede">
+              Back any topic you want explained. The most-backed idea becomes
+              next week&rsquo;s brief — free to read.
+            </p>
+            <div className="mkt-head-actions">
+              <BriefTimer />
+              <SubscribeButton />
+            </div>
           </div>
+          <nav className="mkt-head-nav">
+            <a href="#briefs" className="mo-chip">
+              Briefs
+            </a>
+            <a href="#board" className="mo-chip">
+              The Board
+            </a>
+          </nav>
         </section>
       </div>
 
@@ -82,9 +85,9 @@ export default async function Marketplace_Page() {
 
       {/* current issue */}
       <div className="mo-wrap">
-        <section className="mkt-current">
+        <section id="briefs" className="mkt-current">
           <div className="mo-features-head">
-            <span>// Current issue</span>
+            <span>// Briefs</span>
             <span>{latest ? fmtDate(latest.covered_at) : "Coming soon"}</span>
           </div>
           <div className="mo-axis" />
@@ -114,42 +117,8 @@ export default async function Marketplace_Page() {
         </section>
       </div>
 
-      {/* fund your own + board */}
+      {/* the board — fund your own */}
       <Marketplace board={board} />
-
-      {/* archive */}
-      <div className="mo-wrap">
-        <section className="mkt-archive">
-          <div className="mo-features-head">
-            <span>// Archive</span>
-            <span>{String(archive.length).padStart(2, "0")} briefs</span>
-          </div>
-          <div className="mo-axis" />
-          {archive.length === 0 ? (
-            <p className="board-empty">No past issues yet — the archive fills up weekly.</p>
-          ) : (
-            <ul className="mkt-arch-list">
-              {archive.map((b, i) => (
-                <li key={b.id}>
-                  <Link href={`/briefs/${b.id}`} className="mkt-arch-row">
-                    <span className="board-rank">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="mkt-arch-tag mono">
-                      {CATEGORY_LABELS[b.category] ?? b.category}
-                    </span>
-                    <span className="mkt-arch-title">{b.title}</span>
-                    <span className="mkt-arch-when mono">
-                      {fmtDate(b.covered_at)}
-                    </span>
-                    <span className="mo-link">Read →</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-      </div>
 
       <Footer />
     </>

@@ -8,7 +8,7 @@ const CONTACT = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@funcimarket.co
 
 export default function Terms() {
   return (
-    <LegalLayout title="Terms of Service" updated="July 13, 2026">
+    <LegalLayout title="Terms of Service" updated="July 18, 2026">
       <p>
         These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and
         use of Functional Intelligence (&ldquo;ƒi&rdquo;,
@@ -20,33 +20,34 @@ export default function Terms() {
 
       <h2>1. What Functional Intelligence is</h2>
       <p>
-        Functional Intelligence is an editorial publication. Readers submit
-        research papers, topics, and questions to a public list called The
-        Board and may make voluntary payments to prioritize which topic we
-        cover next. The single most-funded topic when a market closes is
-        published as a short explanatory brief. The Service is a way to
-        prioritize and commission editorial content. It is not a financial
+        Functional Intelligence is an editorial publication with two offerings:
+        a free weekly brief funded through a research marketplace, and paid
+        writing services. In the research marketplace, readers submit topics to
+        a public board and may make voluntary payments to prioritize which topic
+        we cover next; each week the most-backed topic is published as a short
+        explanatory brief (Tuesdays, 7am ET), free to read. The Service is a way
+        to prioritize and commission editorial content. It is not a financial
         product, security, investment, deposit, wager, lottery, or game of
         chance.
       </p>
 
-      <h2>2. Payments: backing and commissions</h2>
+      <h2>2. Payments: backing and writing retainers</h2>
       <ul>
         <li>
           <strong>Backing</strong> is a voluntary payment that adds to a
-          topic&rsquo;s total to help it rank higher on The Board. Multiple
+          topic&rsquo;s total to help it rank higher on the board. Multiple
           people may back the same topic; totals are cumulative.
         </li>
         <li>
-          <strong>Commissions</strong> are voluntary payments (from $100) to
-          have a private brief written on a topic of your choice, delivered to
-          you first. A commissioned brief remains private unless you choose to
-          release it.
+          <strong>Writing retainers</strong> (Founder Voice and Founder Voice+)
+          are recurring monthly subscriptions for content written in your voice
+          and published under your name. They renew automatically until
+          cancelled; you may cancel at any time to stop future charges.
         </li>
         <li>
           All payments are <strong>voluntary and non-refundable</strong> except
           as described in our{" "}
-          <a href="/refunds">Refund Policy</a>. Payments confer no odds, no
+          <a href="/refunds">Refund Policy</a>. Backing confers no odds, no
           payouts, and no financial, ownership, equity, or other return of any
           kind.
         </li>
@@ -57,14 +58,14 @@ export default function Terms() {
         </li>
       </ul>
 
-      <h2>3. How The Board works</h2>
+      <h2>3. How the research marketplace works</h2>
       <p>
-        Each market closes at 8:00 PM ET the night before an issue (Monday and
-        Wednesday). When a market closes, the topic with the highest total
-        funding is selected to be published as a brief, typically on the
-        following Tuesday or Thursday. Topics that are not selected keep their
-        funding and remain on The Board until covered, removed, or superseded.
-        We may adjust the schedule, mechanics, or selection at our discretion.
+        Topics on the board are ranked by total backing. Each week the
+        highest-backed topic is selected to be published as a brief, typically
+        the following Tuesday at 7:00 AM ET. Topics that are not selected keep
+        their backing and remain on the board until covered, removed, or
+        superseded. We may adjust the schedule, mechanics, or selection at our
+        discretion.
       </p>
 
       <h2>4. Your submissions</h2>
