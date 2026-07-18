@@ -2,7 +2,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Marketplace from "@/components/Marketplace";
-import EmailCapture from "@/components/EmailCapture";
+import SubscribeButton, { BriefTimer } from "@/components/SubscribeButton";
 import {
   fetchBriefs,
   fetchLatestBrief,
@@ -59,12 +59,6 @@ export default async function Marketplace_Page() {
     <>
       <Nav active="marketplace" />
 
-      <div className="tstrip">
-        <span>// Research marketplace</span>
-        <span className="tstrip-mid" />
-        <span>FIG. 02 — READER-FUNDED</span>
-      </div>
-
       <div className="mo-wrap">
         <section className="mkt-head">
           <div className="mo-eyebrow">// Reader-funded research</div>
@@ -75,9 +69,12 @@ export default async function Marketplace_Page() {
           </h1>
           <p className="mo-lede">
             Back the topic you want explained. The most-backed idea becomes next
-            week&rsquo;s brief — free to read, like all of them. Subscribe to get
-            each issue Tuesday at 7am ET.
+            week&rsquo;s brief — free to read.
           </p>
+          <div className="mkt-head-actions">
+            <BriefTimer />
+            <SubscribeButton />
+          </div>
         </section>
       </div>
 
@@ -119,24 +116,6 @@ export default async function Marketplace_Page() {
 
       {/* fund your own + board */}
       <Marketplace board={board} />
-
-      {/* subscribe */}
-      <div className="mo-wrap">
-        <section className="mkt-sub">
-          <div className="mo-features-head">
-            <span>// Subscribe</span>
-            <span>Free · Weekly</span>
-          </div>
-          <div className="mo-axis" />
-          <div className="mkt-sub-row">
-            <h2 className="mkt-h2">Get every brief in your inbox.</h2>
-            <p className="mo-card-desc">
-              One issue a week, Tuesday at 7am ET. No spam, unsubscribe anytime.
-            </p>
-            <EmailCapture variant="band" cta="Sign up — free" />
-          </div>
-        </section>
-      </div>
 
       {/* archive */}
       <div className="mo-wrap">

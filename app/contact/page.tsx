@@ -16,12 +16,6 @@ export default function ContactPage() {
     <>
       <Nav active="contact" />
 
-      <div className="tstrip">
-        <span>// Contact</span>
-        <span className="tstrip-mid" />
-        <span>FIG. 04 — GET IN TOUCH</span>
-      </div>
-
       <div className="mo-wrap">
         <section className="mkt-head">
           <div className="mo-eyebrow">// Say hello</div>
@@ -57,22 +51,6 @@ export default function ContactPage() {
               <a href={`mailto:${CONTACT}`} className="contact-email">
                 {CONTACT}
               </a>
-            </div>
-            <div className="contact-detail">
-              <div className="cf-label">Response time</div>
-              <p className="mo-card-desc">
-                We usually reply within one to two business days.
-              </p>
-            </div>
-            <div className="contact-detail">
-              <div className="cf-label">Also</div>
-              <p className="mo-card-desc">
-                For writing engagements, see{" "}
-                <a href="/services" className="mo-link">
-                  Writing Services
-                </a>
-                .
-              </p>
             </div>
           </aside>
         </section>

@@ -6,16 +6,14 @@ const SCHOLAR_URL =
 export default function About() {
   return (
     <>
-      <div className="tstrip">
-        <span>// About</span>
-        <span className="tstrip-mid" />
-        <span>FIG. 05 — WHO WE ARE</span>
-      </div>
-
       <div className="mo-wrap">
         <section className="mkt-head">
-          <div className="mo-eyebrow">// Clear frameworks for hard things</div>
-          <h1 className="mo-h1">About.</h1>
+          <div className="mo-eyebrow">// About Functional Intelligence</div>
+          <h1 className="mo-h1">
+            Hard ideas,
+            <br />
+            made <span className="dim">legible.</span>
+          </h1>
           <p className="mo-lede">
             Functional Intelligence is written and edited by Nripendra Acharya,
             whose research has centered on a recurring problem: constructing

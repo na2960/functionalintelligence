@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-
-const CONTACT =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@funcimarket.com";
+import ContactModal from "./ContactModal";
 
 export default function FounderVoice() {
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [showContact, setShowContact] = useState(false);
 
   async function subscribe(tier: "founder_voice" | "founder_voice_plus") {
     setBusy(tier);
@@ -30,12 +29,6 @@ export default function FounderVoice() {
 
   return (
     <>
-      <div className="tstrip">
-        <span>// Writing services</span>
-        <span className="tstrip-mid" />
-        <span>FIG. 03 — FOUNDER VOICE</span>
-      </div>
-
       <div className="mo-wrap">
         <section className="mkt-head">
           <div className="mo-eyebrow">// Content under your name</div>
@@ -72,8 +65,6 @@ export default function FounderVoice() {
               </div>
               <ul className="fv-list">
                 <li>Two publish-ready pieces a month</li>
-                <li>Monthly 45-minute extraction call</li>
-                <li>Two revision rounds</li>
               </ul>
               <button
                 className="btn-ghost"
@@ -92,8 +83,6 @@ export default function FounderVoice() {
               </div>
               <ul className="fv-list">
                 <li>Four pieces a month</li>
-                <li>LinkedIn-native adaptation of each</li>
-                <li>Monthly call, two revision rounds</li>
               </ul>
               <button
                 className="btn-ghost"
@@ -162,26 +151,23 @@ export default function FounderVoice() {
           <div className="mo-axis" />
           <div className="fv-cta-row">
             <p className="mo-card-desc fv-private">
-              Your name on the work. Our involvement stays private, always — our
-              client list is confidential by default.
+              Your name on the work. Our involvement stays private, always.
             </p>
             <div className="fv-cta-actions">
-              <a
+              <button
+                type="button"
                 className="btn-blk"
-                href={`mailto:${CONTACT}?subject=${encodeURIComponent(
-                  "Writing services — let's talk"
-                )}`}
+                onClick={() => setShowContact(true)}
               >
-                Start a conversation →
-              </a>
-              <a className="mo-link" href="/briefs">
-                The briefs are our portfolio →
-              </a>
+                Contact us →
+              </button>
             </div>
           </div>
           {err && <p className="cf-msg err">{err}</p>}
         </section>
       </div>
+
+      {showContact && <ContactModal onClose={() => setShowContact(false)} />}
     </>
   );
 }
