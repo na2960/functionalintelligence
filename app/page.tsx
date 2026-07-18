@@ -1,33 +1,19 @@
-import About from "@/components/About";
+import Link from "next/link";
 import EmailCapture from "@/components/EmailCapture";
 import Footer from "@/components/Footer";
-import FounderVoice from "@/components/FounderVoice";
 import FundTopic from "@/components/FundTopic";
-import LatestBrief from "@/components/LatestBrief";
 import MarketProvider from "@/components/MarketProvider";
 import Nav from "@/components/Nav";
-import {
-  fetchBoard,
-  fetchLatestBrief,
-  type BoardIdea,
-  type Brief,
-} from "@/lib/supabase";
+import { fetchBoard, type BoardIdea } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  // Fetch independently so one failing query can't blank the other.
   let board: BoardIdea[] = [];
-  let latest: Brief | null = null;
   try {
     board = await fetchBoard();
   } catch {
     // topic list falls back to empty; client refreshes
-  }
-  try {
-    latest = await fetchLatestBrief();
-  } catch {
-    // no latest brief yet
   }
 
   return (
@@ -35,49 +21,47 @@ export default async function Home() {
       <Nav />
 
       <div className="frame">
-        <section className="frame-sec hero2">
-          <h1 className="hero-h1">Hard ideas, made legible.</h1>
-          <p className="hero-lede2">You fund it. We break it down.</p>
-          <p className="hero-desc">
-            Every Tuesday at 7am, we take one genuinely difficult topic — a
-            paper, a method, a claim — and break it down to its underlying
-            assumptions in a five-minute brief anyone can follow. Free to read,
-            always.
+        <section className="frame-sec ed-hero">
+          <h1 className="ed-statement">Hard ideas, made legible.</h1>
+          <p className="ed-sub">
+            A free weekly brief that breaks one genuinely difficult topic — a
+            paper, a method, a claim — down to its underlying assumptions.
+            Anyone can follow it. Every Tuesday, 7am ET.
           </p>
-          <div className="hero-cta-row">
-            <a className="btn btn-gold" href="/briefs">
-              Read the briefs →
-            </a>
-            <a className="btn btn-secondary" href="#fund">
-              Fund a topic →
-            </a>
+          <div className="ed-hero-links">
+            <Link href="/briefs">Read the briefs →</Link>
+            <a href="#fund">Fund a topic →</a>
           </div>
         </section>
 
-        <LatestBrief brief={latest} />
+        <section className="frame-sec ed-subscribe">
+          <h2 className="ed-title">Subscribe for our briefs</h2>
+          <p className="ed-lede">
+            Every Tuesday at 7am ET, in your inbox. Always free.
+          </p>
+          <EmailCapture variant="band" cta="Sign up for the brief — free" />
+        </section>
 
         <MarketProvider initialIdeas={board}>
-          <section id="fund" className="frame-sec">
-            <div className="section-head">
-              <h2>Fund a topic</h2>
-            </div>
+          <section id="fund" className="frame-sec ed-fund">
+            <h2 className="ed-title">Back a topic you want us to cover</h2>
+            <p className="ed-lede">
+              The most-backed topic becomes next Tuesday&rsquo;s brief.
+            </p>
             <FundTopic />
           </section>
         </MarketProvider>
 
-        <section className="frame-sec subscribe-sec">
-          <div className="subscribe-inner">
-            <div>
-              <h2>Get the brief free, every Tuesday.</h2>
-              <p>One email a week — the week&rsquo;s brief, in your inbox at 7am ET.</p>
-            </div>
-            <EmailCapture variant="band" />
-          </div>
+        <section className="frame-sec ed-teaser">
+          <h2 className="ed-title">Writing &amp; research services</h2>
+          <p className="ed-lede">
+            We also write technical content in your voice, published under your
+            name — the briefs are our portfolio. Our involvement stays private.
+          </p>
+          <Link href="/services" className="ed-more">
+            See writing &amp; research services →
+          </Link>
         </section>
-
-        <FounderVoice />
-
-        <About />
       </div>
 
       <Footer />

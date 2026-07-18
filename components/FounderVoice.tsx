@@ -5,7 +5,7 @@ import { useState } from "react";
 const CONTACT =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@funcimarket.com";
 const MAILTO = `mailto:${CONTACT}?subject=${encodeURIComponent(
-  "Founder Voice — let's talk"
+  "Writing & research services — let's talk"
 )}`;
 
 export default function FounderVoice() {
@@ -32,76 +32,98 @@ export default function FounderVoice() {
   }
 
   return (
-    <section id="founder-voice" className="frame-sec fv">
-      <div className="fv-head">
-        <div className="fv-kicker">Work with us</div>
-        <h2>Founder Voice</h2>
-        <p className="fv-intro">
-          Starts with a 45-minute conversation a month about your technology,
-          your market, your ideas. Our team writes the briefs: technical details
-          down to underlying assumptions, or however you need. You review our
-          draft, we revise, you publish.
-        </p>
-        <p className="fv-tag">
+    <>
+      <section className="frame-sec fv-intro">
+        <div className="ed-kicker">Writing &amp; research services</div>
+        <h1 className="ed-statement">Founder Voice</h1>
+        <p className="ed-sub">
           Technical content, written in your voice, published under your name.
         </p>
-      </div>
+        <p className="fv-body">
+          Starts with a 45-minute conversation a month about your technology,
+          your market, your ideas. Our team writes the briefs — technical detail
+          down to its underlying assumptions, or however you need. You review
+          our draft, we revise, you publish.
+        </p>
+      </section>
 
-      <div className="fv-tiers">
-        <div className="fv-tier">
-          <h3>Founder Voice</h3>
-          <div className="fv-price">
-            From $1,500<span>/mo</span>
+      <section className="frame-sec">
+        <div className="fv-tiers2">
+          <div className="fv-tier2">
+            <h2 className="fv-name">Founder Voice</h2>
+            <div className="fv-price2">
+              From $1,500<span>/mo</span>
+            </div>
+            <ul className="fv-list">
+              <li>Two publish-ready pieces a month</li>
+              <li>Monthly 45-minute extraction call</li>
+              <li>Two revision rounds</li>
+            </ul>
+            <button
+              className="fv-sub"
+              onClick={() => subscribe("founder_voice")}
+              disabled={busy !== null}
+            >
+              {busy === "founder_voice" ? "Working…" : "Subscribe →"}
+            </button>
           </div>
-          <ul>
-            <li>Two published-ready pieces a month</li>
-            <li>Monthly 45-minute extraction call</li>
-            <li>Two revision rounds</li>
-          </ul>
-          <button
-            className="fv-subscribe"
-            onClick={() => subscribe("founder_voice")}
-            disabled={busy !== null}
-          >
-            {busy === "founder_voice" ? "Working…" : "Subscribe now →"}
-          </button>
-        </div>
 
-        <div className="fv-tier feature">
-          <div className="fv-badge">Most popular</div>
-          <h3>Founder Voice+</h3>
-          <div className="fv-price">
-            From $2,500<span>/mo</span>
+          <div className="fv-tier2">
+            <h2 className="fv-name">Founder Voice+</h2>
+            <div className="fv-price2">
+              From $2,500<span>/mo</span>
+            </div>
+            <ul className="fv-list">
+              <li>Four pieces a month</li>
+              <li>LinkedIn-native adaptation of each</li>
+              <li>Monthly call, two revision rounds</li>
+            </ul>
+            <button
+              className="fv-sub"
+              onClick={() => subscribe("founder_voice_plus")}
+              disabled={busy !== null}
+            >
+              {busy === "founder_voice_plus" ? "Working…" : "Subscribe →"}
+            </button>
           </div>
-          <ul>
-            <li>Four pieces a month</li>
-            <li>LinkedIn-native adaptation of each</li>
-            <li>Monthly call, two revision rounds</li>
-          </ul>
-          <button
-            className="fv-subscribe"
-            onClick={() => subscribe("founder_voice_plus")}
-            disabled={busy !== null}
-          >
-            {busy === "founder_voice_plus" ? "Working…" : "Subscribe now →"}
-          </button>
         </div>
-      </div>
+      </section>
 
-      <p className="fv-private">
-        Your name on the work. Our involvement stays private, always. Our client
-        list is confidential by default.
-      </p>
+      <section className="frame-sec">
+        <h2 className="ed-title">How it works</h2>
+        <ol className="fv-steps">
+          <li>
+            <b>Voice audit.</b> We read your past posts, talks, and decks to
+            learn how you actually sound.
+          </li>
+          <li>
+            <b>Monthly call.</b> A recorded 45-minute conversation where we draw
+            out your opinions — the call is where the work comes from.
+          </li>
+          <li>
+            <b>Drafts in five business days.</b> Argument-driven, technical but
+            legible, 800&ndash;1,500 words.
+          </li>
+          <li>
+            <b>Two revision rounds.</b> Then you publish, under your name.
+          </li>
+        </ol>
+        <p className="fv-private2">
+          Your name on the work. Our involvement stays private, always — our
+          client list is confidential by default. Month-to-month, full IP
+          assignment on payment, 30-day cancellation.
+        </p>
+      </section>
 
-      <div className="fv-cta">
-        <a className="btn btn-gold" href={MAILTO}>
+      <section className="frame-sec fv-cta2">
+        <a className="btn btn-ink" href={MAILTO}>
           Start a conversation
         </a>
-        <a className="fv-portfolio" href="/briefs">
+        <a className="ed-more" href="/briefs">
           The briefs are our portfolio — read them first →
         </a>
-      </div>
-      {err && <p className="form-msg err">{err}</p>}
-    </section>
+        {err && <p className="form-msg err">{err}</p>}
+      </section>
+    </>
   );
 }

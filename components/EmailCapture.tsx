@@ -4,8 +4,10 @@ import { useState } from "react";
 
 export default function EmailCapture({
   variant = "band",
+  cta = "Subscribe",
 }: {
   variant?: "band" | "footer";
+  cta?: string;
 }) {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
@@ -24,7 +26,7 @@ export default function EmailCapture({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Something went wrong.");
       setEmail("");
-      setMsg({ ok: true, text: "You're on the list. First brief lands 7am." });
+      setMsg({ ok: true, text: "You're on the list — first brief lands Tuesday, 7am ET." });
     } catch (err) {
       setMsg({
         ok: false,
@@ -47,7 +49,7 @@ export default function EmailCapture({
           onChange={(e) => setEmail(e.target.value)}
         />
         <button type="submit" disabled={busy}>
-          {busy ? "…" : "Subscribe"}
+          {busy ? "…" : cta}
         </button>
       </div>
       {msg && (

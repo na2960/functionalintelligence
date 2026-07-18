@@ -12,11 +12,6 @@ export default function FundTopic() {
 
   return (
     <div className="fund-block">
-      <p className="section-sub">
-        Curious about something hard? Put it on the list. The most-backed topic
-        becomes next Tuesday&rsquo;s brief.
-      </p>
-
       <div className="fund-actions">
         <button className="btn btn-gold" onClick={openBackNew}>
           Suggest a topic

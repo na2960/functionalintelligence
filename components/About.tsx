@@ -6,9 +6,8 @@ const SCHOLAR_URL =
 export default function About() {
   return (
     <section id="about" className="frame-sec about">
-      <div className="section-head">
-        <h2>About</h2>
-      </div>
+      <div className="ed-kicker">About</div>
+      <h1 className="ed-statement about-h1">Clear frameworks for hard things.</h1>
       <p className="about-intro">
         Functional Intelligence is written and edited by Nripendra Acharya,
         whose research interests have centered on a recurring problem:

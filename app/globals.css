@@ -2717,7 +2717,7 @@ a.action {
   margin-top: 18px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--blue);
+  color: var(--gold-deep);
   text-decoration: none;
 }
 .about-scholar:hover {
@@ -2728,4 +2728,393 @@ a.action {
 .nav-cta.ghost.on {
   border-color: var(--ink);
   color: var(--ink);
+}
+
+/* ================= v12: editorial rework — spare, serif-led, hairline rules ================= */
+
+:root {
+  --bg: #f7f4ec;          /* warm paper */
+  --bg-sunken: #efeadd;
+  --card: #f7f4ec;
+  --border: #e3ddcc;      /* warm hairline */
+  --border-strong: #d4ccb6;
+  --text: #22242b;
+  --text-2: #575649;
+  --muted: #928c7c;
+  --gold-deep: #97731d;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ---- typography: serif for statements + titles, quiet sans elsewhere ---- */
+.ed-statement {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  max-width: 15ch;
+}
+.ed-sub {
+  margin-top: 16px;
+  max-width: 60ch;
+  font-size: 17.5px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.ed-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(23px, 2.8vw, 31px);
+  line-height: 1.12;
+  letter-spacing: -0.005em;
+  color: var(--text);
+}
+.ed-lede {
+  margin-top: 10px;
+  max-width: 60ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.ed-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 14px;
+}
+
+/* general title register — pull existing headings into the serif system */
+.section-head h2,
+.brief-page h1,
+.legal h1,
+.brief-card h3,
+.empty-briefs h3,
+.success-sec h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.section-head h2 {
+  font-size: 24px;
+  color: var(--text);
+}
+
+/* ---- frame + spacing: generous, one thing at a time ---- */
+.frame {
+  border-color: var(--border);
+}
+.frame-sec {
+  padding: 46px 46px;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 640px) {
+  .frame-sec {
+    padding: 30px 20px;
+  }
+}
+
+/* ---- nav ---- */
+.brand-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.mark {
+  background: var(--ink);
+  color: var(--gold);
+  border: none;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-link {
+  font-size: 14px;
+  color: var(--text-2);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 1.5px solid transparent;
+}
+.nav-link:hover {
+  color: var(--ink);
+}
+.nav-link.on {
+  color: var(--ink);
+  border-bottom-color: var(--gold-deep);
+}
+.masthead-timer {
+  color: var(--muted);
+}
+.masthead-timer .mt-cadence {
+  color: var(--text-2);
+  font-weight: 500;
+}
+@media (max-width: 620px) {
+  .brand-name {
+    display: none;
+  }
+  .nav-links {
+    gap: 14px;
+  }
+  .nav-link {
+    font-size: 13px;
+  }
+}
+
+/* ---- links / CTAs ---- */
+.ed-hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 26px;
+}
+.ed-hero-links a,
+.ed-more {
+  color: var(--gold-deep);
+  font-size: 15.5px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.ed-hero-links a:hover,
+.ed-more:hover {
+  text-decoration: underline;
+}
+.ed-more {
+  display: inline-block;
+  margin-top: 16px;
+}
+
+/* restrained ink button (replaces the loud green) */
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: none;
+}
+.btn-gold,
+.btn-ink,
+.email-field button {
+  background: var(--ink);
+  color: #f4efe2;
+  border: 1px solid var(--ink);
+}
+.btn-gold:hover,
+.btn-ink:hover,
+.email-field button:hover {
+  background: #16233a;
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+.btn-secondary:hover {
+  border-color: var(--ink);
+  background: transparent;
+}
+
+/* ---- subscribe (no card — plain, hairline section) ---- */
+.ed-subscribe .email-capture {
+  align-items: flex-start;
+  margin-top: 18px;
+}
+.email-field {
+  border: 1px solid var(--border-strong);
+  background: #fffdf8;
+  border-radius: 8px;
+}
+.email-field input[type="email"] {
+  width: 260px;
+}
+.email-field button {
+  border-radius: 6px;
+}
+
+/* ---- fund a topic (editorial list, serif titles) ---- */
+.ed-fund .fund-block {
+  margin-top: 18px;
+}
+.on-list-label {
+  color: var(--muted);
+  margin-top: 4px;
+}
+.topic-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.005em;
+  color: var(--text);
+}
+.topic-row {
+  padding: 15px 2px;
+  border-color: var(--border);
+}
+.topic-row:first-child {
+  border-top-color: var(--border);
+}
+.back-quiet {
+  color: var(--gold-deep);
+  font-weight: 500;
+}
+.back-quiet:hover {
+  background: var(--bg-sunken);
+  color: var(--ink);
+}
+.fund-note {
+  color: var(--muted);
+}
+
+/* ---- services (Founder Voice) — spare, hairline-separated tiers ---- */
+.fv-intro .ed-sub {
+  color: var(--gold-deep);
+  font-weight: 500;
+}
+.fv-body {
+  margin-top: 16px;
+  max-width: 62ch;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.fv-tiers2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.fv-tier2 {
+  padding: 4px 28px 4px 0;
+}
+.fv-tier2 + .fv-tier2 {
+  padding: 4px 0 4px 28px;
+  border-left: 1px solid var(--border);
+}
+@media (max-width: 640px) {
+  .fv-tiers2 {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .fv-tier2,
+  .fv-tier2 + .fv-tier2 {
+    padding: 0;
+    border-left: none;
+  }
+}
+.fv-name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--text);
+}
+.fv-price2 {
+  margin-top: 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+.fv-price2 span {
+  color: var(--muted);
+  font-weight: 400;
+}
+.fv-list {
+  list-style: none;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.fv-list li {
+  font-size: 14.5px;
+  color: var(--text-2);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.4;
+}
+.fv-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--gold-deep);
+}
+.fv-sub {
+  margin-top: 18px;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.fv-sub:hover {
+  border-color: var(--ink);
+}
+.fv-steps {
+  margin: 16px 0 0 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 66ch;
+}
+.fv-steps li {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.fv-steps li b {
+  color: var(--text);
+  font-weight: 600;
+}
+.fv-private2 {
+  margin-top: 20px;
+  max-width: 62ch;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.fv-cta2 {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+/* ---- about page ---- */
+.about-h1 {
+  margin-bottom: 20px;
+}
+.about-intro {
+  color: var(--text-2);
+}
+.about-quote {
+  border-left-color: var(--gold-deep);
+}
+.about-quote p {
+  color: var(--text);
+}
+
+/* footer on paper */
+.footer {
+  background: var(--bg);
+  border-top-color: var(--border);
+}
+.footer-brand {
+  color: var(--text);
+}
+
+/* briefs list / pages inherit the paper + serif titles automatically */
+.brief-card,
+.step,
+.subscribe-inner,
+.signup-inner {
+  background: transparent;
 }
