@@ -4,9 +4,6 @@ import { useState } from "react";
 
 const CONTACT =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@funcimarket.com";
-const MAILTO = `mailto:${CONTACT}?subject=${encodeURIComponent(
-  "Writing & research services — let's talk"
-)}`;
 
 export default function FounderVoice() {
   const [busy, setBusy] = useState<string | null>(null);
@@ -33,97 +30,158 @@ export default function FounderVoice() {
 
   return (
     <>
-      <section className="frame-sec fv-intro">
-        <div className="ed-kicker">Writing &amp; research services</div>
-        <h1 className="ed-statement">Founder Voice</h1>
-        <p className="ed-sub">
-          Technical content, written in your voice, published under your name.
-        </p>
-        <p className="fv-body">
-          Starts with a 45-minute conversation a month about your technology,
-          your market, your ideas. Our team writes the briefs — technical detail
-          down to its underlying assumptions, or however you need. You review
-          our draft, we revise, you publish.
-        </p>
-      </section>
+      <div className="tstrip">
+        <span>// Writing services</span>
+        <span className="tstrip-mid" />
+        <span>FIG. 03 — FOUNDER VOICE</span>
+      </div>
 
-      <section className="frame-sec">
-        <div className="fv-tiers2">
-          <div className="fv-tier2">
-            <h2 className="fv-name">Founder Voice</h2>
-            <div className="fv-price2">
-              From $1,500<span>/mo</span>
-            </div>
-            <ul className="fv-list">
-              <li>Two publish-ready pieces a month</li>
-              <li>Monthly 45-minute extraction call</li>
-              <li>Two revision rounds</li>
-            </ul>
-            <button
-              className="fv-sub"
-              onClick={() => subscribe("founder_voice")}
-              disabled={busy !== null}
-            >
-              {busy === "founder_voice" ? "Working…" : "Subscribe →"}
-            </button>
+      <div className="mo-wrap">
+        <section className="mkt-head">
+          <div className="mo-eyebrow">// Content under your name</div>
+          <h1 className="mo-h1">
+            Writing
+            <br />
+            Services.
+          </h1>
+          <p className="mo-lede">
+            Well-researched, technical content — written in your voice and
+            published under your name. Starts with a 45-minute conversation a
+            month; our team writes, you review, we revise, you publish. Our
+            involvement stays private.
+          </p>
+        </section>
+      </div>
+
+      <div className="mo-ruler" />
+
+      {/* tiers */}
+      <div className="mo-wrap">
+        <section className="mkt-current">
+          <div className="mo-features-head">
+            <span>// Retainers</span>
+            <span>02 / Plans</span>
           </div>
+          <div className="mo-axis" />
+          <div className="fv-grid">
+            <article className="fv-plan">
+              <div className="mo-card-idx">01</div>
+              <h2 className="mo-card-h">Founder Voice</h2>
+              <div className="fv-price">
+                From $1,500<span> / mo</span>
+              </div>
+              <ul className="fv-list">
+                <li>Two publish-ready pieces a month</li>
+                <li>Monthly 45-minute extraction call</li>
+                <li>Two revision rounds</li>
+              </ul>
+              <button
+                className="btn-ghost"
+                onClick={() => subscribe("founder_voice")}
+                disabled={busy !== null}
+              >
+                {busy === "founder_voice" ? "Working…" : "Subscribe →"}
+              </button>
+            </article>
 
-          <div className="fv-tier2">
-            <h2 className="fv-name">Founder Voice+</h2>
-            <div className="fv-price2">
-              From $2,500<span>/mo</span>
-            </div>
-            <ul className="fv-list">
-              <li>Four pieces a month</li>
-              <li>LinkedIn-native adaptation of each</li>
-              <li>Monthly call, two revision rounds</li>
-            </ul>
-            <button
-              className="fv-sub"
-              onClick={() => subscribe("founder_voice_plus")}
-              disabled={busy !== null}
-            >
-              {busy === "founder_voice_plus" ? "Working…" : "Subscribe →"}
-            </button>
+            <article className="fv-plan">
+              <div className="mo-card-idx">02</div>
+              <h2 className="mo-card-h">Founder Voice+</h2>
+              <div className="fv-price">
+                From $2,500<span> / mo</span>
+              </div>
+              <ul className="fv-list">
+                <li>Four pieces a month</li>
+                <li>LinkedIn-native adaptation of each</li>
+                <li>Monthly call, two revision rounds</li>
+              </ul>
+              <button
+                className="btn-ghost"
+                onClick={() => subscribe("founder_voice_plus")}
+                disabled={busy !== null}
+              >
+                {busy === "founder_voice_plus" ? "Working…" : "Subscribe →"}
+              </button>
+            </article>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      <section className="frame-sec">
-        <h2 className="ed-title">How it works</h2>
-        <ol className="fv-steps">
-          <li>
-            <b>Voice audit.</b> We read your past posts, talks, and decks to
-            learn how you actually sound.
-          </li>
-          <li>
-            <b>Monthly call.</b> A recorded 45-minute conversation where we draw
-            out your opinions — the call is where the work comes from.
-          </li>
-          <li>
-            <b>Drafts in five business days.</b> Argument-driven, technical but
-            legible, 800&ndash;1,500 words.
-          </li>
-          <li>
-            <b>Two revision rounds.</b> Then you publish, under your name.
-          </li>
-        </ol>
-        <p className="fv-private2">
-          Your name on the work. Our involvement stays private, always — our
-          client list is confidential by default. Month-to-month, full IP
-          assignment on payment, 30-day cancellation.
-        </p>
-      </section>
+      {/* how it works — numbered cards on a shared axis */}
+      <div className="mo-wrap">
+        <section className="mo-features">
+          <div className="mo-features-head">
+            <span>// How it works</span>
+            <span>04 / Steps</span>
+          </div>
+          <div className="mo-axis" />
+          <div className="mo-cards mo-cards-4">
+            <article className="mo-card">
+              <div className="mo-card-idx">01</div>
+              <h3 className="mo-card-h">Voice audit</h3>
+              <p className="mo-card-desc">
+                We read your past posts, talks, and decks to learn how you
+                actually sound.
+              </p>
+            </article>
+            <article className="mo-card">
+              <div className="mo-card-idx">02</div>
+              <h3 className="mo-card-h">Monthly call</h3>
+              <p className="mo-card-desc">
+                A recorded 45-minute conversation where we draw out your
+                opinions — the call is where the work comes from.
+              </p>
+            </article>
+            <article className="mo-card">
+              <div className="mo-card-idx">03</div>
+              <h3 className="mo-card-h">Drafts in 5 days</h3>
+              <p className="mo-card-desc">
+                Argument-driven, technical but legible, 800–1,500 words,
+                delivered in five business days.
+              </p>
+            </article>
+            <article className="mo-card">
+              <div className="mo-card-idx">04</div>
+              <h3 className="mo-card-h">Two revisions</h3>
+              <p className="mo-card-desc">
+                Then you publish, under your name. Full IP assignment on
+                payment, month-to-month, 30-day cancellation.
+              </p>
+            </article>
+          </div>
+        </section>
+      </div>
 
-      <section className="frame-sec fv-cta2">
-        <a className="btn btn-ink" href={MAILTO}>
-          Start a conversation
-        </a>
-        <a className="ed-more" href="/briefs">
-          The briefs are our portfolio — read them first →
-        </a>
-        {err && <p className="form-msg err">{err}</p>}
-      </section>
+      {/* private + cta */}
+      <div className="mo-wrap">
+        <section className="fv-cta">
+          <div className="mo-features-head">
+            <span>// Private by default</span>
+            <span>Get started</span>
+          </div>
+          <div className="mo-axis" />
+          <div className="fv-cta-row">
+            <p className="mo-card-desc fv-private">
+              Your name on the work. Our involvement stays private, always — our
+              client list is confidential by default.
+            </p>
+            <div className="fv-cta-actions">
+              <a
+                className="btn-blk"
+                href={`mailto:${CONTACT}?subject=${encodeURIComponent(
+                  "Writing services — let's talk"
+                )}`}
+              >
+                Start a conversation →
+              </a>
+              <a className="mo-link" href="/briefs">
+                The briefs are our portfolio →
+              </a>
+            </div>
+          </div>
+          {err && <p className="cf-msg err">{err}</p>}
+        </section>
+      </div>
     </>
   );
 }

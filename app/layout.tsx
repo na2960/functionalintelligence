@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { Newsreader, Inter } from "next/font/google";
+import { Space_Grotesk, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const serif = Newsreader({
+const grotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-grotesk",
 });
 
-const sans = Inter({
+const mono = Space_Mono({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-sans",
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-mono-ui",
 });
 
 export const metadata: Metadata = {
@@ -44,7 +45,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={`${grotesk.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   );

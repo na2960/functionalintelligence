@@ -12,9 +12,7 @@ export default function AboutPage() {
   return (
     <>
       <Nav active="about" />
-      <div className="frame">
-        <About />
-      </div>
+      <About />
       <Footer />
     </>
   );

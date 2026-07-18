@@ -33,12 +33,12 @@ export default async function BriefPage({
 
   return (
     <>
-      <Nav active="briefs" />
+      <Nav active="marketplace" />
       <main className="wrap">
         <article className="brief-page">
           <div className="brief-meta">
             <Link href="/briefs" className="back-link">
-              ← All briefs
+              ← Research Marketplace
             </Link>
             <span className="chip">
               {CATEGORY_LABELS[brief.category] ?? brief.category}
@@ -75,7 +75,7 @@ export default async function BriefPage({
           ) : null}
           <div className="brief-cta">
             <span>Want the next one to be yours?</span>{" "}
-            <Link href="/#board">Back an idea on The Board →</Link>
+            <Link href="/briefs">Back a topic on the board →</Link>
           </div>
         </article>
       </main>
