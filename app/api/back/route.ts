@@ -4,24 +4,15 @@ import { publicClient } from "@/lib/supabase";
 import { captureEmail, normalizeEmail } from "@/lib/substack";
 
 // Back a topic — either an existing idea (ideaId) or a brand-new one
-// (newTopic). Minimum backing is $3.
+// (newTopic). Minimum backing is $5.
 //
 // With Stripe configured (STRIPE_SECRET_KEY set), this creates a Checkout
-// session and the webhook records the paid backing. Without it — launch
-// mode — the backing is recorded directly as an unpaid pledge, which RLS
-// permits; 'paid' rows can only ever be written by the webhook.
+// session; the topic (for a new one) and the paid backing are both written
+// only after payment succeeds, in recordPaidSession. Without Stripe — launch
+// mode — the topic is created and an unpaid pledge is recorded, which RLS
+// permits; 'paid' rows can only ever be written by fulfillment.
 
-const CATEGORIES = new Set([
-  "ai",
-  "biomed",
-  "markets",
-  "supply-chain",
-  "science",
-  "math",
-  "other",
-]);
-
-const MIN_CENTS = 300; // $3
+const MIN_CENTS = 500; // $5
 const MAX_CENTS = 100000; // $1,000
 
 export async function POST(req: NextRequest) {
@@ -29,10 +20,7 @@ export async function POST(req: NextRequest) {
     ideaId?: string;
     newTopic?: {
       title?: string;
-      detail?: string;
       link?: string;
-      category?: string;
-      customCategory?: string;
     };
     amountCents?: number;
     name?: string;
@@ -50,27 +38,23 @@ export async function POST(req: NextRequest) {
 
   if (!Number.isFinite(amountCents) || amountCents < MIN_CENTS || amountCents > MAX_CENTS) {
     return NextResponse.json(
-      { error: "Backing must be between $3 and $1,000." },
+      { error: "Backing must be between $5 and $1,000." },
       { status: 400 }
     );
   }
 
   const supabase = publicClient();
 
-  // Resolve the idea: existing one, or create a new public topic.
-  let idea: { id: string; title: string; status: string } | null = null;
+  // Resolve the target. A brand-new topic is validated but NOT created yet —
+  // the topic is only written once payment succeeds (in recordPaidSession), so
+  // a cancelled checkout never leaves an unpaid topic on the board. An existing
+  // topic is looked up and must be open.
+  let idea: { id: string; title: string } | null = null;
+  let newTopic: { title: string; link: string | null } | null = null;
 
   if (body.newTopic) {
     const title = (body.newTopic.title ?? "").trim();
-    const detail = (body.newTopic.detail ?? "").trim();
     const link = (body.newTopic.link ?? "").trim();
-    const category = CATEGORIES.has(body.newTopic.category ?? "")
-      ? (body.newTopic.category as string)
-      : "other";
-    const customCategory =
-      category === "other"
-        ? (body.newTopic.customCategory ?? "").trim().slice(0, 80) || null
-        : null;
     if (title.length < 3 || title.length > 140) {
       return NextResponse.json(
         { error: "Topic must be 3–140 characters." },
@@ -83,27 +67,10 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    if (link.length > 500 || detail.length > 1000) {
+    if (link.length > 500) {
       return NextResponse.json({ error: "Too long." }, { status: 400 });
     }
-    const { data, error } = await supabase
-      .from("fi_ideas")
-      .insert({
-        title,
-        detail: detail || null,
-        link: link || null,
-        category,
-        custom_category: customCategory,
-      })
-      .select("id, title, status")
-      .single();
-    if (error || !data) {
-      return NextResponse.json(
-        { error: "Could not create the topic. Try again." },
-        { status: 500 }
-      );
-    }
-    idea = data;
+    newTopic = { title, link: link || null };
   } else {
     const ideaId = body.ideaId ?? "";
     if (!/^[0-9a-f-]{36}$/i.test(ideaId)) {
@@ -123,12 +90,13 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    idea = data;
+    idea = { id: data.id, title: data.title };
   }
 
   // Capture email (Supabase + best-effort Substack) — never blocks the flow.
   if (email) void captureEmail(email, "back");
 
+  const title = idea ? idea.title : newTopic!.title;
   const stripeKey = process.env.STRIPE_SECRET_KEY;
 
   if (stripeKey) {
@@ -146,14 +114,16 @@ export async function POST(req: NextRequest) {
             currency: "usd",
             unit_amount: amountCents,
             product_data: {
-              name: `Back: ${idea.title}`,
-              description: "Funds coverage of this topic on The Board.",
+              name: `Back: ${title}`,
+              description: "Funds coverage of this topic on the board.",
             },
           },
         },
       ],
       metadata: {
-        idea_id: idea.id,
+        idea_id: idea?.id ?? "",
+        new_title: newTopic?.title ?? "",
+        new_link: newTopic?.link ?? "",
         backer_name: name,
         backer_email: email ?? "",
         is_commission: "0",
@@ -164,9 +134,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: session.url });
   }
 
-  // Launch mode: record a pledge (RLS only allows status='pledged' here).
+  // Launch mode (no Stripe): no payment step, so create the topic if new and
+  // record a pledge (RLS only allows status='pledged' here).
+  let ideaId = idea?.id;
+  if (!ideaId && newTopic) {
+    const { data, error } = await supabase
+      .from("fi_ideas")
+      .insert({ title: newTopic.title, link: newTopic.link, category: "other" })
+      .select("id")
+      .single();
+    if (error || !data) {
+      return NextResponse.json(
+        { error: "Could not create the topic. Try again." },
+        { status: 500 }
+      );
+    }
+    ideaId = data.id;
+  }
   const { error: pledgeErr } = await supabase.from("fi_backings").insert({
-    idea_id: idea.id,
+    idea_id: ideaId,
     amount_cents: amountCents,
     backer_name: name || null,
     backer_email: email,
@@ -177,5 +163,5 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-  return NextResponse.json({ pledged: true, ideaId: idea.id });
+  return NextResponse.json({ pledged: true, ideaId });
 }

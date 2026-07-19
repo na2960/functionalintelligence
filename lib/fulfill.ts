@@ -6,16 +6,51 @@ import { serviceClient } from "@/lib/supabase";
 // payment is recorded even if the webhook endpoint is misconfigured or the
 // event is delayed. Idempotent: the unique stripe_session_id + ignoreDuplicates
 // upsert means calling it many times for the same session is safe.
+//
+// New topics are created here, only on a paid session — a cancelled checkout
+// never leaves an unpaid topic on the board.
 export async function recordPaidSession(
   session: Stripe.Checkout.Session
 ): Promise<{ ok: boolean; recorded: boolean; error?: string }> {
   const supabase = serviceClient();
   if (!supabase) return { ok: false, recorded: false, error: "not configured" };
 
-  const ideaId = session.metadata?.idea_id;
+  let ideaId = session.metadata?.idea_id || "";
+  const newTitle = session.metadata?.new_title || "";
   const amount = session.amount_total;
-  if (!ideaId || !amount || session.payment_status !== "paid") {
+  if ((!ideaId && !newTitle) || !amount || session.payment_status !== "paid") {
     return { ok: true, recorded: false };
+  }
+
+  // If this session backed a brand-new topic, create it now — but reuse an
+  // existing idea if this session was already fulfilled (webhook + /success).
+  if (!ideaId && newTitle) {
+    const { data: prior } = await supabase
+      .from("fi_backings")
+      .select("idea_id")
+      .eq("stripe_session_id", session.id)
+      .maybeSingle();
+    if (prior?.idea_id) {
+      ideaId = prior.idea_id;
+    } else {
+      const { data: idea, error: ideaErr } = await supabase
+        .from("fi_ideas")
+        .insert({
+          title: newTitle,
+          link: session.metadata?.new_link || null,
+          category: "other",
+        })
+        .select("id")
+        .single();
+      if (ideaErr || !idea) {
+        return {
+          ok: false,
+          recorded: false,
+          error: ideaErr?.message ?? "could not create topic",
+        };
+      }
+      ideaId = idea.id;
+    }
   }
 
   const email =
