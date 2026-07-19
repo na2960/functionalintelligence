@@ -109,8 +109,7 @@ export default async function Marketplace_Page() {
             <div className="mkt-issue mkt-issue-empty">
               <h2 className="mkt-issue-h">The first brief ships soon.</h2>
               <p className="mo-card-desc">
-                The board decides what it is. Back a topic below to help set the
-                agenda.
+                Back a topic below to help set the agenda.
               </p>
             </div>
           )}

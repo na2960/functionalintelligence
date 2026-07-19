@@ -4917,3 +4917,90 @@ body {
   display: block;
   margin-top: 10px;
 }
+
+/* ================= v18: how-it-works points, front-page polish, buttons ================= */
+
+/* "How it works": drop the vertical dividers — just points on the top axis */
+.mo-features .mo-cards .mo-card {
+  border-left: none;
+  padding-left: 2px;
+  padding-right: 22px;
+}
+.mo-features .mo-cards .mo-card::before {
+  left: 0;
+}
+
+/* equal-size plan buttons; book-a-call first */
+.fv-plan-actions .fv-btn {
+  padding: 12px 22px;
+  min-width: 138px;
+}
+
+/* contact form: context tag + native controls styled like inputs */
+.cf-context {
+  font-family: var(--mono-ui);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  border: 1.5px dashed var(--line);
+  border-radius: 4px;
+  padding: 8px 12px;
+  align-self: flex-start;
+}
+.cf-field select {
+  font-family: var(--mono-ui);
+  font-size: 13.5px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 4px;
+  padding: 12px 14px;
+  width: 100%;
+  cursor: pointer;
+}
+.cf-field select:disabled {
+  color: var(--muted);
+  cursor: default;
+}
+.cf-field select:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+/* ---- front page: gray lines, axis trimmed to the end nodes, softer feel ---- */
+.home-diagram {
+  grid-template-rows: repeat(3, 1fr);
+  min-height: 640px;
+  --hm-line: #b4b0a3;
+  --hm-node: #8d8a7e;
+}
+.home-diagram .hm-box {
+  border-color: var(--hm-line);
+  transition: border-color 0.16s ease;
+}
+.home-diagram .hm-box:hover {
+  border-color: var(--ink);
+}
+.hm-axis {
+  top: 16.667%;
+  bottom: 16.667%;
+  border-left-color: var(--hm-line);
+}
+.hm-conn {
+  border-top-color: var(--hm-line);
+}
+.hm-conn::before,
+.hm-conn::after {
+  background: var(--hm-node);
+}
+@media (max-width: 820px) {
+  .home-diagram {
+    grid-template-rows: none;
+    min-height: 0;
+  }
+  .home-diagram .hm-box:not(:last-child)::after {
+    border-left-color: var(--hm-line);
+  }
+}

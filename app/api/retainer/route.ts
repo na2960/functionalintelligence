@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     line_items: [{ price: RETAINERS[tier].price, quantity: 1 }],
     metadata: { tier },
     success_url: `${origin}/success?retainer=${tier}&session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origin}/#founder-voice`,
+    cancel_url: `${origin}/services`,
   });
   return NextResponse.json({ url: session.url });
 }

@@ -6,7 +6,7 @@ import ContactModal from "./ContactModal";
 export default function FounderVoice() {
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
-  const [showContact, setShowContact] = useState(false);
+  const [contact, setContact] = useState<string | null>(null);
 
   async function subscribe(tier: "founder_voice" | "founder_voice_plus") {
     setBusy(tier);
@@ -51,7 +51,7 @@ export default function FounderVoice() {
             <button
               type="button"
               className="btn-blk"
-              onClick={() => setShowContact(true)}
+              onClick={() => setContact("Writing services enquiry")}
             >
               Contact us →
             </button>
@@ -80,18 +80,18 @@ export default function FounderVoice() {
               </p>
               <div className="fv-plan-actions">
                 <button
-                  className="btn-blk"
+                  type="button"
+                  className="btn-ghost fv-btn"
+                  onClick={() => setContact("Founder Voice")}
+                >
+                  Book a call
+                </button>
+                <button
+                  className="btn-blk fv-btn"
                   onClick={() => subscribe("founder_voice")}
                   disabled={busy !== null}
                 >
                   Subscribe →
-                </button>
-                <button
-                  type="button"
-                  className="btn-ghost"
-                  onClick={() => setShowContact(true)}
-                >
-                  Book a call
                 </button>
               </div>
             </article>
@@ -107,18 +107,18 @@ export default function FounderVoice() {
               </p>
               <div className="fv-plan-actions">
                 <button
-                  className="btn-blk"
+                  type="button"
+                  className="btn-ghost fv-btn"
+                  onClick={() => setContact("Founder Voice+")}
+                >
+                  Book a call
+                </button>
+                <button
+                  className="btn-blk fv-btn"
                   onClick={() => subscribe("founder_voice_plus")}
                   disabled={busy !== null}
                 >
                   Subscribe →
-                </button>
-                <button
-                  type="button"
-                  className="btn-ghost"
-                  onClick={() => setShowContact(true)}
-                >
-                  Book a call
                 </button>
               </div>
             </article>
@@ -161,7 +161,9 @@ export default function FounderVoice() {
         </section>
       </div>
 
-      {showContact && <ContactModal onClose={() => setShowContact(false)} />}
+      {contact && (
+        <ContactModal context={contact} onClose={() => setContact(null)} />
+      )}
     </>
   );
 }

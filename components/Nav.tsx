@@ -4,6 +4,8 @@ type Active = "services" | "about" | "marketplace" | "contact";
 
 export default function Nav({ active }: { active?: Active }) {
   const cls = (key: Active) => `nav-link${active === key ? " on" : ""}`;
+  // An active tab links back home, so clicking it again returns to "/".
+  const href = (key: Active, path: string) => (active === key ? "/" : path);
   return (
     <nav className="nav">
       <div className="wrap nav-inner">
@@ -15,16 +17,19 @@ export default function Nav({ active }: { active?: Active }) {
         </Link>
         <div className="spacer" />
         <div className="nav-links">
-          <Link href="/services" className={cls("services")}>
+          <Link href={href("services", "/services")} className={cls("services")}>
             Writing Services
           </Link>
-          <Link href="/about" className={cls("about")}>
+          <Link href={href("about", "/about")} className={cls("about")}>
             About
           </Link>
-          <Link href="/briefs" className={cls("marketplace")}>
+          <Link
+            href={href("marketplace", "/briefs")}
+            className={cls("marketplace")}
+          >
             Research Marketplace
           </Link>
-          <Link href="/contact" className={cls("contact")}>
+          <Link href={href("contact", "/contact")} className={cls("contact")}>
             Contact Us
           </Link>
         </div>
