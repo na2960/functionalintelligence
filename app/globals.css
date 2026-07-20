@@ -5004,3 +5004,13 @@ body {
     border-left-color: var(--hm-line);
   }
 }
+
+/* ================= v19: keep plan buttons bottom-aligned across tiers ================= */
+.fv-plan {
+  display: flex;
+  flex-direction: column;
+}
+.fv-plan .fv-plan-actions {
+  margin-top: auto;
+  padding-top: 20px;
+}

@@ -8,7 +8,7 @@ export default function Hub({ latestBriefId }: { latestBriefId: string | null })
         <div className="hm-axis" aria-hidden="true" />
 
         <section className="hm-box hm-tl">
-          <h2 className="hm-h">Research Services</h2>
+          <h2 className="hm-h">Custom Research</h2>
           <p className="hm-desc">
             Well-researched, custom blueprints for your data model or problem
             statement, based on state-of-the-art peer-reviewed literature.

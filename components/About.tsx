@@ -15,10 +15,9 @@ export default function About() {
             made <span className="dim">legible.</span>
           </h1>
           <p className="mo-lede">
-            Functional Intelligence is written and edited by Nripendra Acharya,
-            whose research has centered on a recurring problem: constructing
-            clear, measurable frameworks for concepts that resist easy
-            measurement.
+            The Briefs are written and edited by Nripendra Acharya, whose
+            research has centered on a recurring problem: constructing clear,
+            measurable frameworks for concepts that resist easy measurement.
           </p>
         </section>
       </div>

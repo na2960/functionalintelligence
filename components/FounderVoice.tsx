@@ -34,15 +34,14 @@ export default function FounderVoice() {
           <div className="fv-hero-left">
             <div className="mo-eyebrow">// Custom Researched Solutions</div>
             <h1 className="mo-h1">
-              Research
+              Custom Research
               <br />
               Services.
             </h1>
             <p className="mo-lede">
               Well-researched, custom blueprints — designed specifically for
               your data model or problem statement, based on a review of
-              state-of-the-art peer-reviewed literature. Can include
-              post-implementation writing services.
+              state-of-the-art peer-reviewed literature.
             </p>
           </div>
           <div className="fv-hero-right">
@@ -72,13 +71,6 @@ export default function FounderVoice() {
               <div className="fv-price">
                 From $2,000<span> / mo</span>
               </div>
-              <p className="fv-plan-desc">
-                For your data model or problem statement, based on peer-reviewed
-                literature.
-              </p>
-              <ul className="fv-list">
-                <li>Custom implementation blueprint — math explained simply</li>
-              </ul>
               <div className="fv-plan-actions">
                 <button
                   type="button"
@@ -103,13 +95,8 @@ export default function FounderVoice() {
                 From $2,500<span> / mo</span>
               </div>
               <p className="fv-plan-desc">
-                Deeper coverage, with follow-through after implementation.
+                Post-implementation writing services included.
               </p>
-              <ul className="fv-list">
-                <li>Technical literature review of the state of the art</li>
-                <li>Custom implementation blueprint — math explained simply</li>
-                <li>Writing services, post-implementation</li>
-              </ul>
               <div className="fv-plan-actions">
                 <button
                   type="button"
@@ -143,7 +130,7 @@ export default function FounderVoice() {
             <article className="mo-card">
               <h3 className="mo-card-h">Kick-off Call</h3>
               <p className="mo-card-desc">
-                We get familiar with your data model or your specific problem.
+                Gain an understanding of your data model and problem statement.
               </p>
             </article>
             <article className="mo-card">
