@@ -18,7 +18,7 @@ async function notifyByEmail(msg: {
     "contact@funcimarket.com";
   const from =
     process.env.CONTACT_FROM_EMAIL ??
-    "Functional Intelligence <onboarding@resend.dev>";
+    "Functional Intelligence <hello@funcimarket.com>";
   try {
     await fetch("https://api.resend.com/emails", {
       method: "POST",
