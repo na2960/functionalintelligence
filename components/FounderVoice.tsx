@@ -70,7 +70,7 @@ export default function FounderVoice() {
             <article className="fv-plan">
               <h2 className="mo-card-h">Custom Blueprint</h2>
               <div className="fv-price">
-                From $1,500<span> / mo</span>
+                From $2,000<span> / mo</span>
               </div>
               <p className="fv-plan-desc">
                 For your data model or problem statement, based on peer-reviewed

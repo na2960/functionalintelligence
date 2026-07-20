@@ -11,7 +11,7 @@ export const RETAINERS: Record<
 > = {
   founder_voice: {
     name: "Custom Blueprint",
-    monthly: "$1,500/mo",
+    monthly: "$2,000/mo",
     price:
       process.env.STRIPE_PRICE_FOUNDER_VOICE ??
       "price_1TuPMICvWCG8D5mHQR27EwL0",
