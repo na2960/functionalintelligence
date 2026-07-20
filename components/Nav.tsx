@@ -18,7 +18,7 @@ export default function Nav({ active }: { active?: Active }) {
         <div className="spacer" />
         <div className="nav-links">
           <Link href={href("services", "/services")} className={cls("services")}>
-            Writing Services
+            Research Services
           </Link>
           <Link href={href("about", "/about")} className={cls("about")}>
             About

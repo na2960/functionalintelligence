@@ -12,11 +12,11 @@ export default function Refunds() {
       <p>
         Backing a topic is a voluntary payment that prioritizes editorial
         coverage. Because it funds work immediately, backing is{" "}
-        <strong>generally non-refundable</strong>. Writing retainers (Founder
-        Voice and Founder Voice+) are recurring subscriptions; you can cancel at
-        any time to stop future charges, and amounts already billed for a
-        current or past period are non-refundable. Please back and subscribe
-        deliberately.
+        <strong>generally non-refundable</strong>. Research retainers (Custom
+        Blueprint and Custom Blueprint+) are recurring subscriptions; you can
+        cancel at any time to stop future charges, and amounts already billed
+        for a current or past period are non-refundable. Please back and
+        subscribe deliberately.
       </p>
 
       <h2>When we will refund</h2>
@@ -30,7 +30,7 @@ export default function Refunds() {
           our side; or
         </li>
         <li>
-          we started a writing retainer but were unable to begin the work (in
+          we started a research retainer but were unable to begin the work (in
           which case the first month is refunded).
         </li>
       </ul>

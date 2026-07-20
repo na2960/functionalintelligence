@@ -3,9 +3,9 @@ import Footer from "@/components/Footer";
 import FounderVoice from "@/components/FounderVoice";
 
 export const metadata = {
-  title: "Writing Services — Functional Intelligence",
+  title: "Research Services — Functional Intelligence",
   description:
-    "Technical content, written in your voice and published under your name. Founder Voice retainers, from $1,500/mo. Our involvement stays private.",
+    "Well-researched, custom implementation blueprints for your data model or problem statement, based on state-of-the-art peer-reviewed literature. From $1,500/mo.",
 };
 
 export default function Services() {

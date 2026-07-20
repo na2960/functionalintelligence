@@ -19,7 +19,7 @@ export default function Privacy() {
       <ul>
         <li>
           <strong>Email address</strong> &mdash; when you subscribe, back a
-          topic, contact us, or start a writing retainer, so we can deliver
+          topic, contact us, or start a research retainer, so we can deliver
           briefs and confirmations.
         </li>
         <li>

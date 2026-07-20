@@ -32,26 +32,24 @@ export default function FounderVoice() {
       <div className="mo-wrap">
         <section className="mkt-head fv-hero">
           <div className="fv-hero-left">
-            <div className="mo-eyebrow">// Content under your name</div>
+            <div className="mo-eyebrow">// Custom Researched Solutions</div>
             <h1 className="mo-h1">
-              Writing
+              Research
               <br />
               Services.
             </h1>
             <p className="mo-lede">
-              Well-researched, technical content — written in your voice and
-              published under your name. Starts with a monthly call; our team
-              writes, you review, we revise, you publish.
+              Well-researched, custom blueprints — designed specifically for
+              your data model or problem statement, based on a review of
+              state-of-the-art peer-reviewed literature. Can include
+              post-implementation writing services.
             </p>
           </div>
           <div className="fv-hero-right">
-            <p className="fv-hero-note">
-              Your name on the work. Our involvement stays private, always.
-            </p>
             <button
               type="button"
               className="btn-blk"
-              onClick={() => setContact("Writing services enquiry")}
+              onClick={() => setContact("Research Services Inquiry")}
             >
               Contact us →
             </button>
@@ -70,19 +68,22 @@ export default function FounderVoice() {
           <div className="mo-axis" />
           <div className="fv-grid">
             <article className="fv-plan">
-              <h2 className="mo-card-h">Founder Voice</h2>
+              <h2 className="mo-card-h">Custom Blueprint</h2>
               <div className="fv-price">
                 From $1,500<span> / mo</span>
               </div>
               <p className="fv-plan-desc">
-                Two publish-ready, well-researched pieces a month — in your
-                voice, under your name.
+                For your data model or problem statement, based on peer-reviewed
+                literature.
               </p>
+              <ul className="fv-list">
+                <li>Custom implementation blueprint — math explained simply</li>
+              </ul>
               <div className="fv-plan-actions">
                 <button
                   type="button"
                   className="btn-ghost fv-btn"
-                  onClick={() => setContact("Founder Voice")}
+                  onClick={() => setContact("Custom Blueprint")}
                 >
                   Book a call
                 </button>
@@ -97,19 +98,23 @@ export default function FounderVoice() {
             </article>
 
             <article className="fv-plan">
-              <h2 className="mo-card-h">Founder Voice+</h2>
+              <h2 className="mo-card-h">Custom Blueprint+</h2>
               <div className="fv-price">
                 From $2,500<span> / mo</span>
               </div>
               <p className="fv-plan-desc">
-                Four pieces a month, with wider distribution and priority
-                turnaround.
+                Deeper coverage, with follow-through after implementation.
               </p>
+              <ul className="fv-list">
+                <li>Technical literature review of the state of the art</li>
+                <li>Custom implementation blueprint — math explained simply</li>
+                <li>Writing services, post-implementation</li>
+              </ul>
               <div className="fv-plan-actions">
                 <button
                   type="button"
                   className="btn-ghost fv-btn"
-                  onClick={() => setContact("Founder Voice+")}
+                  onClick={() => setContact("Custom Blueprint+")}
                 >
                   Book a call
                 </button>
@@ -136,25 +141,27 @@ export default function FounderVoice() {
           <div className="mo-axis" />
           <div className="mo-cards mo-cards-4">
             <article className="mo-card">
-              <h3 className="mo-card-h">Voice audit</h3>
+              <h3 className="mo-card-h">Kick-off Call</h3>
               <p className="mo-card-desc">
-                We read your past posts, talks, and decks to learn how you
-                actually sound.
+                We get familiar with your data model or your specific problem.
               </p>
             </article>
             <article className="mo-card">
-              <h3 className="mo-card-h">Kickoff / Monthly Call</h3>
-            </article>
-            <article className="mo-card">
-              <h3 className="mo-card-h">Drafts in 5 days</h3>
+              <h3 className="mo-card-h">Literature Review</h3>
               <p className="mo-card-desc">
-                800–1,500 words, delivered in five business days.
+                A review of state-of-the-art peer-reviewed literature with
+                relevant implementations.
               </p>
             </article>
             <article className="mo-card">
-              <h3 className="mo-card-h">Two revisions</h3>
+              <h3 className="mo-card-h">Custom Blueprint</h3>
+              <p className="mo-card-desc">The implementation blueprint is designed.</p>
+            </article>
+            <article className="mo-card">
+              <h3 className="mo-card-h">Review and Revision</h3>
               <p className="mo-card-desc">
-                Publish under your name. Full IP assignment. Month-to-month.
+                The math and the review are explained simply. Revisions are
+                discussed.
               </p>
             </article>
           </div>

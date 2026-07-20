@@ -8,10 +8,10 @@ export default function Hub({ latestBriefId }: { latestBriefId: string | null })
         <div className="hm-axis" aria-hidden="true" />
 
         <section className="hm-box hm-tl">
-          <h2 className="hm-h">Writing Services</h2>
+          <h2 className="hm-h">Research Services</h2>
           <p className="hm-desc">
-            Technical content, written in your voice and published under your
-            name. Our involvement stays private.
+            Well-researched, custom blueprints for your data model or problem
+            statement, based on state-of-the-art peer-reviewed literature.
           </p>
           <Link href="/services" className="mo-link hm-link">
             Learn more →

@@ -3,8 +3,9 @@ import Stripe from "stripe";
 import { RETAINERS, type RetainerTier } from "@/lib/retainer";
 import { normalizeEmail } from "@/lib/substack";
 
-// Start a Founder Voice retainer: creates a subscription-mode Stripe Checkout
-// session for the chosen tier. Requires STRIPE_SECRET_KEY.
+// Start a Research Services retainer (Custom Blueprint / Custom Blueprint+):
+// creates a subscription-mode Stripe Checkout session for the chosen tier.
+// Requires STRIPE_SECRET_KEY.
 export async function POST(req: NextRequest) {
   let body: { tier?: string; email?: string };
   try {

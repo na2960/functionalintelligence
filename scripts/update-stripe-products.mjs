@@ -21,23 +21,23 @@ const PLANS = [
     priceId:
       process.env.STRIPE_PRICE_FOUNDER_VOICE ??
       "price_1TuPMICvWCG8D5mHQR27EwL0",
-    name: "Founder Voice",
+    name: "Custom Blueprint",
     description:
-      "Two publish-ready, well-researched pieces a month — written in your " +
-      "voice and published under your name. Includes a monthly kickoff call, " +
-      "drafts in five business days, and two revision rounds. Full IP " +
-      "assignment; month-to-month.",
+      "A custom implementation blueprint for your data model or problem " +
+      "statement, with the math explained simply — based on a review of " +
+      "state-of-the-art peer-reviewed literature. Kick-off call, literature " +
+      "review, blueprint, and a review-and-revision round.",
   },
   {
     priceId:
       process.env.STRIPE_PRICE_FOUNDER_VOICE_PLUS ??
       "price_1TuPMgCvWCG8D5mHcH41h3s3",
-    name: "Founder Voice+",
+    name: "Custom Blueprint+",
     description:
-      "Four publish-ready pieces a month — written in your voice and " +
-      "published under your name, with wider distribution and priority " +
-      "turnaround. Includes a monthly kickoff call, drafts in five business " +
-      "days, and two revision rounds. Full IP assignment; month-to-month.",
+      "Deeper coverage: a technical literature review of the state of the " +
+      "art plus a custom implementation blueprint with the math explained " +
+      "simply, and writing services after implementation. Kick-off call, " +
+      "literature review, blueprint, and a review-and-revision round.",
   },
 ];
 

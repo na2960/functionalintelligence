@@ -17,7 +17,8 @@ export default async function Success({
 }) {
   const { session_id, retainer } = await searchParams;
   const isRetainer = retainer === "founder_voice" || retainer === "founder_voice_plus";
-  const tierName = retainer === "founder_voice_plus" ? "Founder Voice+" : "Founder Voice";
+  const tierName =
+    retainer === "founder_voice_plus" ? "Custom Blueprint+" : "Custom Blueprint";
 
   let paid = false;
   let amount: number | null = null;
@@ -52,8 +53,8 @@ export default async function Success({
               <h1>Welcome to {tierName}.</h1>
               <p>
                 Your retainer is active. We&rsquo;ll email you within one
-                business day to schedule your first extraction call and kick off
-                the voice audit. Questions any time:{" "}
+                business day to schedule your kick-off call and get familiar
+                with your data model or problem. Questions any time:{" "}
                 <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.
               </p>
             </>

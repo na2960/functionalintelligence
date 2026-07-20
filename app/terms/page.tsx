@@ -22,7 +22,7 @@ export default function Terms() {
       <p>
         Functional Intelligence is an editorial publication with two offerings:
         a free weekly brief funded through a research marketplace, and paid
-        writing services. In the research marketplace, readers submit topics to
+        research services. In the research marketplace, readers submit topics to
         a public board and may make voluntary payments to prioritize which topic
         we cover next; each week the most-backed topic is published as a short
         explanatory brief (Tuesdays, 7am ET), free to read. The Service is a way
@@ -31,7 +31,7 @@ export default function Terms() {
         chance.
       </p>
 
-      <h2>2. Payments: backing and writing retainers</h2>
+      <h2>2. Payments: backing and research retainers</h2>
       <ul>
         <li>
           <strong>Backing</strong> is a voluntary payment that adds to a
@@ -39,10 +39,11 @@ export default function Terms() {
           people may back the same topic; totals are cumulative.
         </li>
         <li>
-          <strong>Writing retainers</strong> (Founder Voice and Founder Voice+)
-          are recurring monthly subscriptions for content written in your voice
-          and published under your name. They renew automatically until
-          cancelled; you may cancel at any time to stop future charges.
+          <strong>Research retainers</strong> (Custom Blueprint and Custom
+          Blueprint+) are recurring monthly subscriptions for custom
+          implementation blueprints and related research, based on peer-reviewed
+          literature. They renew automatically until cancelled; you may cancel
+          at any time to stop future charges.
         </li>
         <li>
           All payments are <strong>voluntary and non-refundable</strong> except

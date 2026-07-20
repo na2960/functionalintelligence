@@ -20,11 +20,11 @@ const mono = Space_Mono({
 export const metadata: Metadata = {
   title: "Functional Intelligence — Hard ideas, made legible.",
   description:
-    "A free weekly brief that breaks one hard topic down to its underlying assumptions — every Tuesday, 7am ET. Fund a topic, or put our writing under your name.",
+    "A free weekly brief that breaks one hard topic down to its underlying assumptions — every Tuesday, 7am ET. Fund a topic, or commission a custom research blueprint.",
   openGraph: {
     title: "Functional Intelligence — Hard ideas, made legible.",
     description:
-      "A free weekly brief that breaks one hard topic down to its underlying assumptions — every Tuesday, 7am ET. Fund a topic, or put our writing under your name.",
+      "A free weekly brief that breaks one hard topic down to its underlying assumptions — every Tuesday, 7am ET. Fund a topic, or commission a custom research blueprint.",
     siteName: "Functional Intelligence",
   },
   icons: {
