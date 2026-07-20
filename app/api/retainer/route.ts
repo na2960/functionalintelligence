@@ -33,10 +33,39 @@ export async function POST(req: NextRequest) {
     req.headers.get("origin") ??
     `https://${req.headers.get("host") ?? "localhost:3000"}`;
 
+  // Resolve the product's current price. Prefer the default price; fall back
+  // to the newest active recurring price on the product.
+  const productId = RETAINERS[tier].product;
+  let priceId: string | null = null;
+  try {
+    const product = await stripe.products.retrieve(productId);
+    priceId =
+      typeof product.default_price === "string"
+        ? product.default_price
+        : product.default_price?.id ?? null;
+    if (!priceId) {
+      const prices = await stripe.prices.list({
+        product: productId,
+        active: true,
+        type: "recurring",
+        limit: 1,
+      });
+      priceId = prices.data[0]?.id ?? null;
+    }
+  } catch {
+    priceId = null;
+  }
+  if (!priceId) {
+    return NextResponse.json(
+      { error: "This plan isn't available right now — email us instead." },
+      { status: 503 }
+    );
+  }
+
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
     ...(email ? { customer_email: email } : {}),
-    line_items: [{ price: RETAINERS[tier].price, quantity: 1 }],
+    line_items: [{ price: priceId, quantity: 1 }],
     metadata: { tier },
     success_url: `${origin}/success?retainer=${tier}&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/services`,
