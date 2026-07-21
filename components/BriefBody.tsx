@@ -44,6 +44,25 @@ export default function BriefBody({ body }: { body: string }) {
       {blocks.map((block, bi) => {
         const b = block.trim();
         if (!b) return null;
+        // Figure: ![caption](/same-origin.png) or an https image, on its own
+        // line. Rendered as a plain <img> (src restricted to a leading "/" or
+        // https), so it can never inject markup or script.
+        const fig = b.match(
+          /^!\[([^\]]*)\]\((\/[^\s)]+|https?:\/\/[^\s)]+)\)$/
+        );
+        if (fig) {
+          return (
+            <figure key={bi} className="brief-fig">
+              <img
+                src={fig[2]}
+                alt={fig[1]}
+                className="brief-img"
+                loading="lazy"
+              />
+              {fig[1] ? <figcaption>{fig[1]}</figcaption> : null}
+            </figure>
+          );
+        }
         if (b.startsWith("## ")) {
           return <h2 key={bi}>{renderInline(b.slice(3), `h${bi}`)}</h2>;
         }
