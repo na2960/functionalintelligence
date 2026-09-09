@@ -18,25 +18,6 @@ const AREAS = [
   },
 ];
 
-const STEPS = [
-  {
-    h: "Frame the problem",
-    p: "The data model, the decision it feeds, and the value at stake.",
-  },
-  {
-    h: "Build a structural model",
-    p: "Physics-aware and uncertainty-aware — a predictive distribution, not a point estimate.",
-  },
-  {
-    h: "Backtest with integrity checks",
-    p: "Leak checks, shuffle tests, deflated Sharpe, discovery-acceleration factor. If it can't survive them, it isn't reported.",
-  },
-  {
-    h: "Deliver an auditable decision",
-    p: "A reproducible notebook (Colab / Kaggle) and a claim stated as rule, cost, capacity, and out-of-sample interval.",
-  },
-];
-
 export default function FounderVoice() {
   const [contact, setContact] = useState<string | null>(null);
 
@@ -94,24 +75,6 @@ export default function FounderVoice() {
             >
               Bring us a problem →
             </button>
-          </div>
-        </section>
-      </div>
-
-      {/* how it works */}
-      <div className="mo-wrap">
-        <section className="mo-features">
-          <div className="mo-features-head">
-            <span>// How it works</span>
-          </div>
-          <div className="mo-axis" />
-          <div className="mo-cards mo-cards-4">
-            {STEPS.map((s) => (
-              <article className="mo-card" key={s.h}>
-                <h3 className="mo-card-h">{s.h}</h3>
-                <p className="mo-card-desc">{s.p}</p>
-              </article>
-            ))}
           </div>
         </section>
       </div>

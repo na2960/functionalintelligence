@@ -1,35 +1,32 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import ProblemMarket from "@/components/ProblemMarket";
+import MarketBoard from "@/components/MarketBoard";
 
 export const metadata = {
-  title: "Marketplace — Functional Intelligence",
+  title: "Markets — Functional Intelligence",
   description:
-    "The top-valued, specifically-named problems we work on across finance, energy, and materials design — each solvable with custom physics-AI.",
+    "Live markets across the sectors we interface with — energy, power, renewables, and the materials supply chain. Auto-updating.",
 };
 
-export default function MarketplacePage() {
+export default function MarketsPage() {
   return (
     <>
       <Nav active="marketplace" />
 
       <div className="mo-wrap">
         <section className="mkt-head">
-          <div className="mo-eyebrow">// Top-valued problems</div>
-          <h1 className="mo-h1">
-            Marketplace.
-          </h1>
+          <div className="mo-eyebrow">// Live markets</div>
+          <h1 className="mo-h1">Markets.</h1>
           <p className="mo-lede">
-            The specifically-named problems we work on across markets and
-            materials — each one high-value, well-defined, and solvable with
-            custom physics-AI. See one that&rsquo;s yours? Get in touch.
+            The sectors we interface with, live — energy, power, renewables, and
+            the materials supply chain. Auto-updating on the page.
           </p>
         </section>
       </div>
 
       <div className="mo-ruler" />
 
-      <ProblemMarket />
+      <MarketBoard />
 
       <Footer />
     </>

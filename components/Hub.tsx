@@ -21,13 +21,13 @@ export default function Hub({ latestBriefId }: { latestBriefId: string | null })
 
         <section className="hm-box hm-mr">
           <span className="hm-conn hm-conn-l" aria-hidden="true" />
-          <h2 className="hm-h">Marketplace</h2>
+          <h2 className="hm-h">Markets</h2>
           <p className="hm-desc">
-            The top-valued, specifically-named problems we work on across
-            finance, energy, and materials design.
+            Live markets across the sectors we interface with — energy, power,
+            renewables, and the materials supply chain.
           </p>
           <Link href="/marketplace" className="mo-link hm-link">
-            See the problems →
+            See the markets →
           </Link>
         </section>
 

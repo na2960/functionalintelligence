@@ -24,7 +24,7 @@ export default function Nav({ active }: { active?: Active }) {
             href={href("marketplace", "/marketplace")}
             className={cls("marketplace")}
           >
-            Marketplace
+            Markets
           </Link>
           <Link
             href={href("newsletter", "/briefs")}
