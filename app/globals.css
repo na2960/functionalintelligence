@@ -5037,3 +5037,11 @@ body {
   letter-spacing: 0.03em;
   color: var(--muted);
 }
+
+/* ================= v21: About "coming soon" placeholder ================= */
+.about-soon {
+  min-height: 44vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

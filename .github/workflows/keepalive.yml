@@ -1,0 +1,26 @@
+name: Supabase keep-alive
+
+# Free-tier Supabase projects pause after ~7 days of inactivity. This pings
+# the database once a day (independent of the Vercel deploy) so it never
+# pauses. The URL and publishable key are the same public values shipped in
+# the web client — no secrets required. A second daily ping runs as a Vercel
+# Cron against /api/keepalive; either one keeps the project awake.
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # daily at 06:17 UTC
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Touch the database (public read counts as activity)
+        run: |
+          set -e
+          URL="https://hxmbvkljjulssmoylwbq.supabase.co/rest/v1/fi_ideas?select=id&limit=1"
+          KEY="sb_publishable_NkiX6MDTmdr8RCFBmayfkw_trPQJyng"
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$URL" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY")
+          echo "Supabase REST responded: $code"
+          test "$code" = "200"
