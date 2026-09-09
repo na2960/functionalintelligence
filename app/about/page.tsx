@@ -4,8 +4,7 @@ import About from "@/components/About";
 
 export const metadata = {
   title: "About — Functional Intelligence",
-  description:
-    "Functional Intelligence is written and edited by Nripendra Acharya — clear, measurable frameworks for concepts that resist easy measurement.",
+  description: "About Functional Intelligence — coming soon.",
 };
 
 export default function AboutPage() {

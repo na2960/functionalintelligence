@@ -1,14 +1,9 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import Marketplace from "@/components/Marketplace";
+import EmailCapture from "@/components/EmailCapture";
 import SubscribeButton, { BriefTimer } from "@/components/SubscribeButton";
-import {
-  fetchLatestBrief,
-  fetchBoard,
-  type Brief,
-  type BoardIdea,
-} from "@/lib/supabase";
+import { fetchBriefs, type Brief } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +11,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   ai: "AI",
   biomed: "Biomedicine",
   markets: "Markets",
+  materials: "Materials",
   "supply-chain": "Supply Chain",
   science: "Science",
   math: "Math",
@@ -23,9 +19,9 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export const metadata = {
-  title: "Research Marketplace — Functional Intelligence",
+  title: "Newsletter — Functional Intelligence",
   description:
-    "Back any topic you want explained, read the current issue, and subscribe. Reader-funded briefs, free to read.",
+    "Plain-language notes on the methods and the science behind our work in markets and materials. Free.",
 };
 
 function fmtDate(d: string | null) {
@@ -38,86 +34,73 @@ function fmtDate(d: string | null) {
     : "";
 }
 
-export default async function Marketplace_Page() {
-  let latest: Brief | null = null;
-  let board: BoardIdea[] = [];
+export default async function NewsletterPage() {
+  let posts: Brief[] = [];
   try {
-    latest = await fetchLatestBrief();
-  } catch {}
-  try {
-    board = await fetchBoard();
+    posts = await fetchBriefs();
   } catch {}
 
   return (
     <>
-      <Nav active="marketplace" />
+      <Nav active="newsletter" />
 
       <div className="mo-wrap">
-        <section className="mkt-head mkt-head-2col">
-          <div className="mkt-head-main">
-            <div className="mo-eyebrow">// Reader-funded research</div>
-            <h1 className="mo-h1">
-              Research
-              <br />
-              Marketplace.
-            </h1>
-            <p className="mo-lede">
-              Back any topic you want explained. The most-backed idea becomes
-              next week&rsquo;s brief — free to read.
-            </p>
-            <div className="mkt-head-actions">
-              <BriefTimer />
-              <SubscribeButton />
-            </div>
+        <section className="mkt-head">
+          <div className="mo-eyebrow">// The newsletter</div>
+          <h1 className="mo-h1">Newsletter.</h1>
+          <p className="mo-lede">
+            Plain-language notes on the methods and the science behind the
+            work — the math explained simply. Free to read.
+          </p>
+          <div className="mkt-head-actions">
+            <BriefTimer />
+            <SubscribeButton label="Follow — free" />
           </div>
-          <nav className="mkt-head-nav">
-            <a href="#briefs" className="mo-chip">
-              Briefs
-            </a>
-            <a href="#board" className="mo-chip">
-              The Board
-            </a>
-          </nav>
         </section>
       </div>
 
       <div className="mo-ruler" />
 
-      {/* current issue */}
       <div className="mo-wrap">
-        <section id="briefs" className="mkt-current">
+        <section className="mkt-current">
           <div className="mo-features-head">
-            <span>// Briefs</span>
-            <span>{latest ? fmtDate(latest.covered_at) : "Coming soon"}</span>
+            <span>// Notes</span>
+            <span>{posts.length ? `${posts.length} published` : "Coming soon"}</span>
           </div>
           <div className="mo-axis" />
-          {latest ? (
-            <Link href={`/briefs/${latest.id}`} className="mkt-issue">
-              <div className="mkt-issue-meta mono">
-                <span className="mkt-tag">
-                  {CATEGORY_LABELS[latest.category] ?? latest.category}
-                </span>
-                <span>Latest brief</span>
-              </div>
-              <h2 className="mkt-issue-h">{latest.title}</h2>
-              {latest.detail ? (
-                <p className="mo-card-desc">{latest.detail}</p>
-              ) : null}
-              <span className="mo-link">Read the brief →</span>
-            </Link>
+
+          {posts.length ? (
+            <div className="news-list">
+              {posts.map((p) => (
+                <Link key={p.id} href={`/briefs/${p.id}`} className="news-item">
+                  <div className="mkt-issue-meta mono">
+                    <span className="mkt-tag">
+                      {CATEGORY_LABELS[p.category] ?? p.category}
+                    </span>
+                    <span>{fmtDate(p.covered_at)}</span>
+                  </div>
+                  <h2 className="mkt-issue-h">{p.title}</h2>
+                  {p.detail ? <p className="mo-card-desc">{p.detail}</p> : null}
+                  <span className="mo-link">Read the note →</span>
+                </Link>
+              ))}
+            </div>
           ) : (
             <div className="mkt-issue mkt-issue-empty">
-              <h2 className="mkt-issue-h">The first brief ships soon.</h2>
+              <h2 className="mkt-issue-h">The first note ships soon.</h2>
               <p className="mo-card-desc">
-                Back a topic below to help set the agenda.
+                Follow along and it will land in your inbox.
               </p>
             </div>
           )}
         </section>
       </div>
 
-      {/* the board — fund your own */}
-      <Marketplace board={board} />
+      <div className="mo-wrap">
+        <section className="news-sub">
+          <EmailCapture variant="band" cta="Sign up — free" />
+        </section>
+      </div>
 
       <Footer />
     </>

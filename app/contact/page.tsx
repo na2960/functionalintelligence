@@ -8,7 +8,7 @@ const CONTACT =
 export const metadata = {
   title: "Contact — Functional Intelligence",
   description:
-    "Get in touch about research services, the research marketplace, or anything else.",
+    "Get in touch about research services, a problem in the marketplace, or anything else.",
 };
 
 export default function ContactPage() {
@@ -21,8 +21,9 @@ export default function ContactPage() {
           <div className="mo-eyebrow">// Say hello</div>
           <h1 className="mo-h1">Contact.</h1>
           <p className="mo-lede">
-            Questions about research services, the research marketplace, or a
-            topic you want covered — send a note and we&rsquo;ll get back to you.
+            Questions about research services, a problem in the marketplace, or
+            a prediction problem of your own — send a note and we&rsquo;ll get
+            back to you.
           </p>
         </section>
       </div>

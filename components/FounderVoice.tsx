@@ -3,54 +3,67 @@
 import { useState } from "react";
 import ContactModal from "./ContactModal";
 
-export default function FounderVoice() {
-  const [busy, setBusy] = useState<string | null>(null);
-  const [err, setErr] = useState<string | null>(null);
-  const [contact, setContact] = useState<string | null>(null);
+const AREAS = [
+  {
+    title: "Markets & Energy",
+    body: "Weather, power, and gas markets; renewable generation; storage and demand. Calibrated, uncertainty-aware forecasts turned into auditable trading and hedging decisions.",
+  },
+  {
+    title: "Materials Design",
+    body: "Crystal stability, battery lifetime, catalyst screening. Physics-aware models that rank candidates by calibrated probability and spend compute where it finds the most real discoveries.",
+  },
+  {
+    title: "Decision & Uncertainty",
+    body: "Every model ships as a predictive distribution and a decision — rule, cost, capacity, out-of-sample interval — with the integrity checks that make a performance claim survive scrutiny.",
+  },
+];
 
-  async function subscribe(tier: "founder_voice" | "founder_voice_plus") {
-    setBusy(tier);
-    setErr(null);
-    try {
-      const res = await fetch("/api/retainer", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.url)
-        throw new Error(data.error ?? "Please email us instead.");
-      window.location.href = data.url;
-    } catch (e) {
-      setErr(e instanceof Error ? e.message : "Please email us instead.");
-      setBusy(null);
-    }
-  }
+const STEPS = [
+  {
+    h: "Frame the problem",
+    p: "The data model, the decision it feeds, and the value at stake.",
+  },
+  {
+    h: "Build a structural model",
+    p: "Physics-aware and uncertainty-aware — a predictive distribution, not a point estimate.",
+  },
+  {
+    h: "Backtest with integrity checks",
+    p: "Leak checks, shuffle tests, deflated Sharpe, discovery-acceleration factor. If it can't survive them, it isn't reported.",
+  },
+  {
+    h: "Deliver an auditable decision",
+    p: "A reproducible notebook (Colab / Kaggle) and a claim stated as rule, cost, capacity, and out-of-sample interval.",
+  },
+];
+
+export default function FounderVoice() {
+  const [contact, setContact] = useState<string | null>(null);
 
   return (
     <>
       <div className="mo-wrap">
         <section className="mkt-head fv-hero">
           <div className="fv-hero-left">
-            <div className="mo-eyebrow">// Custom Researched Solutions</div>
+            <div className="mo-eyebrow">// Physics-AI for markets &amp; materials</div>
             <h1 className="mo-h1">
-              Custom Research
+              Research
               <br />
               Services.
             </h1>
             <p className="mo-lede">
-              Well-researched, custom blueprints — designed specifically for
-              your data model or problem statement, based on a review of
-              state-of-the-art peer-reviewed literature.
+              We build custom physics-AI models for high-value prediction
+              problems in markets and materials — calibrated, uncertainty-aware
+              forecasts turned into auditable, economic decisions.
             </p>
           </div>
           <div className="fv-hero-right">
             <button
               type="button"
               className="btn-blk"
-              onClick={() => setContact("Research Services Inquiry")}
+              onClick={() => setContact("Research Services inquiry")}
             >
-              Contact us →
+              Get in touch →
             </button>
           </div>
         </section>
@@ -58,64 +71,30 @@ export default function FounderVoice() {
 
       <div className="mo-ruler" />
 
-      {/* plans */}
+      {/* what we handle */}
       <div className="mo-wrap">
-        <section className="mkt-current">
+        <section className="mo-features">
           <div className="mo-features-head">
-            <span>// Plans</span>
+            <span>// What we handle</span>
           </div>
           <div className="mo-axis" />
-          <div className="fv-grid">
-            <article className="fv-plan">
-              <h2 className="mo-card-h">Custom Blueprint</h2>
-              <div className="fv-price">
-                From $2,000<span> / mo</span>
-              </div>
-              <div className="fv-plan-actions">
-                <button
-                  type="button"
-                  className="btn-ghost fv-btn"
-                  onClick={() => setContact("Custom Blueprint")}
-                >
-                  Book a call
-                </button>
-                <button
-                  className="btn-blk fv-btn"
-                  onClick={() => subscribe("founder_voice")}
-                  disabled={busy !== null}
-                >
-                  Subscribe →
-                </button>
-              </div>
-            </article>
-
-            <article className="fv-plan">
-              <h2 className="mo-card-h">Custom Blueprint+</h2>
-              <div className="fv-price">
-                From $2,500<span> / mo</span>
-              </div>
-              <p className="fv-plan-desc">
-                Post-implementation writing services included.
-              </p>
-              <div className="fv-plan-actions">
-                <button
-                  type="button"
-                  className="btn-ghost fv-btn"
-                  onClick={() => setContact("Custom Blueprint+")}
-                >
-                  Book a call
-                </button>
-                <button
-                  className="btn-blk fv-btn"
-                  onClick={() => subscribe("founder_voice_plus")}
-                  disabled={busy !== null}
-                >
-                  Subscribe →
-                </button>
-              </div>
-            </article>
+          <div className="area-grid">
+            {AREAS.map((a) => (
+              <article className="area-card" key={a.title}>
+                <h2 className="mo-card-h">{a.title}</h2>
+                <p className="mo-card-desc">{a.body}</p>
+              </article>
+            ))}
           </div>
-          {err && <p className="cf-msg err">{err}</p>}
+          <div className="fv-cta-row">
+            <button
+              type="button"
+              className="btn-blk"
+              onClick={() => setContact("Research Services inquiry")}
+            >
+              Bring us a problem →
+            </button>
+          </div>
         </section>
       </div>
 
@@ -127,30 +106,12 @@ export default function FounderVoice() {
           </div>
           <div className="mo-axis" />
           <div className="mo-cards mo-cards-4">
-            <article className="mo-card">
-              <h3 className="mo-card-h">Kick-off Call</h3>
-              <p className="mo-card-desc">
-                Gain an understanding of your data model and problem statement.
-              </p>
-            </article>
-            <article className="mo-card">
-              <h3 className="mo-card-h">Literature Review</h3>
-              <p className="mo-card-desc">
-                A review of state-of-the-art peer-reviewed literature with
-                relevant implementations.
-              </p>
-            </article>
-            <article className="mo-card">
-              <h3 className="mo-card-h">Custom Blueprint</h3>
-              <p className="mo-card-desc">The implementation blueprint is designed.</p>
-            </article>
-            <article className="mo-card">
-              <h3 className="mo-card-h">Review and Revision</h3>
-              <p className="mo-card-desc">
-                The math and the review are explained simply. Revisions are
-                discussed.
-              </p>
-            </article>
+            {STEPS.map((s) => (
+              <article className="mo-card" key={s.h}>
+                <h3 className="mo-card-h">{s.h}</h3>
+                <p className="mo-card-desc">{s.p}</p>
+              </article>
+            ))}
           </div>
         </section>
       </div>

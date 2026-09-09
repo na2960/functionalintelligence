@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-type Active = "services" | "about" | "marketplace" | "contact";
+type Active = "services" | "about" | "marketplace" | "newsletter" | "contact";
 
 export default function Nav({ active }: { active?: Active }) {
   const cls = (key: Active) => `nav-link${active === key ? " on" : ""}`;
@@ -20,17 +20,20 @@ export default function Nav({ active }: { active?: Active }) {
           <Link href={href("services", "/services")} className={cls("services")}>
             Research Services
           </Link>
-          <Link href={href("about", "/about")} className={cls("about")}>
-            About
-          </Link>
           <Link
-            href={href("marketplace", "/briefs")}
+            href={href("marketplace", "/marketplace")}
             className={cls("marketplace")}
           >
-            Research Marketplace
+            Marketplace
+          </Link>
+          <Link
+            href={href("newsletter", "/briefs")}
+            className={cls("newsletter")}
+          >
+            Newsletter
           </Link>
           <Link href={href("contact", "/contact")} className={cls("contact")}>
-            Contact Us
+            Contact
           </Link>
         </div>
       </div>

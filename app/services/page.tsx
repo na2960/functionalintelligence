@@ -5,7 +5,7 @@ import FounderVoice from "@/components/FounderVoice";
 export const metadata = {
   title: "Research Services — Functional Intelligence",
   description:
-    "Well-researched, custom implementation blueprints for your data model or problem statement, based on state-of-the-art peer-reviewed literature. From $2,000/mo.",
+    "Custom physics-AI models for high-value prediction in markets and materials — calibrated, uncertainty-aware forecasts turned into auditable, economic decisions.",
 };
 
 export default function Services() {
