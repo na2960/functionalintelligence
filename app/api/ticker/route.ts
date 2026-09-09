@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 
-// Live-ish market quotes for the sectors Functional Intelligence interfaces
-// with. Fetched server-side (no CORS, no key) from Yahoo Finance's public
-// chart endpoint; the client polls this route every ~30s. Quotes from a free
-// public feed are typically delayed ~15 minutes.
+// Live market quotes for the sectors Functional Intelligence interfaces with.
+// Robust + free by design: two independent keyless sources (Yahoo Finance and
+// Stooq) with a short server cache and a last-good fallback, so an intermittent
+// upstream failure never blanks the board and there is no single provider to
+// depend on. Fetched server-side (no CORS); the client polls every ~30s.
 export const dynamic = "force-dynamic";
 
 const INSTRUMENTS: { symbol: string; label: string }[] = [
@@ -28,18 +29,26 @@ type Quote = {
   currency: string;
 };
 
-async function yahoo(
+// Warm-instance caches (reset on cold start — that's fine).
+const lastGood = new Map<string, Quote>();
+let cache: { at: number; quotes: Quote[] } | null = null;
+const CACHE_MS = 20_000;
+
+async function fromYahoo(
+  host: "query1" | "query2",
   symbol: string
 ): Promise<{ price: number; prev: number; currency: string } | null> {
   try {
     const r = await fetch(
-      `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?range=1d&interval=1d`,
+      `https://${host}.finance.yahoo.com/v8/finance/chart/${symbol}?range=1d&interval=1d`,
       {
         headers: {
           "User-Agent":
             "Mozilla/5.0 (compatible; FunctionalIntelligence/1.0; +https://funcimarket.com)",
+          Accept: "application/json",
         },
-        next: { revalidate: 30 },
+        cache: "no-store",
+        signal: AbortSignal.timeout(6000),
       }
     );
     if (!r.ok) return null;
@@ -58,31 +67,81 @@ async function yahoo(
   }
 }
 
+async function fromStooq(
+  symbol: string
+): Promise<{ price: number; currency: string } | null> {
+  try {
+    const r = await fetch(
+      `https://stooq.com/q/l/?s=${symbol.toLowerCase()}.us&f=sc&h&e=csv`,
+      { cache: "no-store", signal: AbortSignal.timeout(6000) }
+    );
+    if (!r.ok) return null;
+    const text = await r.text();
+    const line = text.trim().split(/\r?\n/).pop() ?? "";
+    const close = line.split(",").pop()?.trim();
+    const price = close ? Number(close) : NaN;
+    if (!Number.isFinite(price)) return null;
+    return { price, currency: "USD" };
+  } catch {
+    return null;
+  }
+}
+
+async function quoteFor(it: {
+  symbol: string;
+  label: string;
+}): Promise<Quote> {
+  const y =
+    (await fromYahoo("query1", it.symbol)) ??
+    (await fromYahoo("query2", it.symbol));
+  if (y) {
+    const change = y.price - y.prev;
+    const q: Quote = {
+      ...it,
+      price: y.price,
+      change,
+      changePct: y.prev ? (change / y.prev) * 100 : 0,
+      currency: y.currency,
+    };
+    lastGood.set(it.symbol, q);
+    return q;
+  }
+  const s = await fromStooq(it.symbol);
+  if (s) {
+    const prev = lastGood.get(it.symbol);
+    const q: Quote = {
+      ...it,
+      price: s.price,
+      // keep last known day-change if we have it; otherwise leave it blank
+      change: prev?.change ?? null,
+      changePct: prev?.changePct ?? null,
+      currency: s.currency,
+    };
+    lastGood.set(it.symbol, q);
+    return q;
+  }
+  // Everything failed this cycle — serve the last good value if we have one.
+  return (
+    lastGood.get(it.symbol) ?? {
+      ...it,
+      price: null,
+      change: null,
+      changePct: null,
+      currency: "USD",
+    }
+  );
+}
+
 function mockQuotes(): Quote[] {
-  // Deterministic-ish sample so the board renders where outbound quotes are
-  // blocked (local/dev). Real quotes are used in production.
   const base: Record<string, [number, number]> = {
-    XLE: [92.4, 91.8],
-    UNG: [14.7, 15.1],
-    XLU: [79.2, 78.6],
-    FAN: [17.9, 17.7],
-    TAN: [33.1, 34.0],
-    XLB: [91.6, 91.9],
-    LIT: [41.3, 40.5],
-    REMX: [28.8, 28.2],
-    URA: [39.5, 38.9],
-    COPX: [46.2, 45.7],
+    XLE: [92.4, 91.8], UNG: [14.7, 15.1], XLU: [79.2, 78.6], FAN: [17.9, 17.7],
+    TAN: [33.1, 34.0], XLB: [91.6, 91.9], LIT: [41.3, 40.5], REMX: [28.8, 28.2],
+    URA: [39.5, 38.9], COPX: [46.2, 45.7],
   };
   return INSTRUMENTS.map((it) => {
     const [price, prev] = base[it.symbol] ?? [100, 100];
     const change = price - prev;
-    return {
-      ...it,
-      price,
-      change,
-      changePct: (change / prev) * 100,
-      currency: "USD",
-    };
+    return { ...it, price, change, changePct: (change / prev) * 100, currency: "USD" };
   });
 }
 
@@ -94,25 +153,18 @@ export async function GET() {
     );
   }
 
-  const quotes: Quote[] = await Promise.all(
-    INSTRUMENTS.map(async (it) => {
-      const y = await yahoo(it.symbol);
-      if (!y)
-        return {
-          ...it,
-          price: null,
-          change: null,
-          changePct: null,
-          currency: "USD",
-        };
-      const change = y.price - y.prev;
-      const changePct = y.prev ? (change / y.prev) * 100 : 0;
-      return { ...it, price: y.price, change, changePct, currency: y.currency };
-    })
-  );
+  if (cache && Date.now() - cache.at < CACHE_MS) {
+    return NextResponse.json(
+      { updated: new Date(cache.at).toISOString(), quotes: cache.quotes },
+      { headers: { "cache-control": "no-store" } }
+    );
+  }
+
+  const quotes = await Promise.all(INSTRUMENTS.map(quoteFor));
+  cache = { at: Date.now(), quotes };
 
   return NextResponse.json(
-    { updated: new Date().toISOString(), quotes },
+    { updated: new Date(cache.at).toISOString(), quotes },
     { headers: { "cache-control": "no-store" } }
   );
 }

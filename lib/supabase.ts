@@ -23,22 +23,6 @@ export function serviceClient() {
   return createClient(SUPABASE_URL, key, { auth: { persistSession: false } });
 }
 
-export type BoardIdea = {
-  id: string;
-  title: string;
-  detail: string | null;
-  link: string | null;
-  category: string;
-  status: string;
-  brief_url: string | null;
-  covered_at: string | null;
-  created_at: string;
-  total_cents: number;
-  backers: number;
-  last_backed_at: string | null;
-  top_backer: string | null;
-};
-
 export type Brief = {
   id: string;
   title: string;
@@ -48,34 +32,6 @@ export type Brief = {
   brief_body: string | null;
   covered_at: string | null;
 };
-
-export async function fetchBoard(): Promise<BoardIdea[]> {
-  const supabase = publicClient();
-  const { data, error } = await supabase
-    .from("fi_board")
-    .select("*")
-    .order("total_cents", { ascending: false })
-    .order("created_at", { ascending: true });
-  if (error) throw new Error(error.message);
-  const board = (data ?? []) as BoardIdea[];
-
-  // Attach the most recent named backer per topic (social proof on the card).
-  // backer_name is intended to be public; emails are never selected here.
-  const { data: backers } = await supabase
-    .from("fi_backings")
-    .select("idea_id, backer_name, created_at")
-    .not("backer_name", "is", null)
-    .in("status", ["pledged", "paid"])
-    .order("created_at", { ascending: false })
-    .limit(200);
-  const topBacker = new Map<string, string>();
-  for (const b of backers ?? []) {
-    if (b.backer_name && !topBacker.has(b.idea_id)) {
-      topBacker.set(b.idea_id, b.backer_name);
-    }
-  }
-  return board.map((i) => ({ ...i, top_backer: topBacker.get(i.id) ?? null }));
-}
 
 const BRIEF_COLS =
   "id, title, detail, category, brief_url, brief_body, covered_at";

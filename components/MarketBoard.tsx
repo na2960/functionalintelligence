@@ -78,7 +78,7 @@ export default function MarketBoard() {
             {status === "ok" ? "Live" : status === "loading" ? "Loading…" : "Reconnecting…"}
           </span>
           <span className="mb-updated mono">
-            Updated {updatedLabel} · delayed quotes, auto-refreshing
+            Updated {updatedLabel} · auto-refreshing every 30s
           </span>
         </div>
 
@@ -114,8 +114,8 @@ export default function MarketBoard() {
         </div>
 
         <p className="mb-foot mono">
-          Sector proxies (ETFs) for the markets we interface with. Quotes via a
-          public feed, typically ~15-min delayed — not investment advice.
+          Sector proxies (ETFs) for the markets we interface with. Quotes from
+          public feeds and may be delayed — not investment advice.
         </p>
       </section>
     </div>
