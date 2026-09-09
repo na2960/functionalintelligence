@@ -5266,3 +5266,14 @@ body {
 @media (max-width: 820px) {
   .mb-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ================= v24: white hero band (nav → ruler) ================= */
+/* The title section (Newsletter / Markets / Research Services / Contact /
+   About) gets a full-bleed white background, matching the white footer.
+   Targets only the hero wrap (the one containing .mkt-head); the box-shadow +
+   clip-path paints edge-to-edge without changing the centered layout. */
+.mo-wrap:has(> .mkt-head) {
+  background: #fff;
+  box-shadow: 0 0 0 100vmax #fff;
+  clip-path: inset(0 -100vmax);
+}
