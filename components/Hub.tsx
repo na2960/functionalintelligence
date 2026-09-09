@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SubscribeButton, { BriefTimer } from "./SubscribeButton";
+import SubscribeButton from "./SubscribeButton";
 
 export default function Hub({ latestBriefId }: { latestBriefId: string | null }) {
   return (
@@ -34,10 +34,9 @@ export default function Hub({ latestBriefId }: { latestBriefId: string | null })
         <section className="hm-box hm-bl">
           <h2 className="hm-h">Newsletter</h2>
           <p className="hm-desc">
-            Plain-language notes on the methods and the science behind the work.
-            Free.
+            Deep tech research and insights — hard ideas, made legible. Free to
+            read.
           </p>
-          <BriefTimer />
           <div className="hm-actions">
             <Link
               href={latestBriefId ? `/briefs/${latestBriefId}` : "/briefs"}

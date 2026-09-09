@@ -45,8 +45,8 @@ export default function SubscribeButton({
       </button>
       {show && (
         <Modal
-          title="Subscribe to the brief"
-          subtitle="Every Tuesday at 7am ET. Always free."
+          title="Subscribe to the newsletter"
+          subtitle="Deep tech research and insights. Always free."
           onClose={() => setShow(false)}
         >
           <div className="sub-modal">

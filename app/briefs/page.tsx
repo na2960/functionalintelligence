@@ -2,7 +2,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import EmailCapture from "@/components/EmailCapture";
-import SubscribeButton, { BriefTimer } from "@/components/SubscribeButton";
+import SubscribeButton from "@/components/SubscribeButton";
 import { fetchBriefs, type Brief } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +21,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export const metadata = {
   title: "Newsletter — Functional Intelligence",
   description:
-    "Plain-language notes on the methods and the science behind our work in markets and materials. Free.",
+    "Deep tech research and insights — hard ideas across the frontier, made legible. Free to read.",
 };
 
 function fmtDate(d: string | null) {
@@ -46,14 +46,13 @@ export default async function NewsletterPage() {
 
       <div className="mo-wrap">
         <section className="mkt-head">
-          <div className="mo-eyebrow">// The newsletter</div>
+          <div className="mo-eyebrow">// Deep tech research &amp; insights</div>
           <h1 className="mo-h1">Newsletter.</h1>
           <p className="mo-lede">
-            Plain-language notes on the methods and the science behind the
-            work — the math explained simply. Free to read.
+            Deep tech research and insights — hard ideas across the frontier,
+            made legible. Free to read.
           </p>
           <div className="mkt-head-actions">
-            <BriefTimer />
             <SubscribeButton label="Follow — free" />
           </div>
         </section>

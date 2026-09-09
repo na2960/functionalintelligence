@@ -26,7 +26,7 @@ export default function EmailCapture({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Something went wrong.");
       setEmail("");
-      setMsg({ ok: true, text: "You're on the list — first brief lands Tuesday, 7am ET." });
+      setMsg({ ok: true, text: "You're on the list — thanks for following." });
     } catch (err) {
       setMsg({
         ok: false,
