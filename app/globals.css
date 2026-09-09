@@ -5273,7 +5273,7 @@ body {
    Targets only the hero wrap (the one containing .mkt-head); the box-shadow +
    clip-path paints edge-to-edge without changing the centered layout. */
 .mo-wrap:has(> .mkt-head) {
-  background: #e7eaee;
-  box-shadow: 0 0 0 100vmax #e7eaee;
+  background: #f3f2ef;
+  box-shadow: 0 0 0 100vmax #f3f2ef;
   clip-path: inset(0 -100vmax);
 }
